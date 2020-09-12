@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    苏富帅
+                    吴孟林
                 </div>
 
                 <div class="links">
