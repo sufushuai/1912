@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    电商前台模板
+                    电模板
                 </div>
 
                 <div class="links">
