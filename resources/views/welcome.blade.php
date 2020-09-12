@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    电模板
+                    苏富帅
                 </div>
 
                 <div class="links">
