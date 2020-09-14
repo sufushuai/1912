@@ -25,4 +25,10 @@ class ManController extends Controller
     public function coupon(){
         return view("man/coupon");
     }
+    /**
+     * 收藏
+     */
+    public function collect(){
+        return view("man/collect");
+    }
 }
