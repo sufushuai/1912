@@ -24,9 +24,6 @@
             <dd><a href="home-person-footmark.html" >我的足迹</a></dd>
         </dl>
         <dl>
-            <dt><i>·</i> 物流消息</dt>
-        </dl>
-        <dl>
             <dt><i>·</i> 设置</dt>
             <dd><a href="home-setting-info.html" class="list-active">个人信息</a></dd>
             <dd><a href="home-setting-address.html"  >地址管理</a></dd>

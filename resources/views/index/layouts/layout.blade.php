@@ -12,6 +12,12 @@
     <link rel="stylesheet" type="text/css" href="/asses/css/widget-jquery.autocomplete.css" />
     <link rel="stylesheet" type="text/css" href="/asses/css/widget-cartPanelView.css" />
 
+    <link rel="icon" href="/asses/img/favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="/asses/css/webbase.css" />
+    <link rel="stylesheet" type="text/css" href="/asses/css/pages-seckillOrder.css" />
+
+    <script type="text/javascript" src="/asses/js/plugins/jquery/jquery.min.js"></script>
 </head>
 
 <body>
@@ -416,7 +422,7 @@
     </div>
 </script>
 <!--侧栏面板结束-->
-<script type="text/javascript" src="/asses/js/plugins/jquery/jquery.min.js"></script>
+
 <script type="text/javascript">
     $(function(){
         $("#service").hover(function(){
@@ -440,6 +446,7 @@
 <script type="text/javascript" src="/asses/js/widget/cartPanelView.js"></script>
 <script type="text/javascript" src="/asses/js/widget/jquery.autocomplete.js"></script>
 <script type="text/javascript" src="/asses/js/widget/nav.js"></script>
+
 @yield('js')
 </body>
 
