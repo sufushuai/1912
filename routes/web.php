@@ -15,3 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::any('/index','Index\IndexController@index');
+Route::any('/index/login','Index\IndexController@login');
+Route::any('/index/register','Index\IndexController@register');
+Route::any('/index/cart','Index\IndexController@cart');
+
