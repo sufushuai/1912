@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    宁
+                    琴
                 </div>
 
                 <div class="links">
