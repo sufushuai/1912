@@ -5,13 +5,13 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
     <title>品优购，优质！优质！</title>
-    <link rel="icon" href="/asses/assets//asses/img/favicon.ico">
+    <link rel="icon" href="/asses/img/favicon.ico">
 
     <link rel="stylesheet" type="text/css" href="/asses/css/webbase.css" />
     <link rel="stylesheet" type="text/css" href="/asses/css/pages-JD-index.css" />
     <link rel="stylesheet" type="text/css" href="/asses/css/widget-jquery.autocomplete.css" />
     <link rel="stylesheet" type="text/css" href="/asses/css/widget-cartPanelView.css" />
-    @yield('js')
+
 </head>
 
 <body>
@@ -416,7 +416,7 @@
     </div>
 </script>
 <!--侧栏面板结束-->
-<script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/asses/js/plugins/jquery/jquery.min.js"></script>
 <script type="text/javascript">
     $(function(){
         $("#service").hover(function(){
@@ -432,14 +432,15 @@
 
     })
 </script>
-<script type="text/javascript" src="js/model/cartModel.js"></script>
-<script type="text/javascript" src="js/czFunction.js"></script>
-<script type="text/javascript" src="js/plugins/jquery.easing/jquery.easing.min.js"></script>
-<script type="text/javascript" src="js/plugins/sui/sui.min.js"></script>
-<script type="text/javascript" src="js/pages/index.js"></script>
-<script type="text/javascript" src="js/widget/cartPanelView.js"></script>
-<script type="text/javascript" src="js/widget/jquery.autocomplete.js"></script>
-<script type="text/javascript" src="js/widget/nav.js"></script>
+<script type="text/javascript" src="/asses/js/model/cartModel.js"></script>
+<script type="text/javascript" src="/asses/js/czFunction.js"></script>
+<script type="text/javascript" src="/asses/js/plugins/jquery.easing/jquery.easing.min.js"></script>
+<script type="text/javascript" src="/asses/js/plugins/sui/sui.min.js"></script>
+<script type="text/javascript" src="/asses/js/pages/index.js"></script>
+<script type="text/javascript" src="/asses/js/widget/cartPanelView.js"></script>
+<script type="text/javascript" src="/asses/js/widget/jquery.autocomplete.js"></script>
+<script type="text/javascript" src="/asses/js/widget/nav.js"></script>
+@yield('js')
 </body>
 
 
