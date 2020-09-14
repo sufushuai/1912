@@ -11,7 +11,6 @@
     <link rel="stylesheet" type="text/css" href="/asses/css/pages-JD-index.css" />
     <link rel="stylesheet" type="text/css" href="/asses/css/widget-jquery.autocomplete.css" />
     <link rel="stylesheet" type="text/css" href="/asses/css/widget-cartPanelView.css" />
-    @yield('js')
 </head>
 
 <body>
@@ -416,7 +415,7 @@
     </div>
 </script>
 <!--侧栏面板结束-->
-<script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/asses/js/plugins/jquery/jquery.min.js"></script>
 <script type="text/javascript">
     $(function(){
         $("#service").hover(function(){
@@ -432,14 +431,14 @@
 
     })
 </script>
-<script type="text/javascript" src="js/model/cartModel.js"></script>
-<script type="text/javascript" src="js/czFunction.js"></script>
-<script type="text/javascript" src="js/plugins/jquery.easing/jquery.easing.min.js"></script>
-<script type="text/javascript" src="js/plugins/sui/sui.min.js"></script>
-<script type="text/javascript" src="js/pages/index.js"></script>
-<script type="text/javascript" src="js/widget/cartPanelView.js"></script>
-<script type="text/javascript" src="js/widget/jquery.autocomplete.js"></script>
-<script type="text/javascript" src="js/widget/nav.js"></script>
+<script type="text/javascript" src="/asses/js/model/cartModel.js"></script>
+<script type="text/javascript" src="/asses/js/czFunction.js"></script>
+<script type="text/javascript" src="/asses/js/plugins/jquery.easing/jquery.easing.min.js"></script>
+<script type="text/javascript" src="/asses/js/plugins/sui/sui.min.js"></script>
+<script type="text/javascript" src="/asses/js/pages/index.js"></script>
+<script type="text/javascript" src="/asses/js/widget/cartPanelView.js"></script>
+<script type="text/javascript" src="/asses/js/widget/jquery.autocomplete.js"></script>
+<script type="text/javascript" src="/asses/js/widget/nav.js"></script>
 </body>
 
 
