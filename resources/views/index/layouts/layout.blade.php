@@ -25,7 +25,7 @@
                 <div class="shortcut">
                     <ul class="fl">
                         <li class="f-item">品优购欢迎您！</li>
-                        <li class="f-item">请<a href="login.html" target="_blank">登录</a>　<span><a href="register.html" target="_blank">免费注册</a></span></li>
+                        <li class="f-item">请<a href="{{url('index/login')}}" target="_blank">登录</a>　<span><a href="{{url('index/register')}}" target="_blank">免费注册</a></span></li>
                     </ul>
                     <ul class="fr">
                         <li class="f-item">我的订单</li>
@@ -88,7 +88,7 @@
                         <div class="fr shopcar">
                             <div class="show-shopcar" id="shopcar">
                                 <span class="car"></span>
-                                <a class="sui-btn btn-default btn-xlarge" href="cart.html" target="_blank">
+                                <a class="sui-btn btn-default btn-xlarge" href="{{url('index/cart')}}" target="_blank">
                                     <span>我的购物车</span>
                                     <i class="shopnum">0</i>
                                 </a>
