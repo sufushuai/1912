@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    琴
+                    项目前台模板
                 </div>
 
                 <div class="links">
