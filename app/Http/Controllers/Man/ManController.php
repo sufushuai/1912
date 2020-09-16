@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 class ManController extends Controller
 {
     /**
+     * 个人中心
+     */
+    public function index(){
+        return view("man/index");
+    }
+    /**
      *  个人信息
      */
     public function perinfo(){
