@@ -1,17 +1,49 @@
-@extends("index.layouts.layout")
-@section("content")
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
 
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+    <title>我的收藏</title>
+    <link rel="icon" href="/asses/img/favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="/asses/css/webbase.css" />
+    <link rel="stylesheet" type="text/css" href="/asses/css/pages-seckillOrder.css" />
+</head>
+
+<body>
 <!-- 头部栏位 -->
+@include("index.layouts.head")
 
+<script type="text/javascript" src="/asses/js/plugins/jquery/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $("#service").hover(function(){
+            $(".service").show();
+        },function(){
+            $(".service").hide();
+        });
+        $("#shopcar").hover(function(){
+            $("#shopcarlist").show();
+        },function(){
+            $("#shopcarlist").hide();
+        });
 
+    })
+</script>
+<script type="text/javascript" src="/asses/js/plugins/jquery.easing/jquery.easing.min.js"></script>
+<script type="text/javascript" src="/asses/js/plugins/sui/sui.min.js"></script>
+<script type="text/javascript" src="/asses/js/plugins/jquery-placeholder/jquery.placeholder.min.js"></script>
+<script type="text/javascript" src="/asses/js/widget/nav.js"></script>
 </body>
 <!--header-->
 <div id="account">
     <div class="py-container">
         <div class="yui3-g collect">
+
             <!--左侧列表-->
-            @include("index.layouts.left")
+            @include("index.layouts.manleft")
             <!--右侧主内容-->
             <div class="yui3-u-5-6 goods">
                 <div class="body">
@@ -192,28 +224,6 @@
         </div>
     </div>
 </div>
+</html>
 <!-- 底部栏位 -->
-<!--页面底部-->
-@endsection
-@section("js")
-    <script type="text/javascript" src="/asses/js/plugins/jquery/jquery.min.js"></script>
-    <script type="text/javascript">
-        $(function(){
-            $("#service").hover(function(){
-                $(".service").show();
-            },function(){
-                $(".service").hide();
-            });
-            $("#shopcar").hover(function(){
-                $("#shopcarlist").show();
-            },function(){
-                $("#shopcarlist").hide();
-            });
-
-        })
-    </script>
-    <script type="text/javascript" src="/asses/js/plugins/jquery.easing/jquery.easing.min.js"></script>
-    <script type="text/javascript" src="/asses/js/plugins/sui/sui.min.js"></script>
-    <script type="text/javascript" src="/asses/js/plugins/jquery-placeholder/jquery.placeholder.min.js"></script>
-    <script type="text/javascript" src="/asses/js/widget/nav.js"></script>
-@endsection
+@include("index.layouts.foot")
