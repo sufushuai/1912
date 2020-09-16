@@ -55,4 +55,17 @@ class ManController extends Controller
     public function address(){
         return view("man/address");
     }
+    /**
+     *待评价
+    */
+    public function evaluate(){
+        return view("man/evaluate");
+    }
+    /**
+     *待收货
+     */
+    public function received(){
+        return view("man/evaluate");
+    }
+
 }
