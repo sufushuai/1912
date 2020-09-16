@@ -14,6 +14,18 @@ class ManController extends Controller
         return view("man/index");
     }
     /**
+     *代付款
+     */
+    public function pay(){
+        return view("man/pay");
+    }
+    /**
+     * 代发货
+     */
+    public function send(){
+        return view("man/send");
+    }
+    /**
      *  个人信息
      */
     public function perinfo(){
