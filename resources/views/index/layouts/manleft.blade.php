@@ -13,11 +13,13 @@
                 <div class="list-items">
                     <dl>
                         <dt><i>·</i> 订单中心</dt>
-                        <dd ><a href=""   >我的订单</a></dd>
-                        <dd><a href="home-order-pay.html" >待付款</a></dd>
-                        <dd><a href="#"  >待发货</a></dd>
+
+                        <dd ><a href="{{url("/man/index")}}"   >我的订单</a></dd>
+                        <dd><a href="{{url("/man/pay")}}" >待付款</a></dd>
+                        <dd><a href="{{url("/man/send")}}"  >待发货</a></dd>
                         <dd><a href="{{url('man/received')}}" >待收货</a></dd>
                         <dd><a href="{{url('man/evaluate')}}" >待评价</a></dd>
+
                     </dl>
                     <dl>
                         <dt><i>·</i> 我的中心</dt>
