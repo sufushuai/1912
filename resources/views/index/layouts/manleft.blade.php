@@ -31,8 +31,7 @@
                     <dl>
                         <dt><i>·</i> 设置</dt>
                         <dd><a href="{{url('man/perinfo')}}">个人信息</a></dd>
-                        <dd><a href="home-setting-address.html"  >地址管理</a></dd>
-                        <dd><a href="home-setting-safe.html" >安全管理</a></dd>
+                        <dd><a href="{{url('man/address')}}"  >地址管理</a></dd>
                     </dl>
                 </div>
             </div>

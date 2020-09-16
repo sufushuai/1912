@@ -25,6 +25,7 @@ Route::any('/man/perinfo','Man\ManController@perinfo');//个人信息
 Route::any('/man/history','Man\ManController@history');//浏览历史
 Route::any('/man/coupon','Man\ManController@coupon');//优惠卷
 Route::any('/man/collect','Man\ManController@collect');//收藏
+Route::any('/man/address','Man\ManController@address');//收藏
 
 //首页
 Route::any('/index/login','Index\IndexController@login');//登录
