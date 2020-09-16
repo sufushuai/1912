@@ -23,6 +23,10 @@ class IndexController extends Controller
     public function cart(){
         return view('index.cart');
     }
+    //成功加入购物车
+    public function success_cart(){
+        return view('index.success_cart');
+    }
     //详情
     public function item(){
         return view('index.item');
