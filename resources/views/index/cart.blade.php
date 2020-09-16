@@ -13,44 +13,7 @@
 
 <body>
 <!--head-->
-<div class="top">
-    <div class="py-container">
-        <div class="shortcut">
-            <ul class="fl">
-                <li class="f-item">品优购欢迎您！</li>
-                <li class="f-item">请登录　<span><a href="#">免费注册</a></span></li>
-            </ul>
-            <ul class="fr">
-                <li class="f-item">我的订单</li>
-                <li class="f-item space"></li>
-                <li class="f-item">我的品优购</li>
-                <li class="f-item space"></li>
-                <li class="f-item">品优购会员</li>
-                <li class="f-item space"></li>
-                <li class="f-item">企业采购</li>
-                <li class="f-item space"></li>
-                <li class="f-item">关注品优购</li>
-                <li class="f-item space"></li>
-                <li class="f-item">客户服务</li>
-                <li class="f-item space"></li>
-                <li class="f-item">网站导航</li>
-            </ul>
-        </div>
-    </div>
-</div>
-<div class="cart py-container">
-    <!--logoArea-->
-    <div class="logoArea">
-        <div class="fl logo"><span class="title">购物车</span></div>
-        <div class="fr search">
-            <form class="sui-form form-inline">
-                <div class="input-append">
-                    <input type="text" type="text" class="input-error input-xxlarge" placeholder="品优购自营" />
-                    <button class="sui-btn btn-xlarge btn-danger" type="button">搜索</button>
-                </div>
-            </form>
-        </div>
-    </div>
+@include('index.layouts.layout')
     <!--All goods-->
     <div class="allgoods">
         <h4>全部商品<span>11</span></h4>
@@ -518,10 +481,10 @@
 </div>
 <!--页面底部END-->
 
-<script type="text/javascript" src="/asses/js/plugins/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="/asses/js/plugins/jquery.easing/jquery.easing.min.js"></script>
-<script type="text/javascript" src="/asses/js/plugins/sui/sui.min.js"></script>
-<script type="text/javascript" src="/asses/js/widget/nav.js"></script>
+<script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="js/plugins/jquery.easing/jquery.easing.min.js"></script>
+<script type="text/javascript" src="js/plugins/sui/sui.min.js"></script>
+<script type="text/javascript" src="js/widget/nav.js"></script>
 </body>
 
 </html>
