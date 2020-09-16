@@ -37,4 +37,10 @@ class ManController extends Controller
     public function collect(){
         return view("man/collect");
     }
+    /**
+     * 地址管理
+     */
+    public function address(){
+        return view("man/address");
+    }
 }
