@@ -27,4 +27,8 @@ class IndexController extends Controller
     public function item(){
         return view('index.item');
     }
+    //订单
+    public function order(){
+        return view('index.order');
+    }
 }

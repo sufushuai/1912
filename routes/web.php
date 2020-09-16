@@ -31,4 +31,6 @@ Route::any('/index/login','Index\IndexController@login');//登录
 Route::any('/index/register','Index\IndexController@register');//注册
 Route::any('/index/cart','Index\IndexController@cart');//购物车
 Route::any('/index/item','Index\IndexController@item');//详情
+Route::any('/index/order','Index\IndexController@order');//订单
+
 

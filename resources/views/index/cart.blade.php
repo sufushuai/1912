@@ -192,7 +192,7 @@
                     <span><em>已节省：</em><i>-¥20.00</i></span>
                 </div>
                 <div class="sumbtn">
-                    <a class="sum-btn" href="getOrderInfo.html" target="_blank">结算</a>
+                    <a class="sum-btn" href="{{url('index/order')}}" target="_blank">结算</a>
                 </div>
             </div>
         </div>
