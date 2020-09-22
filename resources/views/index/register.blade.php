@@ -26,26 +26,26 @@
                 <div class="control-group">
                     <label class="control-label">用户名：</label>
                     <div class="controls">
-                        <input type="text" placeholder="请输入你的用户名" class="input-xfat input-xlarge">
+                        <input type="text" name="username" placeholder="请输入你的用户名" class="input-xfat input-xlarge">
                     </div>
                 </div>
                 <div class="control-group">
                     <label for="inputPassword" class="control-label">登录密码：</label>
                     <div class="controls">
-                        <input type="password" placeholder="设置登录密码" class="input-xfat input-xlarge">
+                        <input type="password" name="password" placeholder="设置登录密码" class="input-xfat input-xlarge">
                     </div>
                 </div>
                 <div class="control-group">
                     <label for="inputPassword" class="control-label">确认密码：</label>
                     <div class="controls">
-                        <input type="password" placeholder="再次确认密码" class="input-xfat input-xlarge">
+                        <input type="password" name="password1" placeholder="再次确认密码" class="input-xfat input-xlarge">
                     </div>
                 </div>
 
                 <div class="control-group">
                     <label class="control-label">手机号：</label>
                     <div class="controls">
-                        <input type="text" placeholder="请输入你的手机号" class="input-xfat input-xlarge">
+                        <input type="text" name="tel" placeholder="请输入你的手机号" class="input-xfat input-xlarge">
                     </div>
                 </div>
                 <div class="control-group">
