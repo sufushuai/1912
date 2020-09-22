@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <title>品优购，优质！优质！</title>
-    <link rel="icon" href="assets/img/favicon.ico">
+    <link rel="icon" href="/assets/img/favicon.ico">
     <link rel="stylesheet" type="text/css" href="/asses/css/webbase.css" />
     <link rel="stylesheet" type="text/css" href="/asses/css/pages-JD-index.css" />
     <link rel="stylesheet" type="text/css" href="/asses/css/widget-jquery.autocomplete.css" />
@@ -498,22 +498,14 @@
         </div>
     </div>
 </div>
+
 <!--商标-->
 <div class="brand">
     <div class="py-container">
         <ul class="Brand-list blockgary">
-            <li class="Brand-item">
-                <img src="/asses/img/brand_21.png" />
-            </li>
-            <li class="Brand-item"><img src="/asses/img/brand_03.png" /></li>
-            <li class="Brand-item"><img src="/asses/img/brand_05.png" /></li>
-            <li class="Brand-item"><img src="/asses/img/brand_07.png" /></li>
-            <li class="Brand-item"><img src="/asses/img/brand_09.png" /></li>
-            <li class="Brand-item"><img src="/asses/img/brand_11.png" /></li>
-            <li class="Brand-item"><img src="/asses/img/brand_13.png" /></li>
-            <li class="Brand-item"><img src="/asses/img/brand_15.png" /></li>
-            <li class="Brand-item"><img src="/asses/img/brand_17.png" /></li>
-            <li class="Brand-item"><img src="/asses/img/brand_19.png" /></li>
+            @foreach($brand as $v)
+            <li class="Brand-item"><img src="{{env('.APP_URL')}}{{$v->brand_logo}}" /></li>
+            @endforeach
         </ul>
     </div>
 </div>
