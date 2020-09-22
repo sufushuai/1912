@@ -98,8 +98,8 @@
 </body>
 
 </html>
-
 <script>
+
     $(document).ready(function() {
         $('.add').click(function () {
             var username = $("#username").val();
@@ -131,7 +131,7 @@
                 data: {username: username,password:password,password1:password1,tel:tel},
                 dataType: "json",
                 success: function (res) {
-                    if (res.status == 200) {
+                    if (res.errno == 200) {
                         alert('注册成功');
                         location.href = "/index/login";
                     } else {
