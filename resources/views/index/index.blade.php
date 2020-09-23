@@ -250,7 +250,7 @@
             <div class="fr">
                 <ul class="sui-nav nav-tabs">
                   
-                  @foreach($category as $k=>$v)
+                  @foreach($category as $v)
                     <li>
                         <a href="#tab2" data-toggle="tab">{{$v->p_id}}</a>
                     </li>
