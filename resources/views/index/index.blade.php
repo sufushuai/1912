@@ -54,6 +54,7 @@
                 </div>
             </div>
             <div class="yui3-u Right">
+                {{--广告--}}
                 <div class="news">
                     <h4><em class="fl">品优购快报</em><span class="fr tip">更多 ></span></h4>
                     <div class="clearix"></div>
@@ -65,6 +66,8 @@
                         @endforeach
                     </ul>
                 </div>
+
+                {{--生命线 话费等服务--}}
                 <ul class="yui3-g Lifeservice">
                     <li class="yui3-u-1-4 life-item tab-item">
                         <i class="list-item list-item-1"></i>
@@ -154,19 +157,11 @@
             <li class="yui3-u-5-24">
                 <a href="list.html" target="_blank"><img src="/asses/img/today01.png" /></a>
             </li>
-            <li class="yui3-u-5-24">
-                <img src="/asses/img/today02.png" />
-            </li>
-            <li class="yui3-u-5-24">
-                <img src="/asses/img/today03.png" />
-            </li>
-            <li class="yui3-u-5-24">
-                <img src="/asses/img/today04.png" />
-            </li>
+
         </ul>
     </div>
 </div>
-<!--喜欢-->
+<!--猜你喜欢-->
 <div class="like">
     <div class="py-container">
         <div class="title">
@@ -176,43 +171,23 @@
         </div>
         <div class="bd">
             <ul class="clearfix yui3-g Favourate picLB" id="picLBxxl">
-                <li class="yui3-u-1-6">
-                    <dl class="picDl huozhe">
-                        <dd>
-                            <a href="{{url('index/item')}}" class="pic"><img src="/asses/img/like_02.png" alt="" /></a>
-                            <div class="like-text">
-                                <p>阳光美包新款单肩包女包时尚子母包四件套女</p>
-                                <h3>¥116.00</h3>
-                            </div>
-                        </dd>
-                        <dd>
-                            <a href="{{url('index/item')}}" class="pic"><img src="/asses/img/like_01.png" alt="" /></a>
-                            <div class="like-text">
-                                <p>爱仕达 30CM炒锅不粘锅NWG8330E电磁炉炒</p>
-                                <h3>¥116.00</h3>
-                            </div>
-                        </dd>
-                    </dl>
-                </li>
+
+                @foreach($guess as $g))
                 <li class="yui3-u-1-6">
                     <dl class="picDl jilu">
+                        @foreach($g as $k=>$g2))
+
                         <dd>
-                            <a href="" class="pic"><img src="/asses/img/like_03.png" alt="" /></a>
+                            <a href="" class="pic"><img src="{{env('UPLOAD_URL')}}{{$g2['goods_img']}}" alt="" /></a>
                             <div class="like-text">
-                                <p>爱仕达 30CM炒锅不粘锅NWG8330E电磁炉炒</p>
-                                <h3>¥116.00</h3>
+                                <p>{{$g2['goods_name']}}</p>
+                                <h3>¥{{$g2['goods_price']}}.00</h3>
                             </div>
                         </dd>
-                        <dd>
-                            <a href="" class="pic"><img src="/asses/img/like_02.png" alt="" /></a>
-                            <div class="like-text">
-                                <p>阳光美包新款单肩包女包时尚子母包四件套女</p>
-                                <h3>¥116.00</h3>
-                            </div>
-                        </dd>
+                        @endforeach
                     </dl>
                 </li>
-
+                @endforeach
             </ul>
         </div>
     </div>
