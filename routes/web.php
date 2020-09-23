@@ -37,9 +37,13 @@ Route::any('/index/item','Index\IndexController@item');//详情
 Route::any('/index/order','Index\IndexController@order');//订单
 //注册登录
 Route::any('/index/register','login\LoginController@register');//注册
+Route::any('/index/tel','login\LoginController@tel');//注册
+Route::any('/index/sendtel','login\LoginController@sendtel');//发送短信验证码
+
 Route::any('/index/do_register','login\LoginController@do_register');//执行注册
 Route::any('/index/login','login\LoginController@login');//登录
 Route::post('/index/do_login','login\LoginController@do_login');//执行登录
 
 
+Route::any('/test','TestController@test');//执行注册
 
