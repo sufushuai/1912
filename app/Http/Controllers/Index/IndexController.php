@@ -8,11 +8,8 @@ use Illuminate\Http\Request;
 use App\Model\BrandModel;
 use App\Model\AdModel;
 use App\Model\SlideModel;
-<<<<<<< HEAD
 use App\Model\CartModel;
-=======
 use App\Model\CategoryModel;
->>>>>>> d1a305d7c8c6fdd194d539c081cc08a7142b45d7
 use App\Model\GoodsModel;
 
 class IndexController extends Common
@@ -41,7 +38,7 @@ class IndexController extends Common
 
         return view('index.index',['brand'=>$brand,'ad'=>$ad,'slide'=>$slide,'category'=>$cate,'guess'=>$guess]);
     }
- 
+
     //购物车
     public function cart(){
         $cart = CartModel::where(['is_del'=>1])->get();
