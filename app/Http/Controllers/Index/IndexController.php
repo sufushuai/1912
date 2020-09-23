@@ -40,4 +40,6 @@ class IndexController extends Controller
     public function order(){
         return view('index.order');
     }
+    //无限极
+    public function cate(){}
 }
