@@ -64,6 +64,30 @@ class Common extends Controller
         }
         return $cateIds;
     }
+    /**
+     * 封装成功时的方法
+     * @param $errno
+     * @param $msg
+     * @param array $data
+     * @return array
+     */
+    protected function success($data=[],$code=200,$msg='success'){
+        return [
+            'code'=>$code,
+            'msg'=>$msg,
+            'data'=>$data,
+        ];
+    }
+    /**
+     * 封装失败时的方法
+     */
+    protected function error($msg='',$code=1,$data=[]){
+        return [
+            'code'=>$code,
+            'msg'=>$msg,
+            'data'=>$data,
+        ];
+    }
 
 
 }
