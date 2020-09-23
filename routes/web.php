@@ -33,7 +33,7 @@ Route::any('/man/evaluate','Man\ManController@evaluate');//待评价
 Route::any('/man/received','Man\ManController@received');//待收获
 //首页
 Route::any('/index/cart','Index\IndexController@cart');//购物车
-Route::any('/index/item','Index\IndexController@item');//详情
+Route::any('/index/item/{goods_id}','Index\IndexController@item');//详情
 Route::any('/index/order','Index\IndexController@order');//订单
 //注册登录
 Route::any('/index/register','login\LoginController@register');//注册
