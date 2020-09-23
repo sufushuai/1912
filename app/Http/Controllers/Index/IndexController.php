@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Index;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Common;
 use Illuminate\Http\Request;
 use App\Model\BrandModel;
 use App\Model\AdModel;
@@ -12,7 +12,7 @@ use App\Model\CategoryModel;
 
 use App\Model\GoodsModel;
 
-class IndexController extends Controller
+class IndexController extends Common
 {
     //首页
     public function index(){
@@ -51,8 +51,12 @@ class IndexController extends Controller
         return view('index.cart');
     }
     //详情
-    public function item(){
-        return view('index.item');
+    public function item(Request $request,$goods_id){
+
+        $role_Info=GoodsModel::where('goods_id',$goods_id)->first();
+
+        return view('index.item',['role_Info'=>$role_Info]);
+
     }
     //订单
     public function order(){
