@@ -33,6 +33,8 @@ Route::any('/man/evaluate','Man\ManController@evaluate');//待评价
 Route::any('/man/received','Man\ManController@received');//待收获
 //首页
 Route::any('/index/cart','Index\IndexController@cart');//购物车
+Route::any('/index/cartdestroy','Index\IndexController@cartdestroy');//购物车删除
+Route::any('/index/cartdel','Index\IndexController@cartdel');//购物车删除
 Route::any('/index/success_cart','Index\IndexController@success_cart');//成功加入购物车
 Route::any('/index/item','Index\IndexController@item');//详情
 Route::any('/index/order','Index\IndexController@order');//订单

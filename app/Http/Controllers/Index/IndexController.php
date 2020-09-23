@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Index;
 
 use App\Http\Controllers\Common;
+use App\Model\RbacUser;
 use Illuminate\Http\Request;
 use App\Model\BrandModel;
 use App\Model\AdModel;
 use App\Model\SlideModel;
+use App\Model\CartModel;
 use App\Model\GoodsModel;
 
 class IndexController extends Common
@@ -30,7 +32,34 @@ class IndexController extends Common
     }
     //购物车
     public function cart(){
-        return view('index.cart');
+        $cart = CartModel::where(['is_del'=>1])->get();
+        return view('index.cart',['cart'=>$cart]);
+    }
+    //购物车删除
+    public function cartdestroy(){
+        $cart_id = request()->post('cart_id');
+        $res = CartModel::where('cart_id',$cart_id)->update(["is_del"=>2]);
+        if($res){
+            return $this->success();
+        }else{
+            return $this->error("删除失败");
+        }
+    }
+    public function cartdel(){
+        $cart_id=request()->post('strIds');
+        //把传来的所有id改为数组形式  explode  字符串转数组
+        $str = explode(",",$cart_id);
+        //dd($str);
+        //利用循环将需要删除的id 一个一个进行执行sql；
+        foreach($str as $k => $v){
+            $res=CartModel::destroy($v);
+        }
+        //dd($res);
+        if($res){
+            return $this->success();
+        }else{
+            return $this->error("删除失败");
+        }
     }
     //成功加入购物车
     public function success_cart(){
