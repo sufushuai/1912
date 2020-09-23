@@ -34,17 +34,28 @@ Route::any('/man/evaluate','Man\ManController@evaluate');//待评价
 Route::any('/man/received','Man\ManController@received');//待收获
 //首页
 Route::any('/index/cart','Index\IndexController@cart');//购物车
+<<<<<<< HEAD
 Route::any('/index/cartdestroy','Index\IndexController@cartdestroy');//购物车删除
 Route::any('/index/cartdel','Index\IndexController@cartdel');//购物车删除
 Route::any('/index/success_cart','Index\IndexController@success_cart');//成功加入购物车
 Route::any('/index/item','Index\IndexController@item');//详情
 Route::any('/index/item/{goods_id}','Index\IndexController@item');//详情
+=======
+
+Route::any('/index/cartdestroy','Index\IndexController@cartdestroy');//购物车删除
+Route::any('/index/cartdel','Index\IndexController@cartdel');//购物车删除
+Route::any('/index/success_cart','Index\IndexController@success_cart');//成功加入购物车
+
+
+Route::any('/index/item/{goods_id}','Index\IndexController@item');//详情
+
+>>>>>>> f4496c4f3465dfd740aa012c3d9633412033ff7c
 Route::any('/index/order','Index\IndexController@order');//订单
 //注册登录
 Route::any('/index/register','login\LoginController@register');//注册
+Route::any('/index/sendtel','login\LoginController@sendtel');//发送短信验证码
 Route::any('/index/do_register','login\LoginController@do_register');//执行注册
 Route::any('/index/login','login\LoginController@login');//登录
 Route::post('/index/do_login','login\LoginController@do_login');//执行登录
-
 
 
