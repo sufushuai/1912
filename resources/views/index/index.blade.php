@@ -21,6 +21,7 @@
 <div class="sort">
     <div class="py-container">
         <div class="yui3-g SortList ">
+            {{--z左边分类菜单--}}
             @include('index.layouts.left')
             <div class="yui3-u Center banerArea">
                 <!--banner轮播-->
@@ -250,11 +251,11 @@
             <div class="fr">
                 <ul class="sui-nav nav-tabs">
                   
-                  @foreach($category as $v)
+
                     <li>
-                        <a href="#tab2" data-toggle="tab">{{$v->p_id}}</a>
+                        <a href="#tab2" data-toggle="tab"></a>
                     </li>
-                   @endforeach
+
                 </ul>
             </div>
         </div>

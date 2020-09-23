@@ -7,9 +7,7 @@ use Illuminate\Http\Request;
 use App\Model\BrandModel;
 use App\Model\AdModel;
 use App\Model\SlideModel;
-
 use App\Model\CategoryModel;
-
 use App\Model\GoodsModel;
 
 class IndexController extends Common
@@ -29,14 +27,14 @@ class IndexController extends Common
         //$guess=collect($guess)->toArray();
         $guess=array_chunk($guess,2,true);
         //dump($guess);die;
-        $obj = new CategoryModel;
-        $where=[
-            ['p_id','=',0],
-        ];
-        $category=$obj->where($where)->limit(6)->get();
 
-        // dd($category);
-        return view('index.index',['brand'=>$brand,'ad'=>$ad,'slide'=>$slide,'category'=>$category,'guess'=>$guess]);
+        //获取分类数据
+        $category=CategoryModel::get()->toArray();
+        //获取所有父级ID p_id
+        //执行无极限
+        $cate=$this->getcateInfo2($category);
+
+        return view('index.index',['brand'=>$brand,'ad'=>$ad,'slide'=>$slide,'category'=>$cate,'guess'=>$guess]);
     }
  
     //购物车
