@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Index;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Common;
 use Illuminate\Http\Request;
 use App\Model\BrandModel;
 use App\Model\AdModel;
 use App\Model\SlideModel;
 use App\Model\GoodsModel;
 
-class IndexController extends Controller
+class IndexController extends Common
 {
     //首页
     public function index(){
@@ -44,4 +44,6 @@ class IndexController extends Controller
     public function order(){
         return view('index.order');
     }
+    //无限极
+    public function cate(){}
 }
