@@ -22,7 +22,10 @@ class IndexController extends Controller
             'is_show'=>1,
             'is_new'=>1
         ];
-        $guess=GoodsModel::where($where)->paginate(6);
+        $guess=GoodsModel::where($where)->limit(12)->get()->toArray();
+        //$guess=collect($guess)->toArray();
+        $guess=array_chunk($guess,2,true);
+        //dump($guess);die;
         return view('index.index',['brand'=>$brand,'ad'=>$ad,'slide'=>$slide,'guess'=>$guess]);
     }
     //购物车

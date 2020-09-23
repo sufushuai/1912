@@ -172,22 +172,22 @@
         <div class="bd">
             <ul class="clearfix yui3-g Favourate picLB" id="picLBxxl">
 
+                @foreach($guess as $g))
                 <li class="yui3-u-1-6">
-                    <dl class="picDl huozhe">
-                        @foreach($guess as $g)
+                    <dl class="picDl jilu">
+                        @foreach($g as $k=>$g2))
+
                         <dd>
-                            <a href="" class="pic"><img src="{{env('UPLOAD_URL')}}{{$g->goods_img}}" alt="" /></a>
+                            <a href="" class="pic"><img src="{{env('UPLOAD_URL')}}{{$g2['goods_img']}}" alt="" /></a>
                             <div class="like-text">
-                                <p>{{$g->goods_name}}</p>
-                                <h3>¥死的</h3>
+                                <p>{{$g2['goods_name']}}</p>
+                                <h3>¥117.00</h3>
                             </div>
                         </dd>
-                            @endforeach
+                        @endforeach
                     </dl>
                 </li>
-
-
-
+                @endforeach
             </ul>
         </div>
     </div>
