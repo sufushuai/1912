@@ -4,6 +4,8 @@ namespace App\Http\Controllers\login;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Model\UserModel;
+
 
 class LoginController extends Controller
 {
@@ -19,23 +21,44 @@ class LoginController extends Controller
     public function do_register(Request $request){
         $username = $request->post("username");
         $password = $request->post("password");
-        $password1 = $request->post("password1");
         $tel = $request->post("tel");
         $data=[
             "username"=>$username,
             "password"=>$password,
-            "password1"=>$password1,
             "tel"=>$tel,
-
-
         ];
+        $res=UserModel::insert($data);
 
-        return view('index.register');
+        if($res){
+            return $this->response(200,'ok');
+        }else{
+            return $this->response(1,'fail');
+        }
     }
 
-    //登录
+    /**
+     * 登录
+     */
     public function login(){
         return view('index.login');
+    }
+    /**
+     * 执行登录
+     */
+    public function do_login(Request $request){
+        $username = $request->post("username");
+        $password = $request->post("password");
+//        $tel = $request->post("tel");
+        $data=[
+            "username"=>$username,
+            "password"=>$password,
+        ];
+        $res=UserModel::where($data)->first();
+        if($res){
+            return $this->response(200,'ok');
+        }else{
+            return $this->response(1,'fail');
+        }
     }
 
 

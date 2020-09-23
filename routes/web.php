@@ -39,6 +39,7 @@ Route::any('/index/order','Index\IndexController@order');//订单
 Route::any('/index/register','login\LoginController@register');//注册
 Route::any('/index/do_register','login\LoginController@do_register');//执行注册
 Route::any('/index/login','login\LoginController@login');//登录
+Route::post('/index/do_login','login\LoginController@do_login');//执行登录
 
 
 
