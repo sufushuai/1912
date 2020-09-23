@@ -19,7 +19,7 @@ class Common extends Controller
             if ($value['pid'] == $pid) {
                 $info[] = $value;
                 $value['level'] = $level;
-                getCateInfo1($array, $value['cate_id'], $value['level']+1);
+                $this->getCateInfo1($array, $value['cate_id'], $value['level']+1);
             }
         }
         return $info;
@@ -32,11 +32,14 @@ class Common extends Controller
      */
     public function getcateInfo2($array,$pid=0){
         $info=[];
+
         foreach($array as $k=>$v){
-            if($v['pid']==$pid){
-                $v['son']=getcateInfo2($array,$v['cate_id']);
+            if($v['p_id']==$pid){
+                //dump($v['p_id']);
+                $v['son']=$this->getcateInfo2($array,$v['cate_id']);
                 $info[]=$v;
             }
+
         }
         return $info;
     }
@@ -46,16 +49,17 @@ class Common extends Controller
      **@param $array 要做处理的处理
      **@param $pid 父类id 默认为0
      */
-    function getCateIds($array, $pid = 0)
+    function getCateIds($array,$pid = 0)
     {
         // 定义一个数组，放所有的分类ID
         static $cateIds = [];
         $cateIds[$pid] = $pid;
+        //dd($cateIds);
         // 将当前的pid塞进数组中
         foreach ($array as $key => $value) {
-            if ($value['pid'] == $pid) {
+            if ($value['p_id'] == $pid) {
                 $cateIds[$value['cate_id']] = $value['cate_id'];
-                getCateIds($array, $value['cate_id']);
+                $this->getCateIds($array, $value['cate_id']);
             }
         }
         return $cateIds;

@@ -21,6 +21,7 @@
 <div class="sort">
     <div class="py-container">
         <div class="yui3-g SortList ">
+            {{--z左边分类菜单--}}
             @include('index.layouts.left')
             <div class="yui3-u Center banerArea">
                 <!--banner轮播-->
@@ -178,9 +179,13 @@
                         @foreach($g as $k=>$g2))
 
                         <dd>
-                            <a href="" class="pic"><img src="{{env('UPLOAD_URL')}}{{$g2['goods_img']}}" alt="" /></a>
+                            <a href="{{url('/index/item/'.$g2['goods_id'])}}" class="pic"><img src="{{env('UPLOAD_URL')}}{{$g2['goods_img']}}" alt="" /></a>
                             <div class="like-text">
                                 <p>{{$g2['goods_name']}}</p>
+<<<<<<< HEAD
+                                <h3>¥{{$g2['goods_price']}}</h3>
+=======
+>>>>>>> 0e9d7d5bb1b4e0863281d5d514ebaf3e309fa006
                                 <h3>¥{{$g2['goods_price']}}.00</h3>
                             </div>
                         </dd>
@@ -249,27 +254,12 @@
             <h3 class="fl">家用电器</h3>
             <div class="fr">
                 <ul class="sui-nav nav-tabs">
-                    <li class="active">
-                        <a href="#tab1" data-toggle="tab">热门</a>
-                    </li>
+                  
+
                     <li>
-                        <a href="#tab2" data-toggle="tab">大家电</a>
+                        <a href="#tab2" data-toggle="tab"></a>
                     </li>
-                    <li>
-                        <a href="#tab3" data-toggle="tab">生活电器</a>
-                    </li>
-                    <li>
-                        <a href="#tab4" data-toggle="tab">厨房电器</a>
-                    </li>
-                    <li>
-                        <a href="#tab5" data-toggle="tab">应季电器</a>
-                    </li>
-                    <li>
-                        <a href="#tab6" data-toggle="tab">空气/净水</a>
-                    </li>
-                    <li>
-                        <a href="#tab7" data-toggle="tab">高端电器</a>
-                    </li>
+
                 </ul>
             </div>
         </div>
