@@ -21,6 +21,7 @@
 <div class="sort">
     <div class="py-container">
         <div class="yui3-g SortList ">
+            {{--z左边分类菜单--}}
             @include('index.layouts.left')
             <div class="yui3-u Center banerArea">
                 <!--banner轮播-->
@@ -54,6 +55,7 @@
                 </div>
             </div>
             <div class="yui3-u Right">
+                {{--广告--}}
                 <div class="news">
                     <h4><em class="fl">品优购快报</em><span class="fr tip">更多 ></span></h4>
                     <div class="clearix"></div>
@@ -65,6 +67,8 @@
                         @endforeach
                     </ul>
                 </div>
+
+                {{--生命线 话费等服务--}}
                 <ul class="yui3-g Lifeservice">
                     <li class="yui3-u-1-4 life-item tab-item">
                         <i class="list-item list-item-1"></i>
@@ -154,19 +158,11 @@
             <li class="yui3-u-5-24">
                 <a href="list.html" target="_blank"><img src="/asses/img/today01.png" /></a>
             </li>
-            <li class="yui3-u-5-24">
-                <img src="/asses/img/today02.png" />
-            </li>
-            <li class="yui3-u-5-24">
-                <img src="/asses/img/today03.png" />
-            </li>
-            <li class="yui3-u-5-24">
-                <img src="/asses/img/today04.png" />
-            </li>
+
         </ul>
     </div>
 </div>
-<!--喜欢-->
+<!--猜你喜欢-->
 <div class="like">
     <div class="py-container">
         <div class="title">
@@ -176,43 +172,27 @@
         </div>
         <div class="bd">
             <ul class="clearfix yui3-g Favourate picLB" id="picLBxxl">
-                <li class="yui3-u-1-6">
-                    <dl class="picDl huozhe">
-                        <dd>
-                            <a href="{{url('index/item')}}" class="pic"><img src="/asses/img/like_02.png" alt="" /></a>
-                            <div class="like-text">
-                                <p>阳光美包新款单肩包女包时尚子母包四件套女</p>
-                                <h3>¥116.00</h3>
-                            </div>
-                        </dd>
-                        <dd>
-                            <a href="{{url('index/item')}}" class="pic"><img src="/asses/img/like_01.png" alt="" /></a>
-                            <div class="like-text">
-                                <p>爱仕达 30CM炒锅不粘锅NWG8330E电磁炉炒</p>
-                                <h3>¥116.00</h3>
-                            </div>
-                        </dd>
-                    </dl>
-                </li>
+
+                @foreach($guess as $g))
                 <li class="yui3-u-1-6">
                     <dl class="picDl jilu">
+                        @foreach($g as $k=>$g2))
+
                         <dd>
-                            <a href="" class="pic"><img src="/asses/img/like_03.png" alt="" /></a>
+                            <a href="{{url('/index/item/'.$g2['goods_id'])}}" class="pic"><img src="{{env('UPLOAD_URL')}}{{$g2['goods_img']}}" alt="" /></a>
                             <div class="like-text">
-                                <p>爱仕达 30CM炒锅不粘锅NWG8330E电磁炉炒</p>
-                                <h3>¥116.00</h3>
+                                <p>{{$g2['goods_name']}}</p>
+<<<<<<< HEAD
+                                <h3>¥{{$g2['goods_price']}}</h3>
+=======
+>>>>>>> 0e9d7d5bb1b4e0863281d5d514ebaf3e309fa006
+                                <h3>¥{{$g2['goods_price']}}.00</h3>
                             </div>
                         </dd>
-                        <dd>
-                            <a href="" class="pic"><img src="/asses/img/like_02.png" alt="" /></a>
-                            <div class="like-text">
-                                <p>阳光美包新款单肩包女包时尚子母包四件套女</p>
-                                <h3>¥116.00</h3>
-                            </div>
-                        </dd>
+                        @endforeach
                     </dl>
                 </li>
-
+                @endforeach
             </ul>
         </div>
     </div>
@@ -274,27 +254,12 @@
             <h3 class="fl">家用电器</h3>
             <div class="fr">
                 <ul class="sui-nav nav-tabs">
-                    <li class="active">
-                        <a href="#tab1" data-toggle="tab">热门</a>
-                    </li>
+                  
+
                     <li>
-                        <a href="#tab2" data-toggle="tab">大家电</a>
+                        <a href="#tab2" data-toggle="tab"></a>
                     </li>
-                    <li>
-                        <a href="#tab3" data-toggle="tab">生活电器</a>
-                    </li>
-                    <li>
-                        <a href="#tab4" data-toggle="tab">厨房电器</a>
-                    </li>
-                    <li>
-                        <a href="#tab5" data-toggle="tab">应季电器</a>
-                    </li>
-                    <li>
-                        <a href="#tab6" data-toggle="tab">空气/净水</a>
-                    </li>
-                    <li>
-                        <a href="#tab7" data-toggle="tab">高端电器</a>
-                    </li>
+
                 </ul>
             </div>
         </div>

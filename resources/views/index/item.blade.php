@@ -42,7 +42,7 @@
                 <div class="zoom">
                     <!--默认第一个预览-->
                     <div id="preview" class="spec-preview">
-                        <span class="jqzoom"><img jqimg="/asses/img/_/b1.png" src="/asses/img/_/s1.png" /></span>
+                        <span class="jqzoom"><img jqimg="{{env('UPLOAD_URL')}}{{$role_Info["goods_img"]}}" style="width: 100%;height: 100%" src="{{env('UPLOAD_URL')}}{{$role_Info["goods_img"]}}" /></span>
                     </div>
                     <!--下方的缩略图-->
                     <div class="spec-scroll">
@@ -67,9 +67,9 @@
             </div>
             <div class="fr itemInfo-wrap">
                 <div class="sku-name">
-                    <h4>Apple iPhone 6s（A1700）64G玫瑰金色 移动通信电信4G手机</h4>
+                    <h3>{{$role_Info["goods_name"]}}</h3>
                 </div>
-                <div class="news"><span>推荐选择下方[移动优惠购],手机套餐齐搞定,不用换号,每月还有花费返</span></div>
+
                 <div class="summary">
                     <div class="summary-wrap">
                         <div class="fl title">
@@ -77,11 +77,8 @@
                         </div>
                         <div class="fl price">
                             <i>¥</i>
-                            <em>5299.00</em>
+                            <em>{{$role_Info["goods_price"]}}</em>
                             <span>降价通知</span>
-                        </div>
-                        <div class="fr remark">
-                            <i>累计评价</i><em>612188</em>
                         </div>
                     </div>
                     <div class="summary-wrap">
@@ -90,28 +87,20 @@
                         </div>
                         <div class="fl fix-width">
                             <i class="red-bg">加价购</i>
-                            <em class="t-gray">满999.00另加20.00元，或满1999.00另加30.00元，或满2999.00另加40.00元，即可在购物车换
-                                购热销商品</em>
+                            <span>{{$role_Info["goods_desc"]}}</span>
                         </div>
                     </div>
                 </div>
                 <div class="support">
                     <div class="summary-wrap">
                         <div class="fl title">
-                            <i>支　　持</i>
+                            <h4><i>积　　分</i></h4>
                         </div>
                         <div class="fl fix-width">
-                            <em class="t-gray">以旧换新，闲置手机回收  4G套餐超值抢  礼品购</em>
+                            <h4><span style="color: red">{{$role_Info["goods_score"]}}</span></h4>
                         </div>
                     </div>
-                    <div class="summary-wrap">
-                        <div class="fl title">
-                            <i>配 送 至</i>
-                        </div>
-                        <div class="fl fix-width">
-                            <em class="t-gray">满999.00另加20.00元，或满1999.00另加30.00元，或满2999.00另加40.00元，即可在购物车换购热销商品</em>
-                        </div>
-                    </div>
+
                 </div>
                 <div class="clearfix choose">
                     <div id="specification" class="summary-wrap clearfix">
@@ -173,16 +162,19 @@
                         <div class="fl title">
                             <div class="control-group">
                                 <div class="controls">
-                                    <input autocomplete="off" type="text" value="1" minnum="1" class="itxt" />
-                                    <a href="javascript:void(0)" class="increment plus">+</a>
-                                    <a href="javascript:void(0)" class="increment mins">-</a>
+                                    {{--<input autocomplete="off" type="text" value="1" minnum="1" class="itxt" />--}}
+                                    {{--<a href="javascript:void(0)" class="increment plus" onclick="show" id="sub">+</a>--}}
+                                    {{--<a href="javascript:void(0)" class="increment mins" onclick="show" id="sum">-</a>--}}
+                                    <button id="num-jian" class="increment mins">-</button>
+                                    <span id="aa"><input autocomplete="off" id="input-num"  type="text" value="1" minnum="1" class="itxt" /></span>
+                                    <button id="num-jia" class="increment plus">+</button>
                                 </div>
                             </div>
                         </div>
                         <div class="fl">
                             <ul class="btn-choose unstyled">
                                 <li>
-                                    <a href="{{url('index/cart')}}" target="_blank" class="sui-btn  btn-danger addshopcar">加入购物车</a>
+                                    <a href="{{url('index/success_cart')}}" target="_blank" class="sui-btn  btn-danger addshopcar">加入购物车</a>
                                 </li>
                             </ul>
                         </div>
@@ -732,3 +724,22 @@
 </body>
 
 </html>
+<script>
+    //购物车减
+    $(document).on("click","#num-jian",function(){
+        var minus =$("#aa").find("#input-num");
+        if(minus.val()<= 0){
+            minus.val(0);
+        }else{
+            minus.val(parseInt(minus.val()) - 1);
+        }
+        minus.change();
+    });
+    //购物车加
+    $(document).on("click","#num-jia",function(){
+        var add = $("#aa").find("#input-num");
+       // alert(add);
+        add.val(parseInt(add.val()) + 1);
+        add.change();
+    });
+</script>
