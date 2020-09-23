@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <title>品优购，优质！优质！</title>
-    <link rel="icon" href="assets/img/favicon.ico">
+    <link rel="icon" href="/assets/img/favicon.ico">
     <link rel="stylesheet" type="text/css" href="/asses/css/webbase.css" />
     <link rel="stylesheet" type="text/css" href="/asses/css/pages-JD-index.css" />
     <link rel="stylesheet" type="text/css" href="/asses/css/widget-jquery.autocomplete.css" />
@@ -29,24 +29,27 @@
                         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
                         <li data-target="#myCarousel" data-slide-to="1"></li>
                         <li data-target="#myCarousel" data-slide-to="2"></li>
+                        <li data-target="#myCarousel" data-slide-to="3"></li>
+                        <li data-target="#myCarousel" data-slide-to="4"></li>
                     </ol>
                     <div class="carousel-inner">
-                        <div class="active item">
-                            <a href="http://baidu2.wypxj.com/">
-                                <img src="/asses/img/banner1.jpg"  />
-                            </a>
-                        </div>
-                        <div class="item">
-                            <a href="http://baidu2.wypxj.com/">
-                                <img src="/asses/img/banner2.jpg"  />
-                            </a>
-                        </div>
-                        <div class="item">
-                            <a href="http://baidu2.wypxj.com/">
-                                <img src="/asses/img/banner3.jpg"  />
-                            </a>
 
-                        </div>
+                        @foreach($slide as $k=>$s)
+                            @if($k==0)
+                            <div class="active item">
+                                <a href="http://{{$s->slide_url}}">
+                                    <img src="{{env('UPLOAD_URL')}}{{$s->slide_log}}"  />
+                                </a>
+                            </div>
+                            @else
+                                <div class="item">
+                                    <a href="http://{{$s->slide_url}}">
+                                        <img src="{{env('UPLOAD_URL')}}{{$s->slide_log}}"  />
+                                    </a>
+                                </div>
+                            @endif
+                        @endforeach
+
                     </div><a href="#myCarousel" data-slide="prev" class="carousel-control left">‹</a><a href="#myCarousel" data-slide="next" class="carousel-control right">›</a>
                 </div>
             </div>
@@ -55,21 +58,11 @@
                     <h4><em class="fl">品优购快报</em><span class="fr tip">更多 ></span></h4>
                     <div class="clearix"></div>
                     <ul class="news-list unstyled">
+                        @foreach($ad as $a)
                         <li>
-                            <span class="bold">[特惠]</span>备战开学季 全民半价购数码
+                            <span class="bold">[{{$a->ad_name}}]</span>{{$a->ad_desc}}
                         </li>
-                        <li>
-                            <span class="bold">[公告]</span>备战开学季 全民半价购数码
-                        </li>
-                        <li>
-                            <span class="bold">[特惠]</span>备战开学季 全民半价购数码
-                        </li>
-                        <li>
-                            <span class="bold">[公告]</span>备战开学季 全民半价购数码
-                        </li>
-                        <li>
-                            <span class="bold">[特惠]</span>备战开学季 全民半价购数码
-                        </li>
+                        @endforeach
                     </ul>
                 </div>
                 <ul class="yui3-g Lifeservice">
@@ -498,22 +491,14 @@
         </div>
     </div>
 </div>
+
 <!--商标-->
 <div class="brand">
     <div class="py-container">
         <ul class="Brand-list blockgary">
-            <li class="Brand-item">
-                <img src="/asses/img/brand_21.png" />
-            </li>
-            <li class="Brand-item"><img src="/asses/img/brand_03.png" /></li>
-            <li class="Brand-item"><img src="/asses/img/brand_05.png" /></li>
-            <li class="Brand-item"><img src="/asses/img/brand_07.png" /></li>
-            <li class="Brand-item"><img src="/asses/img/brand_09.png" /></li>
-            <li class="Brand-item"><img src="/asses/img/brand_11.png" /></li>
-            <li class="Brand-item"><img src="/asses/img/brand_13.png" /></li>
-            <li class="Brand-item"><img src="/asses/img/brand_15.png" /></li>
-            <li class="Brand-item"><img src="/asses/img/brand_17.png" /></li>
-            <li class="Brand-item"><img src="/asses/img/brand_19.png" /></li>
+            @foreach($brand as $v)
+            <li class="Brand-item"><img src="{{env('UPLOAD_URL')}}{{$v->brand_logo}}" width="100" height="100"/></li>
+            @endforeach
         </ul>
     </div>
 </div>

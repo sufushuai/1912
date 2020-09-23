@@ -26,26 +26,26 @@
                 <div class="control-group">
                     <label class="control-label">用户名：</label>
                     <div class="controls">
-                        <input type="text" placeholder="请输入你的用户名" class="input-xfat input-xlarge">
+                        <input type="text" name="username" id="username" placeholder="请输入你的用户名" class="input-xfat input-xlarge">
                     </div>
                 </div>
                 <div class="control-group">
                     <label for="inputPassword" class="control-label">登录密码：</label>
                     <div class="controls">
-                        <input type="password" placeholder="设置登录密码" class="input-xfat input-xlarge">
+                        <input type="password" name="password" id="password" placeholder="设置登录密码" class="input-xfat input-xlarge">
                     </div>
                 </div>
                 <div class="control-group">
                     <label for="inputPassword" class="control-label">确认密码：</label>
                     <div class="controls">
-                        <input type="password" placeholder="再次确认密码" class="input-xfat input-xlarge">
+                        <input type="password" name="password1" id="password1" placeholder="再次确认密码" class="input-xfat input-xlarge">
                     </div>
                 </div>
 
                 <div class="control-group">
                     <label class="control-label">手机号：</label>
                     <div class="controls">
-                        <input type="text" placeholder="请输入你的手机号" class="input-xfat input-xlarge">
+                        <input type="text" name="tel" id="tel" placeholder="请输入你的手机号" class="input-xfat input-xlarge">
                     </div>
                 </div>
                 <div class="control-group">
@@ -64,7 +64,7 @@
                 <div class="control-group">
                     <label class="control-label"></label>
                     <div class="controls btn-reg">
-                        <a class="sui-btn btn-block btn-xlarge btn-danger" href="home.html" target="_blank">完成注册</a>
+                        <a class=" add sui-btn btn-block btn-xlarge btn-danger" target="_blank">完成注册</a>
                     </div>
                 </div>
             </form>
@@ -98,3 +98,50 @@
 </body>
 
 </html>
+<script>
+
+    $(document).ready(function() {
+        $('.add').click(function () {
+            var username = $("#username").val();
+            var password = $("#password").val();
+            var password1 = $("#password1").val();
+            var tel = $("#tel").val();
+            if(username==""){
+                alert("名称不能为空");
+                return false;
+            }
+            if(password==""){
+                alert("密码不能为空");
+                return false;
+            }
+            if(password1==""){
+                alert("确认密码不能为空");
+                return false;
+            } else if(password1!=password){
+                alert("密码保持一致");
+                return false;
+            }
+            if(tel==""){
+                alert("手机号不能为空");
+                return false;
+            }
+            $.ajax({
+                type: "post",
+                url: "/index/do_register",
+                data: {username: username,password:password,password1:password1,tel:tel},
+                dataType: "json",
+                success: function (res) {
+                    if (res.errno == 200) {
+                        alert('注册成功');
+                        location.href = "/index/login";
+                    } else {
+                        alert('注册失败');
+                    }
+                }
+            })
+
+        })
+    })
+
+</script>
+

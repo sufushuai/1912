@@ -41,20 +41,20 @@
                     <div id="profile" class="tab-pane  active">
                         <form class="sui-form">
                             <div class="input-prepend"><span class="add-on loginname"></span>
-                                <input id="prependedInput" type="text" placeholder="邮箱/用户名/手机号" class="span2 input-xfat">
+                                <input id="username prependedInput" type="text" name="username" placeholder="用户名/手机号" class="span2 input-xfat">
                             </div>
                             <div class="input-prepend"><span class="add-on loginpwd"></span>
-                                <input id="prependedInput" type="password" placeholder="请输入密码" class="span2 input-xfat">
+                                <input id="password prependedInput" type="password"  name="password" placeholder="请输入密码" class="span2 input-xfat">
                             </div>
                             <div class="setting">
                                 <label class="checkbox inline">
-                                    <input name="m1" type="checkbox" value="2" checked="">
+                                    <input name="m1" type="checkbox" value="2">
                                     自动登录
                                 </label>
                                 <span class="forget">忘记密码？</span>
                             </div>
-                            <div class="logined">
-                                <a class="sui-btn btn-block btn-xlarge btn-danger" href="home-index.html" >登&nbsp;&nbsp;录</a>
+                            <div >
+                                <button class="sui-btn btn-block btn-xlarge btn-danger" type="button" id="add">登&nbsp;&nbsp;录</button>
                             </div>
                         </form>
                         <div class="otherlogin">
@@ -91,11 +91,50 @@
     </div>
 </div>
 
-<script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="js/plugins/jquery.easing/jquery.easing.min.js"></script>
-<script type="text/javascript" src="js/plugins/sui/sui.min.js"></script>
-<script type="text/javascript" src="js/plugins/jquery-placeholder/jquery.placeholder.min.js"></script>
-<script type="text/javascript" src="js/pages/login.js"></script>
+<script type="text/javascript" src="/asses/js/plugins/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/asses/js/plugins/jquery.easing/jquery.easing.min.js"></script>
+<script type="text/javascript" src="/asses/js/plugins/sui/sui.min.js"></script>
+<script type="text/javascript" src="/asses/js/plugins/jquery-placeholder/jquery.placeholder.min.js"></script>
+<script type="text/javascript" src="/asses/js/pages/login.js"></script>
 </body>
 
 </html>
+{{--<script src="/jquery.min.js"></script>--}}
+<script>
+    $(document).ready(function() {
+        $('#add').click(function () {
+            var username = $("input[name='username']").val();
+            var password = $("input[name='password']").val();
+            if(username==""){
+                alert("名称不能为空");
+                return false;
+            }
+            if(password==""){
+                alert("密码不能为空");
+                return false;
+            }
+//            if(tel==""){
+//                alert("手机号不能为空");
+//                return false;
+//            }
+//             alert(username);
+//            alert(password) ;return false;
+            $.ajax({
+                type: "post",
+                url: "/index/do_login",
+                data: {username: username,password:password},
+                dataType: "json",
+                success: function (res) {
+                    if (res.errno == 200) {
+                        alert('登录成功');
+                        location.href = "/index";
+                    } else {
+                        alert('登录失败');
+                    }
+                }
+            })
+//            return false;
+        })
+    })
+
+</script>

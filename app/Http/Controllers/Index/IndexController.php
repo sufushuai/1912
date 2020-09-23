@@ -4,20 +4,19 @@ namespace App\Http\Controllers\Index;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Model\BrandModel;
+use App\Model\AdModel;
+use App\Model\SlideModel;
 
 class IndexController extends Controller
 {
     //首页
     public function index(){
-        return view('index.index');
-    }
-    //登录
-    public function login(){
-        return view('index.login');
-    }
-    //注册
-    public function register(){
-        return view('index.register');
+
+        $slide=SlideModel::where('is_del',1)->limit(5)->get();
+        $ad=AdModel::where('is_del',1)->limit(5)->get();
+        $brand=BrandModel::where('status',1)->limit(10)->get();
+        return view('index.index',['brand'=>$brand,'ad'=>$ad,'slide'=>$slide]);
     }
     //购物车
     public function cart(){

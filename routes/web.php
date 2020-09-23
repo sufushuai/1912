@@ -31,13 +31,16 @@ Route::any('/man/collect','Man\ManController@collect');//收藏
 Route::any('/man/address','Man\ManController@address');//收货地址
 Route::any('/man/evaluate','Man\ManController@evaluate');//待评价
 Route::any('/man/received','Man\ManController@received');//待收获
-
 //首页
-Route::any('/index/login','Index\IndexController@login');//登录
-Route::any('/index/register','Index\IndexController@register');//注册
 Route::any('/index/cart','Index\IndexController@cart');//购物车
 Route::any('/index/success_cart','Index\IndexController@success_cart');//成功加入购物车
 Route::any('/index/item','Index\IndexController@item');//详情
 Route::any('/index/order','Index\IndexController@order');//订单
+//注册登录
+Route::any('/index/register','login\LoginController@register');//注册
+Route::any('/index/do_register','login\LoginController@do_register');//执行注册
+Route::any('/index/login','login\LoginController@login');//登录
+Route::post('/index/do_login','login\LoginController@do_login');//执行登录
+
 
 
