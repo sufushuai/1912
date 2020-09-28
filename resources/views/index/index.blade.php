@@ -155,9 +155,11 @@
                     <h3>今日推荐</h3>
                 </div>
             </li>
+            @foreach($today as $t)
             <li class="yui3-u-5-24">
-                <a href="list.html" target="_blank"><img src="/asses/img/today01.png" /></a>
+                <a href="list.html" target="_blank"><img src="{{env('UPLOAD_URL')}}{{$t['goods_img']}}" width="160" height="200"/></a>
             </li>
+                @endforeach
 
         </ul>
     </div>
@@ -173,10 +175,10 @@
         <div class="bd">
             <ul class="clearfix yui3-g Favourate picLB" id="picLBxxl">
 
-                @foreach($guess as $g))
+                @foreach($guess as $g)
                 <li class="yui3-u-1-6">
                     <dl class="picDl jilu">
-                        @foreach($g as $k=>$g2))
+                        @foreach($g as $k=>$g2)
 
                         <dd>
                             <a href="{{url('/index/item/'.$g2['goods_id'])}}" class="pic"><img src="{{env('UPLOAD_URL')}}{{$g2['goods_img']}}" alt="" /></a>
@@ -224,33 +226,23 @@
             <div class="yui3-u row-165 brandArea">
                 <span class="brand-yline"></span>
                 <ul class="yui3-g brand-list">
-                    <li class="yui3-u-1-2 brand-pit"><img src="/asses/img/brand01.png" /></li>
-                    <li class="yui3-u-1-2 brand-pit"><img src="/asses/img/brand02.png" /></li>
-                    <li class="yui3-u-1-2 brand-pit"><img src="/asses/img/brand03.png" /></li>
-                    <li class="yui3-u-1-2 brand-pit"><img src="/asses/img/brand04.png" /></li>
-                    <li class="yui3-u-1-2 brand-pit"><img src="/asses/img/brand05.png" /></li>
-                    <li class="yui3-u-1-2 brand-pit"><img src="/asses/img/brand06.png" /></li>
-                    <li class="yui3-u-1-2 brand-pit"><img src="/asses/img/brand07.png" /></li>
-                    <li class="yui3-u-1-2 brand-pit"><img src="/asses/img/brand08.png" /></li>
-                    <li class="yui3-u-1-2 brand-pit"><img src="/asses/img/brand09.png" /></li>
-                    <li class="yui3-u-1-2 brand-pit"><img src="/asses/img/brand10.png" /></li>
-                    <li class="yui3-u-1-2 brand-pit"><img src="/asses/img/brand11.png" /></li>
-                    <li class="yui3-u-1-2 brand-pit"><img src="/asses/img/brand12.png" /></li>
-                    <li class="yui3-u-1-2 brand-pit"><img src="/asses/img/brand13.png" /></li>
-                    <li class="yui3-u-1-2 brand-pit"><img src="/asses/img/brand03.png" /></li>
+                    @foreach($brand as $v)
+                    <li class="yui3-u-1-2 brand-pit"><a  href=""><img src="{{env('UPLOAD_URL')}}{{$v->brand_logo}}" width="45" height="30"/></a></li>
+                   @endforeach
                 </ul>
             </div>
         </div>
     </div>
 </div>
+
 <!--楼层-->
+
 <div id="floor-1" class="floor">
     <div class="py-container">
         <div class="title floors">
             <h3 class="fl">家用电器</h3>
             <div class="fr">
                 <ul class="sui-nav nav-tabs">
-                  
 
                     <li>
                         <a href="#tab2" data-toggle="tab"></a>
@@ -265,11 +257,7 @@
                     <div class="yui3-u Left blockgary">
                         <ul class="jd-list">
                             <li>节能补贴</li>
-                            <li>4K电视</li>
-                            <li>空气净化器</li>
-                            <li>IH电饭煲</li>
-                            <li>滚筒洗衣机</li>
-                            <li>电热水器</li>
+
                         </ul>
                         <img src="/asses/img/floor-1-1.png" />
                     </div>
@@ -295,6 +283,7 @@
                             <a href="#floorCarousel" data-slide="next" class="carousel-control right">›</a>
                         </div>
                     </div>
+
                     <div class="yui3-u row-220 split">
                         <span class="floor-x-line"></span>
                         <div class="floor-conver-pit">
@@ -304,154 +293,28 @@
                             <img src="/asses/img/floor-1-3.png" />
                         </div>
                     </div>
+
                     <div class="yui3-u row-218 split">
                         <img src="/asses/img/floor-1-4.png" />
                     </div>
+
                     <div class="yui3-u row-220 split">
                         <span class="floor-x-line"></span>
                         <div class="floor-conver-pit">
                             <img src="/asses/img/floor-1-5.png" />
                         </div>
                         <div class="floor-conver-pit">
-                            <img src="/asses/img/floor-1-6.png" />
+
                         </div>
                     </div>
                 </div>
             </div>
-            <div id="tab2" class="tab-pane">
-                <p>第二个</p>
-            </div>
-            <div id="tab3" class="tab-pane">
-                <p>第三个</p>
-            </div>
-            <div id="tab4" class="tab-pane">
-                <p>第4个</p>
-            </div>
-            <div id="tab5" class="tab-pane">
-                <p>第5个</p>
-            </div>
-            <div id="tab6" class="tab-pane">
-                <p>第6个</p>
-            </div>
-            <div id="tab7" class="tab-pane">
-                <p>第7个</p>
-            </div>
+
+
         </div>
     </div>
 </div>
-<div id="floor-2" class="floor">
-    <div class="py-container">
-        <div class="title floors">
-            <h3 class="fl">手机通讯</h3>
-            <div class="fr">
-                <ul class="sui-nav nav-tabs">
-                    <li class="active">
-                        <a href="#tab8" data-toggle="tab">热门</a>
-                    </li>
-                    <li>
-                        <a href="#tab9" data-toggle="tab">品质优选</a>
-                    </li>
-                    <li>
-                        <a href="#tab10" data-toggle="tab">新机尝鲜</a>
-                    </li>
-                    <li>
-                        <a href="#tab11" data-toggle="tab">高性价比</a>
-                    </li>
-                    <li>
-                        <a href="#tab12" data-toggle="tab">合约机</a>
-                    </li>
-                    <li>
-                        <a href="#tab13" data-toggle="tab">手机卡</a>
-                    </li>
-                    <li>
-                        <a href="#tab14" data-toggle="tab">手机配件</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="clearfix  tab-content floor-content">
-            <div id="tab8" class="tab-pane active">
-                <div class="yui3-g Floor-1">
-                    <div class="yui3-u Left blockgary">
-                        <ul class="jd-list">
-                            <li>节能补贴</li>
-                            <li>4K电视</li>
-                            <li>空气净化器</li>
-                            <li>IH电饭煲</li>
-                            <li>滚筒洗衣机</li>
-                            <li>电热水器</li>
-                        </ul>
-                        <img src="/asses/img/floor-1-1.png" />
-                    </div>
-                    <div class="yui3-u row-330 floorBanner">
-                        <div id="floorCarousell" data-ride="carousel" data-interval="4000" class="sui-carousel slide">
-                            <ol class="carousel-indicators">
-                                <li data-target="#floorCarousell" data-slide-to="0" class="active"></li>
-                                <li data-target="#floorCarousell" data-slide-to="1"></li>
-                                <li data-target="#floorCarousell" data-slide-to="2"></li>
-                            </ol>
-                            <div class="carousel-inner">
-                                <div class="active item">
-                                    <img src="/asses/img/floor-1-b01.png">
-                                </div>
-                                <div class="item">
-                                    <img src="/asses/img/floor-1-b02.png">
-                                </div>
-                                <div class="item">
-                                    <img src="/asses/img/floor-1-b03.png">
-                                </div>
-                            </div>
-                            <a href="#floorCarousell" data-slide="prev" class="carousel-control left">‹</a>
-                            <a href="#floorCarousell" data-slide="next" class="carousel-control right">›</a>
-                        </div>
-                    </div>
-                    <div class="yui3-u row-220 split">
-                        <span class="floor-x-line"></span>
-                        <div class="floor-conver-pit">
-                            <img src="/asses/img/floor-1-2.png" />
-                        </div>
-                        <div class="floor-conver-pit">
-                            <img src="/asses/img/floor-1-3.png" />
-                        </div>
-                    </div>
-                    <div class="yui3-u row-218 split">
-                        <img src="/asses/img/floor-1-4.png" />
-                    </div>
-                    <div class="yui3-u row-220 split">
-                        <span class="floor-x-line"></span>
-                        <div class="floor-conver-pit">
-                            <img src="/asses/img/floor-1-5.png" />
-                        </div>
-                        <div class="floor-conver-pit">
-                            <img src="/asses/img/floor-1-6.png" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="tab2" class="tab-pane">
-                <p>第二个</p>
-            </div>
-            <div id="tab9" class="tab-pane">
-                <p>第三个</p>
-            </div>
-            <div id="tab10" class="tab-pane">
-                <p>第4个</p>
-            </div>
-            <div id="tab11" class="tab-pane">
-                <p>第5个</p>
-            </div>
-            <div id="tab12" class="tab-pane">
-                <p>第6个</p>
-            </div>
-            <div id="tab13" class="tab-pane">
-                <p>第7个</p>
-            </div>
-            <div id="tab14" class="tab-pane">
-                <p>第8个</p>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <!--商标-->
 <div class="brand">
