@@ -76,6 +76,7 @@ class LoginController extends Controller
         $user=UserModel::where(["username"=>$username])->first();
         $res=password_verify($password,$user->password);
         if($res){
+          
             return $this->response(200,'ok');
         }else{
             return $this->response(1,'fail');

@@ -38,7 +38,7 @@ class IndexController extends Common
 
         return view('index.index',['brand'=>$brand,'ad'=>$ad,'slide'=>$slide,'category'=>$cate,'guess'=>$guess]);
     }
- 
+
     //购物车
     public function cart(){
         $cart = CartModel::where(['is_del'=>1])->get();
