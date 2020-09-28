@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Index;
 
 use App\Http\Controllers\Common;
+use App\Model\RbacUser;
 use Illuminate\Http\Request;
 use App\Model\BrandModel;
 use App\Model\AdModel;
 use App\Model\SlideModel;
+use App\Model\CartModel;
 use App\Model\CategoryModel;
 use App\Model\GoodsModel;
 
@@ -41,10 +43,41 @@ class IndexController extends Common
 
         return view('index.index',['brand'=>$brand,'ad'=>$ad,'slide'=>$slide,'category'=>$cate,'guess'=>$guess,'today'=>$today]);
     }
- 
+
     //购物车
     public function cart(){
-        return view('index.cart');
+        $cart = CartModel::where(['is_del'=>1])->get();
+        return view('index.cart',['cart'=>$cart]);
+    }
+    //购物车删除
+    public function cartdestroy(){
+        $cart_id = request()->post('cart_id');
+        $res = CartModel::where('cart_id',$cart_id)->update(["is_del"=>2]);
+        if($res){
+            return $this->success();
+        }else{
+            return $this->error("删除失败");
+        }
+    }
+    public function cartdel(){
+        $cart_id=request()->post('strIds');
+        //把传来的所有id改为数组形式  explode  字符串转数组
+        $str = explode(",",$cart_id);
+        //dd($str);
+        //利用循环将需要删除的id 一个一个进行执行sql；
+        foreach($str as $k => $v){
+            $res=CartModel::destroy($v);
+        }
+        //dd($res);
+        if($res){
+            return $this->success();
+        }else{
+            return $this->error("删除失败");
+        }
+    }
+    //成功加入购物车
+    public function success_cart(){
+        return view('index.success_cart');
     }
     //详情
     public function item(Request $request,$goods_id){
@@ -56,8 +89,20 @@ class IndexController extends Common
     }
     //订单
     public function order(){
+           // echo count(strlen("http://php.net"));die;
+//            $z=2;
+//            $x=$z+$z+$z=3;
+//            echo $x;die;
+//            $a=array(1,2);
+//            foreach($a as $k=>&$v){$v=4;}
+//            function t($s){foreach($s as $k => &$v){$v=5;}return $s;}
+//            $b=t($a);
+//            var_dump($b);die;
+//           // var_dump($a);die;
+
         return view('index.order');
     }
     //无限极
-    public function cate(){}
+    public function cate(){
+    }
 }

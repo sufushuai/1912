@@ -20,7 +20,7 @@
     </div>
     <!--register-->
     <div class="registerArea">
-        <h3>注册新用户<span class="go">我有账号，去<a href="{{url('index/login')}}" target="_blank">登陆</a></span></h3>
+        <h3>注册新用户<span class="go">我有账号，去<a href="{{url('index/login')}}" target="_self">登陆</a></span></h3>
         <div class="info">
             <form class="sui-form form-horizontal">
                 <div class="control-group">
@@ -51,7 +51,9 @@
                 <div class="control-group">
                     <label for="inputPassword" class="control-label">短信验证码：</label>
                     <div class="controls">
-                        <input type="text" placeholder="短信验证码" class="input-xfat input-xlarge">  <a href="#">获取短信验证码</a>
+                        <input type="text" name="code" placeholder="短信验证码" class="input-xfat input-xlarge">
+                        <button type="button" id="sendcode" class="sui-btn btn-xlarge btn-warm">获取短信验证码</button>
+                        <span class="getcode" style="display: none"></span>
                     </div>
                 </div>
 
@@ -100,12 +102,85 @@
 </html>
 <script>
 
+    $(document).on('click','#sendcode',function(){
+
+        var username = $("#username").val();
+        var password = $("#password").val();
+        var password1 = $("#password1").val();
+        var tel = $("#tel").val();
+        if(username==""){
+            alert("名称不能为空");
+            return false;
+        }
+        if(password==""){
+            alert("密码不能为空");
+            return false;
+        }
+        if(password1==""){
+            alert("确认密码不能为空");
+            return false;
+        } else if(password1!=password){
+            alert("密码保持一致");
+            return false;
+        }
+        if(tel==""){
+            alert("手机号不能为空");
+            return false;
+        }
+        var reg=/^1[0-9]{10}$/;
+        if(!reg.test(tel)){
+            alert('手机号格式不对');
+            return false;
+        }
+
+        //短信验证码计时器
+        $(".getcode").text("60s");//这个是吧span里面值改成5s
+        _t=setInterval(vals,1000);//定时器
+        $(".getcode").css("pointer-events", "none")//置灰
+        function vals() {
+            s=$(".getcode").text();
+            s=parseInt(s);
+            if(s<=0){
+                $(".getcode").hide();
+                $("#sendcode").show()
+                s=$(".getcode").text("获取验证码");
+                clearInterval(_t)
+                $(".getcode").css("pointer-events", "auto")
+            }else{
+                $("#sendcode").hide();
+                $(".getcode").show()
+                s=s-1;
+                s=$(".getcode").text(s+"s");
+                $(".getcode").css("pointer-events", "none")
+            }
+        }
+
+
+        $.ajax({
+            type: "post",
+            url: "/index/sendtel",
+            data: {tel:tel},
+            dataType: "json",
+            success: function (res) {
+               if(res.Code=='OK'){
+                   alert("验证码发送成功")
+               }else{
+                   alert("验证码发送失败")
+               }
+            }
+        })
+
+
+    })
+
+
     $(document).ready(function() {
         $('.add').click(function () {
             var username = $("#username").val();
             var password = $("#password").val();
             var password1 = $("#password1").val();
             var tel = $("#tel").val();
+            var code = $("input[name=code]").val();
             if(username==""){
                 alert("名称不能为空");
                 return false;
@@ -125,20 +200,26 @@
                 alert("手机号不能为空");
                 return false;
             }
+            if(code==""){
+                alert("验证码不能为空");
+                return false;
+            }
             $.ajax({
                 type: "post",
                 url: "/index/do_register",
-                data: {username: username,password:password,password1:password1,tel:tel},
+                data: {username: username,password:password,password1:password1,tel:tel,code:code},
                 dataType: "json",
                 success: function (res) {
                     if (res.errno == 200) {
                         alert('注册成功');
                         location.href = "/index/login";
-                    } else {
-                        alert('注册失败');
+                    }
+                    if(res.errno==1){
+                        alert(res.msg)
                     }
                 }
             })
+
 
         })
     })

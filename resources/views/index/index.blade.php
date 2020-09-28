@@ -184,6 +184,9 @@
                             <a href="{{url('/index/item/'.$g2['goods_id'])}}" class="pic"><img src="{{env('UPLOAD_URL')}}{{$g2['goods_img']}}" alt="" /></a>
                             <div class="like-text">
                                 <p>{{$g2['goods_name']}}</p>
+
+                                <h3>¥{{$g2['goods_price']}}</h3>
+
                                 <h3>¥{{$g2['goods_price']}}.00</h3>
                             </div>
                         </dd>
