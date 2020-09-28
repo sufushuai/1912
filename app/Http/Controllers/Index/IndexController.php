@@ -8,11 +8,8 @@ use Illuminate\Http\Request;
 use App\Model\BrandModel;
 use App\Model\AdModel;
 use App\Model\SlideModel;
-<<<<<<< HEAD
 use App\Model\CartModel;
-=======
 use App\Model\CategoryModel;
->>>>>>> d1a305d7c8c6fdd194d539c081cc08a7142b45d7
 use App\Model\GoodsModel;
 
 class IndexController extends Common
@@ -87,8 +84,20 @@ class IndexController extends Common
     }
     //订单
     public function order(){
+           // echo count(strlen("http://php.net"));die;
+//            $z=2;
+//            $x=$z+$z+$z=3;
+//            echo $x;die;
+//            $a=array(1,2);
+//            foreach($a as $k=>&$v){$v=4;}
+//            function t($s){foreach($s as $k => &$v){$v=5;}return $s;}
+//            $b=t($a);
+//            var_dump($b);die;
+//           // var_dump($a);die;
+
         return view('index.order');
     }
     //无限极
-    public function cate(){}
+    public function cate(){
+    }
 }
