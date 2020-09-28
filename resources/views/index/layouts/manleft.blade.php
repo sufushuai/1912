@@ -28,7 +28,7 @@
                     </dl>
                     <dl>
                         <dt><i>·</i> 设置</dt>
-                        <dd><a href="{{url('man/perinfo')}}">个人信息</a></dd>
+                        <dd><a href="{{url('man/per_index')}}">个人信息</a></dd>
                         <dd><a href="{{url('man/address')}}"  >地址管理</a></dd>
                         <dd><a href="#"  >安全管理</a></dd>
                     </dl>
