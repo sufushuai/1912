@@ -24,6 +24,7 @@ class IndexController extends Common
         $ad=AdModel::where('is_del',1)->limit(5)->get();
         //品牌
         $brand=BrandModel::where('status',1)->limit(16)->get();
+
           $where=[
                     'is_hot'=>1,
                     'is_show'=>1,
@@ -34,17 +35,26 @@ class IndexController extends Common
         //$guess=collect($guess)->toArray();
         $guess=array_chunk($guess,2,true);
         //dump($guess);die;
+
         //获取分类数据
         $category=CategoryModel::get()->toArray();
         //获取所有父级ID p_id
         //执行无极限
         $cate=$this->getcateInfo2($category);
 
-
         //今日推荐
         $today=GoodsModel::where('is_del',1)->orderby('goods_clicknum','desc')->limit(4)->get();
 
-        return view('index.index',['brand'=>$brand,'ad'=>$ad,'slide'=>$slide,'category'=>$cate,'guess'=>$guess,'today'=>$today]);
+        //楼层
+        $floor=CategoryModel::get()->toArray();
+        //执行无极限
+        $floors=$this->getCateInfo1($floor);
+        print_r($floors);
+        //exit;
+
+        //dump($floors);
+
+        return view('index.index',['brand'=>$brand,'ad'=>$ad,'slide'=>$slide,'category'=>$cate,'guess'=>$guess,'today'=>$today,'floor'=>$floors]);
     }
 
     //购物车
@@ -136,7 +146,6 @@ class IndexController extends Common
 
         return view('index.order');
     }
-    //无限极
-    public function cate(){
-    }
+
+
 }

@@ -14,15 +14,15 @@ class Common extends Controller
      **@param $pid 父类id 默认为0
      **@param $level 级别
      */
-    function getCateInfo1($array, $pid = 0, $level= 1)
-    {
+    function getCateInfo1($array, $pid = 0, $level= 1){
         static $info = [];
-        foreach ($array as $key => $value) {
-            if ($value['pid'] == $pid) {
-                $info[] = $value;
+        foreach ($array as $key => &$value) {
+            if ($value['p_id'] == $pid) {
                 $value['level'] = $level;
+                $info[] = $value;
                 $this->getCateInfo1($array, $value['cate_id'], $value['level']+1);
             }
+            //dump($value);
         }
         return $info;
     }

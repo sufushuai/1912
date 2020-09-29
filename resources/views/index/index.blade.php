@@ -239,11 +239,11 @@
 </div>
 
 <!--楼层-->
-
+@foreach($floor as $v)
 <div id="floor-1" class="floor">
     <div class="py-container">
         <div class="title floors">
-            <h3 class="fl">家用电器</h3>
+            <h3 class="fl">{{$v['cate_name']}}</h3>
             <div class="fr">
                 <ul class="sui-nav nav-tabs">
 
@@ -317,7 +317,7 @@
         </div>
     </div>
 </div>
-
+@endforeach
 
 <!--商标-->
 <div class="brand">
@@ -336,26 +336,13 @@
 <!-- 楼层位置 -->
 <div id="floor-index" class="floor-index">
     <ul>
-        <li>
-            <a class="num" href="javascript:;" style="display: none;">1F</a>
-            <a class="word" href="javascript;;" style="display: block;">家用电器</a>
-        </li>
-        <li>
-            <a class="num" href="javascript:;" style="display: none;">2F</a>
-            <a class="word" href="javascript;;" style="display: block;">手机通讯</a>
-        </li>
-        <li>
-            <a class="num" href="javascript:;" style="display: none;">3F</a>
-            <a class="word" href="javascript;;" style="display: block;">电脑办公</a>
-        </li>
-        <li>
-            <a class="num" href="javascript:;" style="display: none;">4F</a>
-            <a class="word" href="javascript;;" style="display: block;">家居家具</a>
-        </li>
-        <li>
-            <a class="num" href="javascript:;" style="display: none;">5F</a>
-            <a class="word" href="javascript;;" style="display: block;">运动户外</a>
-        </li>
+        @foreach($floor as $b)
+            <li>
+                <a class="num" href="javascript:;" style="display: none;">{{$b['level']}}F</a>
+                <a class="word" href="javascript;;" style="display: block;">{{$b['cate_name']}}</a>
+            </li>
+            @endforeach
+
     </ul>
 </div>
 <!--侧栏面板开始-->
