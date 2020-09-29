@@ -15,25 +15,22 @@
                         <dt><i>·</i> 订单中心</dt>
 
                         <dd ><a href="{{url("/man/index")}}"   >我的订单</a></dd>
-                        <dd><a href="{{url("/man/pay")}}" >待付款</a></dd>
-                        <dd><a href="{{url("/man/send")}}"  >待发货</a></dd>
-                        <dd><a href="{{url('man/received')}}" >待收货</a></dd>
-                        <dd><a href="{{url('man/evaluate')}}" >待评价</a></dd>
+                        <dd ><a href="#"   >订单状态</a></dd>
+                        <dd ><a href="#"   >物流状态</a></dd>
 
                     </dl>
                     <dl>
                         <dt><i>·</i> 我的中心</dt>
                         <dd><a href="{{url('man/collect')}}" class="list-active">我的收藏</a></dd>
                         <dd><a href="{{url('man/history')}}">我的足迹</a></dd>
+                        <dd><a href="{{url('man/history')}}">我的积分</a></dd>
                         <dd><a href="{{url('man/coupon')}}">我的优惠券</a></dd>
                     </dl>
                     <dl>
-                        <dt><i>·</i> 物流消息</dt>
-                    </dl>
-                    <dl>
                         <dt><i>·</i> 设置</dt>
-                        <dd><a href="{{url('man/perinfo')}}">个人信息</a></dd>
+                        <dd><a href="{{url('man/per_index')}}">个人信息</a></dd>
                         <dd><a href="{{url('man/address')}}"  >地址管理</a></dd>
+                        <dd><a href="#"  >安全管理</a></dd>
                     </dl>
                 </div>
             </div>

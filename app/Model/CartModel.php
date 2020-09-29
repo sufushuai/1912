@@ -4,11 +4,10 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserModel extends Model
+class CartModel extends Model
 {
-    protected $table="shop_user";
-    protected $primaryKey="user_id";
+    protected $table="shop_cart";
+    protected $primaryKey="cart_id";
     public $timestamps=false;
-    protected $guarded=[];
     protected $fillable = ['*'];
 }

@@ -42,7 +42,7 @@
                 <div class="zoom">
                     <!--默认第一个预览-->
                     <div id="preview" class="spec-preview">
-                        <span class="jqzoom"><img jqimg="/asses/img/_/b1.png" src="/asses/img/_/s1.png" /></span>
+                        <span class="jqzoom"><img jqimg="{{env('UPLOAD_URL')}}{{$role_Info["goods_img"]}}" style="width: 100%;height: 100%" src="{{env('UPLOAD_URL')}}{{$role_Info["goods_img"]}}" /></span>
                     </div>
                     <!--下方的缩略图-->
                     <div class="spec-scroll">
@@ -66,22 +66,19 @@
                 </div>
             </div>
             <div class="fr itemInfo-wrap">
-                <div class="sku-name">
-                    <h4>{{$role_Info["goods_name"]}}</h4>
+                <div class="sku-name" id="goods_name">
+                    <h3>{{$role_Info["goods_name"]}}</h3>
                 </div>
-                <div class="news"><span>{{$role_Info["goods_desc"]}}</span></div>
+
                 <div class="summary">
                     <div class="summary-wrap">
                         <div class="fl title">
                             <i>价　　格</i>
                         </div>
-                        <div class="fl price">
+                        <div class="fl price" id="goods_price">
                             <i>¥</i>
                             <em>{{$role_Info["goods_price"]}}</em>
                             <span>降价通知</span>
-                        </div>
-                        <div class="fr remark">
-                            <i>累计评价</i><em>612188</em>
                         </div>
                     </div>
                     <div class="summary-wrap">
@@ -90,28 +87,20 @@
                         </div>
                         <div class="fl fix-width">
                             <i class="red-bg">加价购</i>
-                            <em class="t-gray">满999.00另加20.00元，或满1999.00另加30.00元，或满2999.00另加40.00元，即可在购物车换
-                                购热销商品</em>
+                            <span id="goods_desc">{{$role_Info["goods_desc"]}}</span>
                         </div>
                     </div>
                 </div>
                 <div class="support">
                     <div class="summary-wrap">
                         <div class="fl title">
-                            <i>积　　分</i>
+                            <h4><i>积　　分</i></h4>
                         </div>
-                        <div class="fl fix-width">
-                            <em class="t-gray">{{$role_Info["goods_score"]}}</em>
-                        </div>
-                    </div>
-                    <div class="summary-wrap">
-                        <div class="fl title">
-                            <i>配 送 至</i>
-                        </div>
-                        <div class="fl fix-width">
-                            <em class="t-gray">满999.00另加20.00元，或满1999.00另加30.00元，或满2999.00另加40.00元，即可在购物车换购热销商品</em>
+                        <div class="fl fix-width" id="goods_score">
+                            <h4><span style="color: red">{{$role_Info["goods_score"]}}</span></h4>
                         </div>
                     </div>
+
                 </div>
                 <div class="clearfix choose">
                     <div id="specification" class="summary-wrap clearfix">
@@ -173,16 +162,19 @@
                         <div class="fl title">
                             <div class="control-group">
                                 <div class="controls">
-                                    <input autocomplete="off" type="text" value="1" minnum="1" class="itxt" />
-                                    <a href="javascript:void(0)" class="increment plus">+</a>
-                                    <a href="javascript:void(0)" class="increment mins">-</a>
+                                    {{--<input autocomplete="off" type="text" value="1" minnum="1" class="itxt" />--}}
+                                    {{--<a href="javascript:void(0)" class="increment plus" onclick="show" id="sub">+</a>--}}
+                                    {{--<a href="javascript:void(0)" class="increment mins" onclick="show" id="sum">-</a>--}}
+                                    <button id="num-jian" class="increment mins">-</button>
+                                    <span id="aa"><input autocomplete="off" id="input-num"  type="text" name="buy_number" value="1" minnum="1" class="itxt" /></span>
+                                    <button id="num-jia" class="increment plus">+</button>
                                 </div>
                             </div>
                         </div>
                         <div class="fl">
                             <ul class="btn-choose unstyled">
                                 <li>
-                                    <a href="{{url('index/cart')}}" target="_blank" class="sui-btn  btn-danger addshopcar">加入购物车</a>
+                                    <a href="#" target="_blank" class="sui-btn  btn-danger addshopcar" id="add">加入购物车</a>
                                 </li>
                             </ul>
                         </div>
@@ -732,3 +724,43 @@
 </body>
 
 </html>
+<script>
+    //购物车减
+    $(document).on("click","#num-jian",function(){
+        var minus =$("#aa").find("#input-num");
+        if(minus.val()<= 1){
+            minus.val(1);
+        }else{
+            minus.val(parseInt(minus.val()) - 1);
+        }
+        minus.change();
+    });
+    //购物车加
+    $(document).on("click","#num-jia",function(){
+        var add = $("#aa").find("#input-num");
+       // alert(add);
+        add.val(parseInt(add.val()) + 1);
+        add.change();
+    });
+    $(document).ready(function() {
+        $('#add').click(function () {
+            var goods_price = $("#goods_price").val();
+
+            $.ajax({
+                type: "post",
+                url: "/index/success_cart",
+                data: {goods_price:goods_price},
+                dataType: "json",
+                success: function (res) {
+                    if (res.code) {
+                        alert(res.msg);
+                        location.href = "/index/cart";
+                    } else {
+                        alert('添加失败');
+                    }
+                }
+            })
+           return false;
+        })
+    })
+</script>

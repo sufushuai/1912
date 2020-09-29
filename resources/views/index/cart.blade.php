@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
     <title>我的购物车</title>
-
     <link rel="stylesheet" type="text/css" href="/asses/css/webbase.css" />
     <link rel="stylesheet" type="text/css" href="/asses/css/pages-cart.css" />
 </head>
-
 <body>
 <!--head-->
 @include('index.layouts.layout')
@@ -19,176 +16,58 @@
         <h4>全部商品<span>11</span></h4>
         <div class="cart-main">
             <div class="yui3-g cart-th">
-                <div class="yui3-u-1-4"><input type="checkbox" name="" id="" value="" /> 全部</div>
+                <div class="yui3-u-1-4"><input id="allbox" type="checkbox" name="" id="" value="" /> 全部</div>
                 <div class="yui3-u-1-4">商品</div>
                 <div class="yui3-u-1-8">单价（元）</div>
                 <div class="yui3-u-1-8">数量</div>
                 <div class="yui3-u-1-8">小计（元）</div>
                 <div class="yui3-u-1-8">操作</div>
             </div>
-            <div class="cart-item-list">
-                <div class="cart-shop">
-                    <input type="checkbox" name="" id="" value="" />
-                    <span class="shopname self">传智自营</span>
-                </div>
-                <div class="cart-body">
-                    <div class="cart-list">
-                        <ul class="goods-list yui3-g">
-                            <li class="yui3-u-1-24">
-                                <input type="checkbox" name="" id="" value="" />
-                            </li>
-                            <li class="yui3-u-11-24">
-                                <div class="good-item">
-                                    <div class="item-img"><img src="/asses/img/goods.png" /></div>
-                                    <div class="item-msg">Apple Macbook Air 13.3英寸笔记本电脑 银色（Corei5）处理器/8GB内存
-                                        尺寸：13.3英寸</div>
-                                </div>
-                            </li>
-
-                            <li class="yui3-u-1-8"><span class="price">8848.00</span></li>
-                            <li class="yui3-u-1-8">
-                                <a href="javascript:void(0)" class="increment mins">-</a>
-                                <input autocomplete="off" type="text" value="1" minnum="1" class="itxt" />
-                                <a href="javascript:void(0)" class="increment plus">+</a>
-                            </li>
-                            <li class="yui3-u-1-8"><span class="sum">8848.00</span></li>
-                            <li class="yui3-u-1-8">
-                                <a href="#none">删除</a><br />
-                                <a href="#none">移到我的关注</a>
-                            </li>
-                        </ul>
+            @foreach($cart as $k=>$v)
+                <div class="cart-item-list">
+                    <div class="cart-shop">
+                        <span class="shopname">神州数码专营店</span>
                     </div>
-                    <div class="cart-list">
-                        <ul class="goods-list yui3-g">
-                            <li class="yui3-u-1-24">
-                                <input type="checkbox" name="" id="" value="" />
-                            </li>
-                            <li class="yui3-u-11-24">
-                                <div class="good-item">
-                                    <div class="item-img"><img src="/asses/img/goods.png" /></div>
-                                    <div class="item-msg">Apple Macbook Air 13.3英寸笔记本电脑 银色（Corei5）处理器/8GB内存
-                                        尺寸：13.3英寸</div>
-                                </div>
-                            </li>
-
-                            <li class="yui3-u-1-8"><span class="price">8848.00</span></li>
-                            <li class="yui3-u-1-8">
-                                <a href="javascript:void(0)" class="increment mins">-</a>
-                                <input autocomplete="off" type="text" value="1" minnum="1" class="itxt" />
-                                <a href="javascript:void(0)" class="increment plus">+</a>
-                            </li>
-                            <li class="yui3-u-1-8"><span class="sum">8848.00</span></li>
-                            <li class="yui3-u-1-8">
-                                <a href="#none">删除</a><br />
-                                <a href="#none">移到我的关注</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="cart-list">
-                        <ul class="goods-list yui3-g">
-                            <li class="yui3-u-1-24">
-                                <input type="checkbox" name="" id="" value="" />
-                            </li>
-                            <li class="yui3-u-11-24">
-                                <div class="good-item">
-                                    <div class="item-img"><img src="/asses/img/goods.png" /></div>
-                                    <div class="item-msg">
-                                        Apple Macbook Air 13.3英寸笔记本电脑 银色（Corei5）处理器/8GB内存
-                                        尺寸：13.3英寸
+                    <div class="cart-body">
+                        <div class="cart-list">
+                            <ul class="goods-list yui3-g" cart_id="{{$v->cart_id}}">
+                                <li class="yui3-u-1-24">
+                                    <input type="checkbox" name="check" id="" value="{{$v->cart_id}}" />
+                                </li>
+                                <li class="yui3-u-11-24">
+                                    <div class="good-item">
+                                        <div class="item-img"><img src="/asses/img/goods.png" /></div>
+                                        <div class="item-msg">Apple Macbook Air 13.3英寸笔记本电脑 银色（Corei5）处理器/8GB内存
+                                            尺寸：13.3英寸</div>
                                     </div>
-                                </div>
-                            </li>
-
-                            <li class="yui3-u-1-8"><span class="price">8848.00</span></li>
-                            <li class="yui3-u-1-8">
-                                <a href="javascript:void(0)" class="increment mins">-</a>
-                                <input autocomplete="off" type="text" value="1" minnum="1" class="itxt" />
-                                <a href="javascript:void(0)" class="increment plus">+</a>
-                            </li>
-                            <li class="yui3-u-1-8"><span class="sum">8848.00</span></li>
-                            <li class="yui3-u-1-8">
-                                <a href="#none">删除</a><br />
-                                <a href="#none">移到我的关注</a>
-                            </li>
-                        </ul>
+                                </li>
+                                <li class="yui3-u-1-8"><span class="price" id="price" >{{$v->goods_price}}</span></li>
+                                <li class="yui3-u-1-8">
+                                    <button id="num-jian" class="increment mins  numberMinus">－</button>
+                                    <input  id="input-num"  type="text" value="{{$v->buy_number}}" class="itxt" />
+                                    <button id="num-jia" class="increment plus">＋</button>
+                                </li>
+                                <li class="yui3-u-1-8"><span class="sum" id="sum">{{$v->goods_price*$v->buy_number}}</span></li>
+                                <li class="yui3-u-1-8">
+                                    <button class="del">删除</button>
+                                    <button >移到我的关注</button>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="cart-item-list">
-                <div class="cart-shop">
-                    <input type="checkbox" name="" id="" value="" />
-                    <span class="shopname">神州数码专营店</span>
-                </div>
-                <div class="cart-body">
-                    <div class="cart-list">
-                        <ul class="goods-list yui3-g">
-                            <li class="yui3-u-1-24">
-                                <input type="checkbox" name="" id="" value="" />
-                            </li>
-                            <li class="yui3-u-11-24">
-                                <div class="good-item">
-                                    <div class="item-img"><img src="/asses/img/goods.png" /></div>
-                                    <div class="item-msg">Apple Macbook Air 13.3英寸笔记本电脑 银色（Corei5）处理器/8GB内存
-                                        尺寸：13.3英寸</div>
-                                </div>
-                            </li>
-
-                            <li class="yui3-u-1-8"><span class="price">8848.00</span></li>
-                            <li class="yui3-u-1-8">
-                                <a href="javascript:void(0)" class="increment mins">-</a>
-                                <input autocomplete="off" type="text" value="1" minnum="1" class="itxt" />
-                                <a href="javascript:void(0)" class="increment plus">+</a>
-                            </li>
-                            <li class="yui3-u-1-8"><span class="sum">8848.00</span></li>
-                            <li class="yui3-u-1-8">
-                                <a href="#none">删除</a><br />
-                                <a href="#none">移到我的关注</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="cart-list">
-                        <ul class="goods-list yui3-g">
-                            <li class="yui3-u-1-24">
-                                <input type="checkbox" name="" id="" value="" />
-                            </li>
-                            <li class="yui3-u-11-24">
-                                <div class="good-item">
-                                    <div class="item-img"><img src="/asses/img/goods.png" /></div>
-                                    <div class="item-msg">Apple Macbook Air 13.3英寸笔记本电脑 银色（Corei5）处理器/8GB内存
-                                        尺寸：13.3英寸</div>
-                                </div>
-                            </li>
-
-                            <li class="yui3-u-1-8"><span class="price">8848.00</span></li>
-                            <li class="yui3-u-1-8">
-                                <a href="javascript:void(0)" class="increment mins">-</a>
-                                <input autocomplete="off" type="text" value="1" minnum="1" class="itxt" />
-                                <a href="javascript:void(0)" class="increment plus">+</a>
-                            </li>
-                            <li class="yui3-u-1-8"><span class="sum">8848.00</span></li>
-                            <li class="yui3-u-1-8">
-                                <a href="#none">删除</a><br />
-                                <a href="#none">移到我的关注</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
         <div class="cart-tool">
-            <div class="select-all">
-                <input type="checkbox" name="" id="" value="" />
-                <span>全选</span>
-            </div>
             <div class="option">
-                <a href="#none">删除选中的商品</a>
+                <input type="button" class="btn bg-olive btn-xs" value="批量删除" id="dels">
                 <a href="#none">移到我的关注</a>
                 <a href="#none">清除下柜商品</a>
             </div>
             <div class="toolbar">
-                <div class="chosed">已选择<span>0</span>件商品</div>
+                <div class="chosed">已选择<span class="cartSumNumber" id="cartSumNumber">0</span>件商品</div>
                 <div class="sumprice">
-                    <span><em>总价（不含运费） ：</em><i class="summoney">¥16283.00</i></span>
+                    <span><em>总价（不含运费） ：</em><span class="summoney" id="Sum">16283.00</span></span>
                     <span><em>已节省：</em><i>-¥20.00</i></span>
                 </div>
                 <div class="sumbtn">
@@ -349,142 +228,137 @@
 </div>
 <!-- 底部栏位 -->
 <!--页面底部-->
-<div class="clearfix footer">
-    <div class="py-container">
-        <div class="footlink">
-            <div class="Mod-service">
-                <ul class="Mod-Service-list">
-                    <li class="grid-service-item intro  intro1">
-
-                        <i class="serivce-item fl"></i>
-                        <div class="service-text">
-                            <h4>正品保障</h4>
-                            <p>正品保障，提供发票</p>
-                        </div>
-
-                    </li>
-                    <li class="grid-service-item  intro intro2">
-
-                        <i class="serivce-item fl"></i>
-                        <div class="service-text">
-                            <h4>正品保障</h4>
-                            <p>正品保障，提供发票</p>
-                        </div>
-
-                    </li>
-                    <li class="grid-service-item intro  intro3">
-
-                        <i class="serivce-item fl"></i>
-                        <div class="service-text">
-                            <h4>正品保障</h4>
-                            <p>正品保障，提供发票</p>
-                        </div>
-
-                    </li>
-                    <li class="grid-service-item  intro intro4">
-
-                        <i class="serivce-item fl"></i>
-                        <div class="service-text">
-                            <h4>正品保障</h4>
-                            <p>正品保障，提供发票</p>
-                        </div>
-
-                    </li>
-                    <li class="grid-service-item intro intro5">
-
-                        <i class="serivce-item fl"></i>
-                        <div class="service-text">
-                            <h4>正品保障</h4>
-                            <p>正品保障，提供发票</p>
-                        </div>
-
-                    </li>
-                </ul>
-            </div>
-            <div class="clearfix Mod-list">
-                <div class="yui3-g">
-                    <div class="yui3-u-1-6">
-                        <h4>购物指南</h4>
-                        <ul class="unstyled">
-                            <li>购物流程</li>
-                            <li>会员介绍</li>
-                            <li>生活旅行/团购</li>
-                            <li>常见问题</li>
-                            <li>购物指南</li>
-                        </ul>
-
-                    </div>
-                    <div class="yui3-u-1-6">
-                        <h4>配送方式</h4>
-                        <ul class="unstyled">
-                            <li>上门自提</li>
-                            <li>211限时达</li>
-                            <li>配送服务查询</li>
-                            <li>配送费收取标准</li>
-                            <li>海外配送</li>
-                        </ul>
-                    </div>
-                    <div class="yui3-u-1-6">
-                        <h4>支付方式</h4>
-                        <ul class="unstyled">
-                            <li>货到付款</li>
-                            <li>在线支付</li>
-                            <li>分期付款</li>
-                            <li>邮局汇款</li>
-                            <li>公司转账</li>
-                        </ul>
-                    </div>
-                    <div class="yui3-u-1-6">
-                        <h4>售后服务</h4>
-                        <ul class="unstyled">
-                            <li>售后政策</li>
-                            <li>价格保护</li>
-                            <li>退款说明</li>
-                            <li>返修/退换货</li>
-                            <li>取消订单</li>
-                        </ul>
-                    </div>
-                    <div class="yui3-u-1-6">
-                        <h4>特色服务</h4>
-                        <ul class="unstyled">
-                            <li>夺宝岛</li>
-                            <li>DIY装机</li>
-                            <li>延保服务</li>
-                            <li>品优购E卡</li>
-                            <li>品优购通信</li>
-                        </ul>
-                    </div>
-                    <div class="yui3-u-1-6">
-                        <h4>帮助中心</h4>
-                        <img src="/asses/img/wx_cz.jpg">
-                    </div>
-                </div>
-            </div>
-            <div class="Mod-copyright">
-                <ul class="helpLink">
-                    <li>关于我们<span class="space"></span></li>
-                    <li>联系我们<span class="space"></span></li>
-                    <li>关于我们<span class="space"></span></li>
-                    <li>商家入驻<span class="space"></span></li>
-                    <li>营销中心<span class="space"></span></li>
-                    <li>友情链接<span class="space"></span></li>
-                    <li>关于我们<span class="space"></span></li>
-                    <li>营销中心<span class="space"></span></li>
-                    <li>友情链接<span class="space"></span></li>
-                    <li>关于我们</li>
-                </ul>
-                <p>地址：北京市昌平区建材城西路金燕龙办公楼一层 邮编：100096 电话：400-618-4000 传真：010-82935100</p>
-                <p>京ICP备08001421号京公网安备110108007702</p>
-            </div>
-        </div>
-    </div>
-</div>
+@include('index.layouts.foot')
 <!--页面底部END-->
+<script type="text/javascript" src="/asses/js/plugins/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/asses/js/plugins/jquery.easing/jquery.easing.min.js"></script>
+<script type="text/javascript" src="/asses/js/plugins/sui/sui.min.js"></script>
+<script type="text/javascript" src="/asses/js/widget/nav.js"></script>
+<script>
+    //购物车减
+    $(document).on("click","#num-jian",function(){
+        var minus = $(this).parent("li").find("#input-num").val();//获取数量框里的数值
+        var productPrice=$(this).parent("li").prev().find("#price").text();//单价的值
+        minus--;  //单击“-”减号时，数量递减
+        if(minus<=0){
+            $(this).prop("disabled", true);
+        }
+        // if(minus.val()<= 0){
+        //     minus.val(0);
+        // }else{
+        //     minus.val(parseInt(minus.val()) - 1);
+        // }
+       // minus.change();
+        //alert(minus);
+        $(this).next("#input-num").val(minus); //把数量变化后的新值放入数量框中
+        $(this).parent().next().find("#sum").text(minus*productPrice);//小计的值
+        totalPrice();	//调用总价方法
+        // totalNum();	//合计数
+    });
+    //加号操作
+    $(document).on("click","#num-jia",function(){
+        var minus = $(this).parent("li").find("#input-num").val();//获取数量框里的数值
+        var productPrice=$(this).parent("li").prev().find("#price").text();//单价的值
+        minus++;  //单击“+”减号时，数量递减
+        if(minus>0){
+            $(this).prev("disabled", false);
+        }
+        //add.val(parseInt(add.val()) + 1);
+        $(this).prev("#input-num").val(minus); //把数量变化后的新值放入数量框中
+        $(this).parent().next().find("#sum").text(minus*productPrice);//小计的值
+        totalPrice();	//调用总价方法
+       // totalNum();	//合计数
+    });
+    //计算总价方法
+    function totalPrice(){
+        //计算总价，编写总价方法
+        var zong = 0;
+        $("#sum").each(function(){
+            var all = parseInt($(this).text());
+            zong += all;
+        })
+        $("#Sum").text(zong);
+    }
+    //加载页面时，调用总价方法
+    $(function(){
+        //totalNum();
+        totalPrice();	//调用总价方法
+    })
 
-<script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="js/plugins/jquery.easing/jquery.easing.min.js"></script>
-<script type="text/javascript" src="js/plugins/sui/sui.min.js"></script>
-<script type="text/javascript" src="js/widget/nav.js"></script>
+    //ajax删除
+    $(document).on('click','.del',function(){
+        var cart_id = $(this).parents('ul').attr('cart_id');
+        $.ajax({
+            type:"post",
+            dataType:"json",
+            url:"/index/cartdestroy",
+            data:{cart_id:cart_id},
+            success:function(res){
+                if(confirm("确定是否删除？")){
+                    if(res.code==200){
+                        alert("删除成功")
+                        location.href='/index/cart'
+                    }
+                }
+                if(res.code==1){
+                    alert(res.msg)
+                }
+            }
+        })
+    });
+    // 全选
+    $(function(){
+        // 给老大得复选框一个点击事件
+        $("#allbox").click(function () {
+            var _this = $(this);
+            // 循环下面所有得复选框
+            $("input[name='check']").each(function () {
+                // 判断老大是否时选中状态
+                if (_this.prop("checked") == true) {
+                    $(this).prop('checked', true);
+                } else {
+                    $(this).prop('checked', false);
+                }
+            });
+        });
+
+        // 批量删除
+        $("#dels").click(function(){
+            // 是否删除
+            if (window.confirm('是否删除')) {
+                // 获取所有被选中得值
+                var str = ''; // 定义一个字符串用来装选中得id
+                $("input[name='check']").each(function(){
+                    // 判断是否被选中
+                    if ($(this).prop('checked') == true) {
+                        // 拼接字符串，用，作为分隔符
+                        str = str + $(this).val() +',';
+                        console.log(str);
+                    }
+                });
+                var strIds = str.substr(0, str.length-1);
+                 //alert(strIds);return;
+                // 如果字符串中没有任何的ID就不走后台ajax
+                if (strIds == '') return false;
+                $.ajax({
+                    url:'/index/cartdel',
+                    data: {'strIds': strIds},
+                    dataType: 'json',
+                    type: "post",
+                    success:function(res){
+                            if(res.code==200){
+                                alert("删除成功")
+                                location.href='/index/cart'
+                            }
+                        if(res.code==1){
+                            alert(res.msg)
+                        }
+                    }
+                });
+            }
+        });
+    })
+</script>
 </body>
 
 </html>

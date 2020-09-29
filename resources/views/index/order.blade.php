@@ -65,10 +65,11 @@
                                 </div>
                                 <div class="modal-body">
                                     <form action="" class="sui-form form-horizontal">
+                                        
                                         <div class="control-group">
                                             <label class="control-label">收货人：</label>
                                             <div class="controls">
-                                                <input type="text" class="input-medium">
+                                                <input type="text" name="user_name" class="input-medium">
                                             </div>
                                         </div>
                                         <div class="control-group">
@@ -79,7 +80,7 @@
                                                        
                                                         <select class="area" name="province">
                                                               <option value="0" selected="selected">请选择...</option>
-                                                             @foreach($data as $k=>$v)
+                                                             @foreach($res as $k=>$v)
                                                               <option value="{{$v->area_id}}">{{$v->name}}</option>
                                                               @endforeach
                                                             </select>
@@ -99,40 +100,22 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="control-group">
-                                            <label class="control-label">详细地址：</label>
-                                            <div class="controls">
-                                                <input type="text" class="input-large">
-                                            </div>
-                                        </div>
+                                        
                                         <div class="control-group">
                                             <label class="control-label">联系电话：</label>
                                             <div class="controls">
-                                                <input type="text" class="input-medium">
+                                                <input type="text" name="user_tel" class="input-medium">
                                             </div>
                                         </div>
-                                        <div class="control-group">
-                                            <label class="control-label">邮箱：</label>
-                                            <div class="controls">
-                                                <input type="text" class="input-medium">
-                                            </div>
-                                        </div>
-                                        <div class="control-group">
-                                            <label class="control-label">地址别名：</label>
-                                            <div class="controls">
-                                                <input type="text" class="input-medium">
-                                            </div>
-                                            <div class="othername">
-                                                建议填写常用地址：<a href="#" class="sui-btn btn-default">家里</a>　<a href="#" class="sui-btn btn-default">父母家</a>　<a href="#" class="sui-btn btn-default">公司</a>
-                                            </div>
-                                        </div>
+
+                                       
 
                                     </form>
 
 
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" data-ok="modal" class="sui-btn btn-primary btn-large">确定</button>
+                                    <button type="button" data-ok="modal" class="sui-btn btn-primary btn-large btn">确定</button>
                                     <button type="button" data-dismiss="modal" class="sui-btn btn-default btn-large">取消</button>
                                 </div>
                             </div>
@@ -246,32 +229,7 @@
 
 </html>
 <script>
-//        $(function(){
-//           //给类为area绑定内容改变事件
-//          $(document).on("change",".area",function(){
-//               // alert(1);
-//               var _this=$(this);//发生内容改变的 select
-//               _this.nextAll('select').html("<option value=''>请选择</option>");
-//                //获取到当前的省份id
-//               var area_id=_this.val();
-//                // console.log(id);
 
-//                //通过ajax把id传给控制器
-//                $.post(
-//                    "{:url('/index/order')}",
-//                    {area_id:area_id},
-//                    function(res){
-//                        var _option="<option value=''>请选择...</option>";
-//                       for(var i in res){
-//                           _option+="<option value='"+res[i]['area_id']+"'>"+res[i]['name']+"</option>";
-//                        }
-//                        _this.next('select').html(_option);
-
-//                    },
-//                    'json'
-//                  );
-//            })
-//        })
 
 
 
@@ -289,6 +247,7 @@ $(function(){
                     data : {area_id : area_id},
                     dataType:'json',
                     success:function(res){
+
                         if(res.status=='200'){
                             _this.next().html(res.data)
                         }
@@ -296,6 +255,34 @@ $(function(){
                 })
             });
         });
+
+        $(document).on('click','.btn',function(){
+            // alert(11);
+            var user_name=$("input[name='user_name']").val();
+            var user_tel=$("input[name='user_tel']").val();
+            var province=$("select[name='province']").val();
+            var city=$("select[name='city']").val();
+            var area=$("select[name='area']").val();
+            // console.log(user_name);
+            // console.log(user_tel);
+            // console.log(province);
+            // console.log(city);
+            // console.log(area);
+             $.ajax({
+                url:"/index/create",
+                data:{user_name:user_name,user_tel:user_tel,province:province,city:city,area:area},
+                type:"post",
+                dataType:"json",
+                success:function(res){
+                    // alert(111);
+                    // if(res.code=='0'){
+                    //     alert(res.mag)
+                    //     location.href='/index/order'
+                    // }
+                }
+            })
+        })
+
     </script>
 
-   </script>
+ 

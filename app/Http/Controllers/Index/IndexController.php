@@ -3,45 +3,106 @@
 namespace App\Http\Controllers\Index;
 
 use App\Http\Controllers\Common;
+use App\Model\RbacUser;
 use Illuminate\Http\Request;
 use App\Model\BrandModel;
 use App\Model\AdModel;
 use App\Model\SlideModel;
+use App\Model\CartModel;
 use App\Model\CategoryModel;
 use App\Model\GoodsModel;
 use App\Model\AreaModel;
+use App\Model\UserModel;
 
 class IndexController extends Common
 {
     //首页
     public function index(){
 
+        //猜你喜欢
+
         $slide=SlideModel::where('is_del',1)->limit(5)->get();
+        //广告
         $ad=AdModel::where('is_del',1)->limit(5)->get();
-        $brand=BrandModel::where('status',1)->limit(10)->get();
+        //品牌
+        $brand=BrandModel::where('status',1)->limit(20)->get();
           $where=[
                     'is_hot'=>1,
                     'is_show'=>1,
                     'is_new'=>1
                 ];
+        //无限极分类
         $guess=GoodsModel::where($where)->limit(12)->get()->toArray();
         //$guess=collect($guess)->toArray();
         $guess=array_chunk($guess,2,true);
         //dump($guess);die;
-        $obj = new CategoryModel;
-        $where=[
-            ['p_id','=',0],
-        ];
-        $category=$obj->where($where)->limit(6)->get();
+        //获取分类数据
+        $category=CategoryModel::get()->toArray();
+        //获取所有父级ID p_id
+        //执行无极限
+        $cate=$this->getcateInfo2($category);
 
-        // dd($category);
-        return view('index.index',['brand'=>$brand,'ad'=>$ad,'slide'=>$slide,'category'=>$category,'guess'=>$guess]);
+        //今日推荐
+        $today=GoodsModel::where('is_del',1)->orderby('goods_id','desc')->limit(4)->get();
+
+        return view('index.index',['brand'=>$brand,'ad'=>$ad,'slide'=>$slide,'category'=>$cate,'guess'=>$guess,'today'=>$today]);
     }
- 
+
     //购物车
     public function cart(){
-        return view('index.cart');
+        $cart = CartModel::where(['is_del'=>1])->get();
+        return view('index.cart',['cart'=>$cart]);
     }
+    //购物车删除
+    public function cartdestroy(){
+        $cart_id = request()->post('cart_id');
+        $res = CartModel::where('cart_id',$cart_id)->update(["is_del"=>2]);
+        if($res){
+            return $this->success();
+        }else{
+            return $this->error("删除失败");
+        }
+    }
+    public function cartdel(){
+        $cart_id=request()->post('strIds');
+        //把传来的所有id改为数组形式  explode  字符串转数组
+        $str = explode(",",$cart_id);
+        //dd($str);
+        //利用循环将需要删除的id 一个一个进行执行sql；
+        foreach($str as $k => $v){
+            $res=CartModel::destroy($v);
+        }
+        //dd($res);
+        if($res){
+            return $this->success();
+        }else{
+            return $this->error("删除失败");
+        }
+    }
+    //成功加入购物车
+    public function success_cart(){
+
+
+        $goods_price = request()->post("goods_price");
+
+        $where =[
+            "goods_price"=>$goods_price
+        ];
+        $res=CartModel::insert($where);
+        if($res){
+            return $this->success(200,'ok');
+        }else{
+            return $this->error(1,'fail');
+        }
+    }
+//    //购物车改变数量
+//    public function cartadd(Request $request){
+//        $minus = $request->post('minus');
+//        $add = $request->post('add');
+//        dd($minus);
+//        dd($add);
+//        return view('index.cart');
+//    }
     //详情
     public function item(Request $request,$goods_id){
 
@@ -50,6 +111,7 @@ class IndexController extends Common
         return view('index.item',['role_Info'=>$role_Info]);
 
     }
+
     //订单
     public function order(){
         //查询所有收货地址  作为列表数据
@@ -60,7 +122,7 @@ class IndexController extends Common
         $res=$this->getAreaInfo(0);
         // $cityInfo=$this->getAreaInfo($addressInfo['province']);
 
-        return view('index.order',['addressInfo'=>$addressInfo]);
+        return view('index.order',['res'=>$res]);
         
        }
 
@@ -74,19 +136,24 @@ class IndexController extends Common
             ['pid','=',$pid]
         ];
         //查询地区表满足where的所有的数据，并将结果返回
-        $info=$area_model->where($where)->select();
+        $info=$area_model->where($where)->get();
         // dump($info);
         return $info;
     }
 
      //获取地区
     public function getArea(){
-        //接受传过来的id
-        $area_id=request()->post("area_id");
-        $info=$this->getAreaInfo($area_id);//获取市
-        // dump($info);
-        //并将结果处理成json
-        echo json_encode($info);
+       $area_id=$request->post('area_id');
+//        if($area_id == 0){
+//            return view('Merchandise.Index.areaajax',['id'=>$area_id]);
+//        }
+        $info = $this->getAreaInfo($area_id);
+        $option = "<option value='0'>--请选择--</option>";
+        foreach($info as $k=>$v){
+            $option.="<option value='".$v['area_id']."'>".$v['name']."</option>";
+        }
+        echo $option;
+
     }
 
 
@@ -108,11 +175,26 @@ class IndexController extends Common
         return $area;
     }
 
-    // 用户收货地址
+    // 用户收货地址添加
     public function create(){
-        $provinceInfo=AreaModel::where(['pid'=>0])->get();
-        print_r($provinceInfo);die;
-        return view('index.order',['data'=>$provinceInfo]);
+       $user_name = request()->post('user_name');
+       $user_tel = request()->post('user_tel');
+       $province = request()->post('province');
+       $city = request()->post('city');
+       $area = request()->post('area');
+       // dump($user_name);
+       // dump($user_tel);
+       // dump($province);
+       // dump($city);
+       // dump($area);
+       $data =[
+            'user_name'=>$user_name,
+            'user_tel'=>$user_tel,
+            'province'=>$province,
+            'city'=>$city,
+            'area'=>$area
+       ];
+       // dd($data);
     }
 
     // 三级联动
@@ -144,5 +226,6 @@ class IndexController extends Common
 
 
     //无限极
-    public function cate(){}
+    public function cate(){
+    }
 }
