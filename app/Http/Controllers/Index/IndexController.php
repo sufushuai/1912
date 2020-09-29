@@ -77,7 +77,19 @@ class IndexController extends Common
     }
     //成功加入购物车
     public function success_cart(){
-        return view('index.success_cart');
+
+
+        $goods_price = request()->post("goods_price");
+
+        $where =[
+            "goods_price"=>$goods_price
+        ];
+        $res=CartModel::insert($where);
+        if($res){
+            return $this->success(200,'ok');
+        }else{
+            return $this->error(1,'fail');
+        }
     }
     //详情
     public function item(Request $request,$goods_id){
@@ -87,6 +99,7 @@ class IndexController extends Common
         return view('index.item',['role_Info'=>$role_Info]);
 
     }
+
     //订单
     public function order(){
            // echo count(strlen("http://php.net"));die;

@@ -66,7 +66,7 @@
                 </div>
             </div>
             <div class="fr itemInfo-wrap">
-                <div class="sku-name">
+                <div class="sku-name" id="goods_name">
                     <h3>{{$role_Info["goods_name"]}}</h3>
                 </div>
 
@@ -75,7 +75,7 @@
                         <div class="fl title">
                             <i>价　　格</i>
                         </div>
-                        <div class="fl price">
+                        <div class="fl price" id="goods_price">
                             <i>¥</i>
                             <em>{{$role_Info["goods_price"]}}</em>
                             <span>降价通知</span>
@@ -87,7 +87,7 @@
                         </div>
                         <div class="fl fix-width">
                             <i class="red-bg">加价购</i>
-                            <span>{{$role_Info["goods_desc"]}}</span>
+                            <span id="goods_desc">{{$role_Info["goods_desc"]}}</span>
                         </div>
                     </div>
                 </div>
@@ -96,7 +96,7 @@
                         <div class="fl title">
                             <h4><i>积　　分</i></h4>
                         </div>
-                        <div class="fl fix-width">
+                        <div class="fl fix-width" id="goods_score">
                             <h4><span style="color: red">{{$role_Info["goods_score"]}}</span></h4>
                         </div>
                     </div>
@@ -166,7 +166,7 @@
                                     {{--<a href="javascript:void(0)" class="increment plus" onclick="show" id="sub">+</a>--}}
                                     {{--<a href="javascript:void(0)" class="increment mins" onclick="show" id="sum">-</a>--}}
                                     <button id="num-jian" class="increment mins">-</button>
-                                    <span id="aa"><input autocomplete="off" id="input-num"  type="text" value="1" minnum="1" class="itxt" /></span>
+                                    <span id="aa"><input autocomplete="off" id="input-num"  type="text" name="buy_number" value="1" minnum="1" class="itxt" /></span>
                                     <button id="num-jia" class="increment plus">+</button>
                                 </div>
                             </div>
@@ -174,7 +174,7 @@
                         <div class="fl">
                             <ul class="btn-choose unstyled">
                                 <li>
-                                    <a href="{{url('index/success_cart')}}" target="_blank" class="sui-btn  btn-danger addshopcar">加入购物车</a>
+                                    <a href="#" target="_blank" class="sui-btn  btn-danger addshopcar" id="add">加入购物车</a>
                                 </li>
                             </ul>
                         </div>
@@ -728,8 +728,8 @@
     //购物车减
     $(document).on("click","#num-jian",function(){
         var minus =$("#aa").find("#input-num");
-        if(minus.val()<= 0){
-            minus.val(0);
+        if(minus.val()<= 1){
+            minus.val(1);
         }else{
             minus.val(parseInt(minus.val()) - 1);
         }
@@ -742,4 +742,25 @@
         add.val(parseInt(add.val()) + 1);
         add.change();
     });
+    $(document).ready(function() {
+        $('#add').click(function () {
+            var goods_price = $("#goods_price").val();
+
+            $.ajax({
+                type: "post",
+                url: "/index/success_cart",
+                data: {goods_price:goods_price},
+                dataType: "json",
+                success: function (res) {
+                    if (res.code) {
+                        alert(res.msg);
+                        location.href = "/index/cart";
+                    } else {
+                        alert('添加失败');
+                    }
+                }
+            })
+           return false;
+        })
+    })
 </script>
