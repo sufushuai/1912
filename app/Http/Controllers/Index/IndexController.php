@@ -49,15 +49,40 @@ class IndexController extends Common
         $today=GoodsModel::where('is_del',1)->orderby('goods_clicknum','desc')->limit(4)->get();
 
         //楼层
-        $floor=CategoryModel::get()->toArray();
-        //执行无极限
-        $floors=$this->getCateInfo1($floor);
-        print_r($floors);
-        //exit;
+        $floor=CategoryModel::where('p_id',0)->value('cate_id');
+        //dd($floor);
+        $this->getFloor($floor);
 
         //dump($floors);
 
-        return view('index.index',['brand'=>$brand,'ad'=>$ad,'slide'=>$slide,'category'=>$cate,'guess'=>$guess,'today'=>$today,'floor'=>$floors]);
+        return view('index.index',['brand'=>$brand,'ad'=>$ad,'slide'=>$slide,'category'=>$cate,'guess'=>$guess,'today'=>$today]);
+    }
+    public function getFloor($cate_id){
+        //最高分类
+        $cateList1=CategoryModel::where('cate_id',$cate_id)->first();
+        //dd($cateList1);
+        $where=[
+            'p_id'=>$cate_id,
+        ];
+        //子级分类
+        $cateList2=CategoryModel::where($where)->get();
+        //所有子孙级ID
+        $cateAll=CategoryModel::get();
+        $cateIds=$this->getCateIds($cateAll,$cate_id);
+        //获取当前数组中所有的值
+        $cateIds=array_values($cateIds);
+        //dd($cateIds);
+        //转换成字符串
+        $str_cateIds=implode(',',$cateIds);
+        //查询当前cate==这些ID的商品
+        $where1=[
+            ['cate_id','in',$str_cateIds]
+        ];
+        $goodsList=GoodsModel::where($where)->limit(8)->get();
+        $this->assign('cateList1',$cateList1);
+        $this->assign('cateList2',$cateList2);
+        $this->assign('goodsList',$goodsList);
+
     }
 
     //购物车

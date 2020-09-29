@@ -332,18 +332,18 @@
 <!--页面底部-->
 @include('index.layouts.foot')
 <!--页面底部END-->
-<!-- 楼层位置 -->
-<div id="floor-index" class="floor-index">
-    <ul>
-        @foreach($floor as $b)
-            <li>
-                <a class="num" href="javascript:;" style="display: none;">{{$b['level']}}F</a>
-                <a class="word" href="javascript;;" style="display: block;">{{$b['cate_name']}}</a>
-            </li>
-            @endforeach
+{{--<!-- 楼层位置 -->--}}
+{{--<div id="floor-index" class="floor-index">--}}
+    {{--<ul>--}}
+        {{--@foreach($floor as $b)--}}
+            {{--<li>--}}
+                {{--<a class="num" href="javascript:;" style="display: none;">{{$b['level']}}F</a>--}}
+                {{--<a class="word" href="javascript;;" style="display: block;">{{$b['cate_name']}}</a>--}}
+            {{--</li>--}}
+            {{--@endforeach--}}
 
-    </ul>
-</div>
+    {{--</ul>--}}
+{{--</div>--}}
 <!--侧栏面板开始-->
 <div class="J-global-toolbar">
     <div class="toolbar-wrap J-wrap">
