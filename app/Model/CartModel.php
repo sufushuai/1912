@@ -9,4 +9,5 @@ class CartModel extends Model
     protected $table="shop_cart";
     protected $primaryKey="cart_id";
     public $timestamps=false;
+    protected $fillable = ['*'];
 }
