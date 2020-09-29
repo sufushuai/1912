@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\AreaModel;
 use App\Model\PerinfoModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class Common extends Controller
 {
@@ -90,13 +91,20 @@ class Common extends Controller
             'data'=>$data,
         ];
     }
-    //获取区域信息
+    /**
+     *获取区域信息
+    */
     function getAreaInfo($pid){
         $where=[
             ['pid','=',$pid]
         ];
         return Areamodel::where($where)->get();
     }
-
+    /**
+    *获取用户id
+     */
+    public function user_id(){
+        return Session::get("id");
+    }
 
 }

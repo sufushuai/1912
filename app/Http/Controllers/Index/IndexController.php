@@ -11,6 +11,7 @@ use App\Model\SlideModel;
 use App\Model\CartModel;
 use App\Model\CategoryModel;
 use App\Model\GoodsModel;
+use Illuminate\Support\Facades\Session;
 
 class IndexController extends Common
 {
