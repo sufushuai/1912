@@ -14,11 +14,8 @@ use App\Model\CategoryModel;
 use App\Model\GoodsModel;
 use App\Model\AreaModel;
 use App\Model\UserModel;
-<<<<<<< HEAD
 use App\Model\AddressModel;
 
-=======
->>>>>>> 487f3237ebe3393f3adb19194cea261012712a25
 
 use Illuminate\Support\Facades\Session;
 class IndexController extends Common
