@@ -32,7 +32,7 @@
                         <div class="cart-list">
                             <ul class="goods-list yui3-g" cart_id="{{$v->cart_id}}">
                                 <li class="yui3-u-1-24">
-                                    <input type="checkbox" name="check" id="" value="{{$v->cart_id}}" />
+                                    <input type="checkbox" name="check" class="box" id="box" value="{{$v->cart_id}}" />
                                 </li>
                                 <li class="yui3-u-11-24">
                                     <div class="good-item">
@@ -47,7 +47,7 @@
                                     <input  id="input-num"  type="text" value="{{$v->buy_number}}" class="itxt" />
                                     <button id="num-jia" class="increment plus">＋</button>
                                 </li>
-                                <li class="yui3-u-1-8"><span class="sum" id="sum">{{$v->goods_price*$v->buy_number}}</span></li>
+                                <li class="yui3-u-1-8 zongnum" id="zongnum"><span class="sum" id="sum">{{$v->goods_price*$v->buy_number}}</span></li>
                                 <li class="yui3-u-1-8">
                                     <button class="del">删除</button>
                                     <button >移到我的关注</button>
@@ -237,54 +237,96 @@
 <script>
     //购物车减
     $(document).on("click","#num-jian",function(){
+        var cart_id = $(this).parents('ul').attr('cart_id');
         var minus = $(this).parent("li").find("#input-num").val();//获取数量框里的数值
         var productPrice=$(this).parent("li").prev().find("#price").text();//单价的值
         minus--;  //单击“-”减号时，数量递减
         if(minus<=0){
             $(this).prop("disabled", true);
         }
-        // if(minus.val()<= 0){
-        //     minus.val(0);
-        // }else{
-        //     minus.val(parseInt(minus.val()) - 1);
-        // }
-       // minus.change();
-        //alert(minus);
+        $.ajax({
+            type:"post",
+            dataType:"json",
+            url:"/index/cartnumjian",
+            data:{buy_number:minus,cart_id:cart_id},
+            success:function(res){
+                    if(res.code==200){
+                        alert("修改成功")
+                        location.href='/index/cart'
+                    }
+                if(res.code==1){
+                    alert(res.msg)
+                }
+            }
+        });
         $(this).next("#input-num").val(minus); //把数量变化后的新值放入数量框中
         $(this).parent().next().find("#sum").text(minus*productPrice);//小计的值
-        totalPrice();	//调用总价方法
-        // totalNum();	//合计数
     });
     //加号操作
     $(document).on("click","#num-jia",function(){
+        var cart_id = $(this).parents('ul').attr('cart_id');
         var minus = $(this).parent("li").find("#input-num").val();//获取数量框里的数值
         var productPrice=$(this).parent("li").prev().find("#price").text();//单价的值
         minus++;  //单击“+”减号时，数量递减
         if(minus>0){
             $(this).prev("disabled", false);
         }
-        //add.val(parseInt(add.val()) + 1);
+        $.ajax({
+            type:"post",
+            dataType:"json",
+            url:"/index/cartnumjia",
+            data:{buy_number:minus,cart_id:cart_id},
+            success:function(res){
+                if(res.code==200){
+                    alert("修改成功")
+                    location.href='/index/cart'
+                }
+                if(res.code==1){
+                    alert(res.msg)
+                }
+            }
+        });
         $(this).prev("#input-num").val(minus); //把数量变化后的新值放入数量框中
         $(this).parent().next().find("#sum").text(minus*productPrice);//小计的值
-        totalPrice();	//调用总价方法
-       // totalNum();	//合计数
+    });
+    $(document).on("click","#box",function(){
+        var num = parseInt($(this).parents().find("#zongnum").find("#sum").text());
+        alert(num);
     });
     //计算总价方法
     function totalPrice(){
         //计算总价，编写总价方法
+        var box = $(".box:checked");
+        if(box.length == 0){
+            $("#Sum").text('￥' + 0);
+            return false;
+        }
         var zong = 0;
-        $("#sum").each(function(){
-            var all = parseInt($(this).text());
-            zong += all;
-        })
-        $("#Sum").text(zong);
+        $("input[name='check']:checked").each(function(){
+            var _this = $(this);
+            var num = parseInt($(this).parents().find("#zongnum").find("#sum").text());
+            //var num = parseInt($(this).text());
+            zong += num;
+            // console.log(zong);
+        });
+        $("#Sum").text('￥'+zong);
     }
+    //计算数量方法
+    function totalNum(){
+        //计算总价，编写总价方法
+        var sumNum = 0;
+        $(".itxt").each(function () {
+            var number = parseInt($(this).val());
+            sumNum += number;
+        })
+        $("#cartSumNumber").text(sumNum);
+    }
+
     //加载页面时，调用总价方法
     $(function(){
-        //totalNum();
+        totalNum();//合计数
         totalPrice();	//调用总价方法
     })
-
     //ajax删除
     $(document).on('click','.del',function(){
         var cart_id = $(this).parents('ul').attr('cart_id');
@@ -360,5 +402,4 @@
     })
 </script>
 </body>
-
 </html>
