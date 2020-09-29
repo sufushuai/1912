@@ -26,6 +26,12 @@ Route::any('/man/index','Man\ManController@index');//我的订单
 Route::any('/man/pay','Man\ManController@pay');//代付款
 Route::any('/man/send','Man\ManController@send');//代发货
 Route::any('/man/perinfo','Man\ManController@perinfo');//个人信息
+Route::any('/man/getArea','Man\ManController@getArea');//三级联动----省市区
+Route::any('/man/per_add','Man\ManController@per_add');//个人信息--添加
+Route::any('/man/per_index','Man\ManController@per_index');//个人信息--展示
+Route::any('/man/per_edit','Man\ManController@per_edit');//个人信息--修改
+Route::any('/man/per_update','Man\ManController@per_update');//个人信息--修改
+
 Route::any('/man/history','Man\ManController@history');//浏览历史
 Route::any('/man/coupon','Man\ManController@coupon');//优惠卷
 Route::any('/man/collect','Man\ManController@collect');//收藏
