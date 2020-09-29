@@ -16,7 +16,6 @@ class IndexController extends Common
 {
     //首页
     public function index(){
-
         $slide=SlideModel::where('is_del',1)->limit(5)->get();
         $ad=AdModel::where('is_del',1)->limit(5)->get();
         $brand=BrandModel::where('status',1)->limit(10)->get();
@@ -74,6 +73,14 @@ class IndexController extends Common
     public function success_cart(){
         return view('index.success_cart');
     }
+//    //购物车改变数量
+//    public function cartadd(Request $request){
+//        $minus = $request->post('minus');
+//        $add = $request->post('add');
+//        dd($minus);
+//        dd($add);
+//        return view('index.cart');
+//    }
     //详情
     public function item(Request $request,$goods_id){
 
