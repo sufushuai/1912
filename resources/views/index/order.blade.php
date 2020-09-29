@@ -71,7 +71,34 @@
                                                 <input type="text" class="input-medium">
                                             </div>
                                         </div>
-
+                                        <div class="control-group">
+                                            <label class="control-label">所在地区：</label>
+                                            <div class="controls">
+                                                <div data-toggle="distpicker">
+                                                    <div class="form-group area">
+                                                       
+                                                        <select class="area" name="province">
+                                                              <option value="0" selected="selected">请选择...</option>
+                                                             @foreach($data as $k=>$v)
+                                                              <option value="{{$v->area_id}}">{{$v->name}}</option>
+                                                              @endforeach
+                                                            </select>
+                                                             <select class="area" name="city">
+                                                              <option value="" selected="selected">请选择...</option>
+            
+                                                               
+                                                              <option value=""></option>
+                                                              
+                                                            </select>
+                                                            <select class="area" name="area">
+                                                              <option value="" selected="selected">请选择...</option>
+                                                          
+                                                        </select>
+                                                    </div>
+                                                  
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="control-group">
                                             <label class="control-label">详细地址：</label>
                                             <div class="controls">
@@ -218,3 +245,57 @@
 </body>
 
 </html>
+<script>
+//        $(function(){
+//           //给类为area绑定内容改变事件
+//          $(document).on("change",".area",function(){
+//               // alert(1);
+//               var _this=$(this);//发生内容改变的 select
+//               _this.nextAll('select').html("<option value=''>请选择</option>");
+//                //获取到当前的省份id
+//               var area_id=_this.val();
+//                // console.log(id);
+
+//                //通过ajax把id传给控制器
+//                $.post(
+//                    "{:url('/index/order')}",
+//                    {area_id:area_id},
+//                    function(res){
+//                        var _option="<option value=''>请选择...</option>";
+//                       for(var i in res){
+//                           _option+="<option value='"+res[i]['area_id']+"'>"+res[i]['name']+"</option>";
+//                        }
+//                        _this.next('select').html(_option);
+
+//                    },
+//                    'json'
+//                  );
+//            })
+//        })
+
+
+
+$(function(){
+            $(document).on('change','.area',function(){
+                // alert(123);
+                var _this = $(this);
+
+                _this.nextAll('select').html("<option value=''>请选择...</option>");
+                var area_id = _this.val();
+                // alert(id);
+                $.ajax({
+                    url : "/index/area",
+                    type : "post",
+                    data : {area_id : area_id},
+                    dataType:'json',
+                    success:function(res){
+                        if(res.status=='200'){
+                            _this.next().html(res.data)
+                        }
+                    }
+                })
+            });
+        });
+    </script>
+
+   </script>

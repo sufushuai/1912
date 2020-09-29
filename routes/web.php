@@ -36,6 +36,8 @@ Route::any('/man/received','Man\ManController@received');//待收获
 Route::any('/index/cart','Index\IndexController@cart');//购物车
 Route::any('/index/item/{goods_id}','Index\IndexController@item');//详情
 Route::any('/index/order','Index\IndexController@order');//订单
+Route::any('/index/area','Index\IndexController@area');//订单
+Route::any('/index/create','Index\IndexController@create');//订单
 //注册登录
 Route::any('/index/register','login\LoginController@register');//注册
 Route::any('/index/do_register','login\LoginController@do_register');//执行注册
