@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserModel extends Model
 {
     protected $table="shop_user";
-    protected $primaryKey="shop_id";
+    protected $primaryKey="user_id";
     public $timestamps=false;
     protected $guarded=[];
     protected $fillable = ['*'];

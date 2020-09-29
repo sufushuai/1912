@@ -6,12 +6,17 @@
                 <div class="shortcut">
                     <ul class="fl">
                         <li class="f-item">品优购欢迎您！</li>
-                        <li class="f-item">请<a href="{{url('index/login')}}" target="_blank">登录</a>　<span><a href="{{url('index/register')}}" target="_blank">免费注册</a></span></li>
+                        @if(Session::get('id'))
+                            <li class="f-item">{{ Session::get('name') }}</li>
+                            <li class="f-item"><a href="{{url('index/quit')}}">退出</a></li>
+                        @else
+                            <li class="f-item">请<a href="{{url('index/login')}}" target="_self">登录</a>　<span><a href="{{url('index/register')}}" target="_self">免费注册</a></span></li>
+                        @endif
                     </ul>
                     <ul class="fr">
                         <li class="f-item">我的订单</li>
                         <li class="f-item space"></li>
-                        <li class="f-item"><a href="{{url("/man/index")}}" target="_blank">个人中心</a></li>
+                        <li class="f-item"><a href="{{url("/man/index")}}" target="_self">个人中心</a></li>
                         <li class="f-item space"></li>
                         <li class="f-item">品优购会员</li>
                         <li class="f-item space"></li>
@@ -22,9 +27,9 @@
                         <li class="f-item" id="service">
                             <span>客户服务</span>
                             <ul class="service">
-                                <li><a href="cooperation.html" target="_blank">合作招商</a></li>
-                                <li><a href="shoplogin.html" target="_blank">商家后台</a></li>
-                                <li><a href="cooperation.html" target="_blank">合作招商</a></li>
+                                <li><a href="cooperation.html" target="_self">合作招商</a></li>
+                                <li><a href="shoplogin.html" target="_self">商家后台</a></li>
+                                <li><a href="cooperation.html" target="_self">合作招商</a></li>
                                 <li><a href="#">商家后台</a></li>
                             </ul>
                         </li>
@@ -40,7 +45,7 @@
             <div class="py-container">
                 <div class="yui3-g Logo">
                     <div class="yui3-u Left logoArea">
-                        <a class="logo-bd" title="品优购" href="JD-index.html" target="_blank"></a>
+                        <a class="logo-bd" title="品优购" href="JD-index.html" target="_self"></a>
                     </div>
                     <div class="yui3-u Center searchArea">
                         <div class="search">
@@ -69,7 +74,7 @@
                         <div class="fr shopcar">
                             <div class="show-shopcar" id="shopcar">
                                 <span class="car"></span>
-                                <a class="sui-btn btn-default btn-xlarge" href="{{url('index/cart')}}" target="_blank">
+                                <a class="sui-btn btn-default btn-xlarge" href="{{url('index/cart')}}" target="_self">
                                     <span>我的购物车</span>
                                     <i class="shopnum">0</i>
                                 </a>
@@ -95,7 +100,7 @@
                             <li class="f-item">闪购</li>
                             <li class="f-item">团购</li>
                             <li class="f-item">有趣</li>
-                            <li class="f-item"><a href="seckill-index.html" target="_blank">秒杀</a></li>
+                            <li class="f-item"><a href="seckill-index.html" target="_self">秒杀</a></li>
                         </ul>
                     </div>
                     <div class="yui3-u Right"></div>

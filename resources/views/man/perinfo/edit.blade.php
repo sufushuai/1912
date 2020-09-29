@@ -91,24 +91,25 @@
                                     </div>
                                 </div>
 
+
                                 <div class="control-group">
                                     <label for="inputPassword" class="control-label">所在地：</label>
                                     <div class="controls">
-                                        <div data-toggle="distpicker">
-                                            <div class="form-group area">
-                                                <select class="form-control" id="province1">
-                                                    <option value="0" selected>--省--</option>
-                                                    {{--@foreach($area as $k=>$v)--}}
-                                                    {{--<option value="{{$v->id}}">{{$v->name}}</option>--}}
-                                                    {{--@endforeach--}}
-                                                </select>
-                                            </div>
-                                            <div class="form-group area">
-                                                <select class="form-control" id="city1"></select>
-                                            </div>
-                                            <div class="form-group area">
-                                                <select class="form-control" id="district1"></select>
-                                            </div>
+                                        {{--<div data-toggle="distpicker">--}}
+                                        <div class="form-group area">
+                                            <select class="form-control region"  name="province">
+                                                <option value="0" selected="selected">--请选择--</option>
+                                                @foreach($area as $k=>$v)
+                                                    <option value="{{$v->area_id}}">{{$v->name}}</option>
+                                                @endforeach
+                                            </select>
+                                            <select class="form-control region" name="city" >
+                                                <option value="0" selected="selected">--请选择--</option>
+                                            </select>
+
+                                            <select  name="area" class="form-control region" >
+                                                <option value="0" selected="selected">--请选择--</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -140,11 +141,14 @@
         var info_name=$("input[name='info_name']").val();
         var info_tel=$("input[name='info_tel']").val();
         var info_sex=$(":checked").val();
+        var province = $("select[name='province']").val();
+        var city = $("select[name='city']").val();
+        var area = $("select[name='area']").val();
 
         $.ajax({
             url:"/man/per_update",
             type:"post",
-            data:{info_id:info_id,info_name:info_name,info_tel:info_tel,info_sex:info_sex},
+            data:{info_id:info_id,info_name:info_name,info_tel:info_tel,info_sex:info_sex,province:province,city:city,area:area},
             dataType:"json",
             success:function(res){
                 if(res.code){
@@ -154,4 +158,22 @@
             }
         })
     })
+    $(document).on("change",".region",function(){
+
+        var _this = $(this);
+
+        _this.nextAll('select').html("<option value='0'>--请选择--</option>");
+
+        var area_id = _this.val();
+
+        $.ajax({
+            url:"{{url('/man/getArea')}}",
+            data : {'area_id':area_id},
+            type:'post',
+            success:function(res){
+
+                _this.next("select").html(res);
+            }
+        });
+    });
 </script>
