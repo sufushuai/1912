@@ -12,6 +12,9 @@ use App\Model\SlideModel;
 use App\Model\CartModel;
 use App\Model\CategoryModel;
 use App\Model\GoodsModel;
+use App\Model\SkuAttrValModel;
+use App\Model\SkuAttrModel;
+use App\Model\SkuValModel;
 use App\Model\AreaModel;
 use App\Model\UserModel;
 use App\Model\AddressModel;
@@ -109,6 +112,9 @@ class IndexController extends Common
     }
     //详情
     public function item(Request $request,$goods_id){
+
+        //商品
+
         $key="num".$goods_id;
         if(Redis::get($key)){
             Redis::incr($key);
@@ -120,9 +126,29 @@ class IndexController extends Common
         ];
 
         GoodsModel::where('goods_id',$goods_id)->update($where);
-        $role_Info=GoodsModel::where('goods_id',$goods_id)->first();
 
-        return view('index.item',['role_Info'=>$role_Info]);
+        $role_Info=GoodsModel::where('goods_id',$goods_id)->first();
+        $role_Info->goods_images=trim( $role_Info->goods_images,',');
+        $sku_id=SkuAttrValModel::where(['goods_id'=>$goods_id])->get('sku')->toArray();
+        foreach ($sku_id as $k1=>&$v1) {
+            $v1['sku']=explode(',',$v1['sku']);
+            $attr_id = SkuValModel::select('attr_id')->whereIn('val_id', $v1['sku'])->get()->toArray();
+            $att=SkuAttrModel::select('attr_id','attr_name')->whereIN('attr_id',$attr_id)->where('is_del',1)->get()->toArray();
+        }
+        foreach ($att as $k2=>&$v2) {
+            $val=SkuValModel::where('attr_id',$v2['attr_id'])->get()->toarray();
+            $v2['sku']=$val;
+            foreach ($v2['sku'] as $k3=>&$v3) {
+                foreach ($sku_id as $k4=>$v4) {
+                    if(in_array($v3['val_id'],$v4['sku'])){
+                        $v2['sku4'][$k3]=$v3;
+                    }
+               }
+            }
+        }
+        $sav = SkuAttrValModel::where('goods_id',$goods_id)->first();
+
+        return view('index.item',['role_Info'=>$role_Info,'sav'=>$att]);
 
     }
     //减购物车数量

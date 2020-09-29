@@ -55,6 +55,7 @@ class ManController extends Common
     *个人信息-----添加
      */
     public function per_add(Request $request){
+        $user_id=$this->user_id();
         $info_name=$request->post("info_name");
         $info_tel=$request->post("info_tel");
         $info_sex=$request->post("info_sex");
@@ -62,6 +63,7 @@ class ManController extends Common
         $city=$request->post("city");
         $area=$request->post("area");
         $info_data=[
+            "user_id"=>$user_id,
             "info_name"=>$info_name,
             "info_tel"=>$info_tel,
             "info_sex"=>$info_sex,
@@ -80,8 +82,10 @@ class ManController extends Common
      *个人信息-----展示
      */
     public function per_index(Request $request){
-
-        $data_info = PerinfoModel::orderBy('info_id','desc')->get();
+        $where=[
+            "user_id"=>$this->user_id(),
+        ];
+        $data_info = PerinfoModel::where($where)->orderBy('info_id','desc')->get();
 
         foreach($data_info as $k=>$v){
             $data_info[$k]['province'] = AreaModel::where('area_id',$v['province'])->value("name");
@@ -103,6 +107,7 @@ class ManController extends Common
      **个人信息 ---修改逻辑
     */
     public function per_update(Request $request){
+        $user_id=$this->user_id();
         $info_id=$request->post("info_id");
         $info_name=$request->post("info_name");
         $info_tel=$request->post("info_tel");
@@ -112,6 +117,7 @@ class ManController extends Common
         $area=$request->post("area");
 
         $info_data=[
+            "user_id"=>$user_id,
             "info_name"=>$info_name,
             "info_tel"=>$info_tel,
             "info_sex"=>$info_sex,
