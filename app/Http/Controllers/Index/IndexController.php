@@ -56,24 +56,17 @@ class IndexController extends Common
         //楼层
         $floor=CategoryModel::where('p_id',0)->value('cate_id');
         //dd($floor);
-        $this->getFloor($floor);
-
-        //dump($floors);
-
-        return view('index.index',['brand'=>$brand,'ad'=>$ad,'slide'=>$slide,'category'=>$cate,'guess'=>$guess,'today'=>$today]);
-    }
-    public function getFloor($cate_id){
         //最高分类
-        $cateList1=CategoryModel::where('cate_id',$cate_id)->first();
+        $cateList1=CategoryModel::where('cate_id',$floor)->first();
         //dd($cateList1);
         $where=[
-            'p_id'=>$cate_id,
+            'p_id'=>$floor,
         ];
         //子级分类
         $cateList2=CategoryModel::where($where)->get();
         //所有子孙级ID
         $cateAll=CategoryModel::get();
-        $cateIds=$this->getCateIds($cateAll,$cate_id);
+        $cateIds=$this->getCateIds($cateAll,$floor);
         //获取当前数组中所有的值
         $cateIds=array_values($cateIds);
         //dd($cateIds);
@@ -83,12 +76,15 @@ class IndexController extends Common
         $where1=[
             ['cate_id','in',$str_cateIds]
         ];
-        $goodsList=GoodsModel::where($where)->limit(8)->get();
-        $this->assign('cateList1',$cateList1);
-        $this->assign('cateList2',$cateList2);
-        $this->assign('goodsList',$goodsList);
+        $goodsList=GoodsModel::where($where1)->limit(8)->get();
 
+
+        //dump($floors);
+
+
+        return view('index.index',['brand'=>$brand,'cateList1'=>$cateList1,'cateList2'=>$cateList2,'goodsList'=>$goodsList,'ad'=>$ad,'slide'=>$slide,'category'=>$cate,'guess'=>$guess,'today'=>$today]);
     }
+
 
     //购物车
     public function cart(){

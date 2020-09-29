@@ -237,11 +237,11 @@
 </div>
 
 <!--楼层-->
-@foreach($floor as $v)
+
 <div id="floor-1" class="floor">
     <div class="py-container">
         <div class="title floors">
-            <h3 class="fl">{{$v['cate_name']}}</h3>
+            <h3 class="fl"></h3>
             <div class="fr">
                 <ul class="sui-nav nav-tabs">
 
@@ -315,7 +315,7 @@
         </div>
     </div>
 </div>
-@endforeach
+
 
 <!--商标-->
 <div class="brand">
