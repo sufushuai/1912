@@ -14,9 +14,13 @@ use App\Model\CategoryModel;
 use App\Model\GoodsModel;
 use App\Model\AreaModel;
 use App\Model\UserModel;
+<<<<<<< HEAD
 use App\Model\AddressModel;
 
+=======
+>>>>>>> 487f3237ebe3393f3adb19194cea261012712a25
 
+use Illuminate\Support\Facades\Session;
 class IndexController extends Common
 {
     //首页
@@ -28,6 +32,7 @@ class IndexController extends Common
         $ad=AdModel::where('is_del',1)->limit(5)->get();
         //品牌
         $brand=BrandModel::where('status',1)->limit(16)->get();
+
           $where=[
                     'is_hot'=>1,
                     'is_show'=>1,
@@ -38,17 +43,26 @@ class IndexController extends Common
         //$guess=collect($guess)->toArray();
         $guess=array_chunk($guess,2,true);
         //dump($guess);die;
+
         //获取分类数据
         $category=CategoryModel::get()->toArray();
         //获取所有父级ID p_id
         //执行无极限
         $cate=$this->getcateInfo2($category);
 
-
         //今日推荐
         $today=GoodsModel::where('is_del',1)->orderby('goods_clicknum','desc')->limit(4)->get();
 
-        return view('index.index',['brand'=>$brand,'ad'=>$ad,'slide'=>$slide,'category'=>$cate,'guess'=>$guess,'today'=>$today]);
+        //楼层
+        $floor=CategoryModel::get()->toArray();
+        //执行无极限
+        $floors=$this->getCateInfo1($floor);
+        print_r($floors);
+        //exit;
+
+        //dump($floors);
+
+        return view('index.index',['brand'=>$brand,'ad'=>$ad,'slide'=>$slide,'category'=>$cate,'guess'=>$guess,'today'=>$today,'floor'=>$floors]);
     }
 
     //购物车
@@ -73,7 +87,7 @@ class IndexController extends Common
         //dd($str);
         //利用循环将需要删除的id 一个一个进行执行sql；
         foreach($str as $k => $v){
-            $res=CartModel::destroy($v);
+            $res=CartModel::where('cart_id',$v)->update(["is_del"=>2]);
         }
         //dd($res);
         if($res){
@@ -84,8 +98,6 @@ class IndexController extends Common
     }
     //成功加入购物车
     public function success_cart(){
-
-
         $goods_price = request()->post("goods_price");
 
         $where =[
@@ -98,14 +110,6 @@ class IndexController extends Common
             return $this->error(1,'fail');
         }
     }
-//    //购物车改变数量
-//    public function cartadd(Request $request){
-//        $minus = $request->post('minus');
-//        $add = $request->post('add');
-//        dd($minus);
-//        dd($add);
-//        return view('index.cart');
-//    }
     //详情
     public function item(Request $request,$goods_id){
         $key="num".$goods_id;
@@ -124,7 +128,28 @@ class IndexController extends Common
         return view('index.item',['role_Info'=>$role_Info]);
 
     }
-
+    //减购物车数量
+    public function cartnumjian(Request $request){
+        $buy_number = $request->post('buy_number');
+        $cart_id = $request->post('cart_id');
+        $numjian = CartModel::where('cart_id',$cart_id)->update(["buy_number"=>$buy_number]);
+        if($numjian){
+            return $this->success(200,'ok');
+        }else{
+            return $this->error(1,'fail');
+        }
+    }
+    //加购物车数量
+    public function cartnumjia(Request $request){
+        $buy_number = $request->post('buy_number');
+        $cart_id = $request->post('cart_id');
+        $numjian = CartModel::where('cart_id',$cart_id)->update(["buy_number"=>$buy_number]);
+        if($numjian){
+            return $this->success(200,'ok');
+        }else{
+            return $this->error(1,'fail');
+        }
+    }
     //订单
     public function order(){
         $address = AddressModel::get();
@@ -157,7 +182,7 @@ class IndexController extends Common
     }
 
      //获取地区
-    public function getArea(){
+    public function getArea(request $request){
        $area_id=$request->post('area_id');
 //        if($area_id == 0){
 //            return view('Merchandise.Index.areaajax',['id'=>$area_id]);
@@ -264,10 +289,4 @@ class IndexController extends Common
         }
     }
 
-   
-
-
-    //无限极
-    public function cate(){
-    }
 }
