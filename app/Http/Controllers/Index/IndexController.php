@@ -12,13 +12,10 @@ use App\Model\SlideModel;
 use App\Model\CartModel;
 use App\Model\CategoryModel;
 use App\Model\GoodsModel;
-<<<<<<< HEAD
 use App\Model\AreaModel;
 use App\Model\UserModel;
-=======
-use Illuminate\Support\Facades\Session;
->>>>>>> 7ec401c734da80b1707a00da275b192ce4910165
 
+use Illuminate\Support\Facades\Session;
 class IndexController extends Common
 {
     //首页
@@ -167,7 +164,7 @@ class IndexController extends Common
     }
 
      //获取地区
-    public function getArea(){
+    public function getArea(request $request){
        $area_id=$request->post('area_id');
 //        if($area_id == 0){
 //            return view('Merchandise.Index.areaajax',['id'=>$area_id]);
@@ -247,14 +244,4 @@ class IndexController extends Common
         }
     }
 
-<<<<<<< HEAD
-
-=======
-   
-
-
-    //无限极
-    public function cate(){
-    }
->>>>>>> 5cff30d933a50513b6f6c15871a2daa2aed04544
 }
