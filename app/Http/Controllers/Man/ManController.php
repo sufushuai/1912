@@ -31,26 +31,25 @@ class ManController extends Common
      *  个人信息
      */
     public function perinfo(){
-        $area=AreaModel::where("pid",0)->get();
-
+        $area=$this->getAreaInfo(0);
         return view("man/perinfo/perinfo",compact("area"));
     }
 
     //三级联动
 
-    //获取区域信息
-    function getAreaInfo($pid){
-        $where=[
-            ['pid','=',$pid]
-        ];
-        return Areamodel::where($where)->select();
-    }
+
     //三级联动
     public function getArea(Request $request){
         $area_id=$request->post('area_id');
-        $info=$this->getAreaInfo($area_id);
-
-        return json_encode($info);
+//        if($area_id == 0){
+//            return view('Merchandise.Index.areaajax',['id'=>$area_id]);
+//        }
+        $info = $this->getAreaInfo($area_id);
+        $option = "<option value='0'>--请选择--</option>";
+        foreach($info as $k=>$v){
+            $option.="<option value='".$v['area_id']."'>".$v['name']."</option>";
+        }
+        echo $option;
     }
     /**
     *个人信息-----添加
@@ -59,10 +58,16 @@ class ManController extends Common
         $info_name=$request->post("info_name");
         $info_tel=$request->post("info_tel");
         $info_sex=$request->post("info_sex");
+        $province=$request->post("province");
+        $city=$request->post("city");
+        $area=$request->post("area");
         $info_data=[
             "info_name"=>$info_name,
             "info_tel"=>$info_tel,
             "info_sex"=>$info_sex,
+            "province"=>$province,
+            "city"=>$city,
+            "area"=>$area
         ];
         $info=PerinfoModel::insert($info_data);
         if($info){
@@ -75,7 +80,14 @@ class ManController extends Common
      *个人信息-----展示
      */
     public function per_index(Request $request){
-        $data_info=PerinfoModel::where("info_id",1)->first();
+
+        $data_info = PerinfoModel::orderBy('info_id','desc')->get();
+
+        foreach($data_info as $k=>$v){
+            $data_info[$k]['province'] = AreaModel::where('area_id',$v['province'])->value("name");
+            $data_info[$k]['city'] =AreaModel::where('area_id',$v['city'])->value("name");
+            $data_info[$k]['area'] = AreaModel::where('area_id',$v['area'])->value("name");
+        }
         return view("man/perinfo/index",compact("data_info"));
     }
     /**
@@ -84,7 +96,8 @@ class ManController extends Common
     public function per_edit(Request $request){
         $info_id=$request->post("info_id");
         $info_edit=PerinfoModel::find($info_id);
-        return view("man/perinfo/edit",compact("info_edit"));
+        $area=$this->getAreaInfo(0);
+        return view("man/perinfo/edit",compact("info_edit","area"));
     }
     /**
      **个人信息 ---修改逻辑
@@ -94,11 +107,17 @@ class ManController extends Common
         $info_name=$request->post("info_name");
         $info_tel=$request->post("info_tel");
         $info_sex=$request->post("info_sex");
+        $province=$request->post("province");
+        $city=$request->post("city");
+        $area=$request->post("area");
 
         $info_data=[
             "info_name"=>$info_name,
             "info_tel"=>$info_tel,
             "info_sex"=>$info_sex,
+            "province"=>$province,
+            "city"=>$city,
+            "area"=>$area
         ];
         $info_edit=PerinfoModel::where("info_id",$info_id)->update($info_data);
         if($info_edit){

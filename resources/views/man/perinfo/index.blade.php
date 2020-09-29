@@ -68,19 +68,20 @@
                         <!--数据列表-->
                         <table id="dataList" class="sui-table table-bordered">
                             <thead>
+                            @foreach($data_info as $k=>$v)
                             <tr>
                                 <th class="sorting_asc">昵称：</th>
-                                <input type="hidden" value="{{$data_info->info_id}}" name="info_id">
-                                <td class="sorting_asc" >{{$data_info->info_name}}</td>
+                                <input type="hidden" value="{{$v->info_id}}" name="info_id">
+                                <td class="sorting_asc" >{{$v->info_name}}</td>
                             </tr>
                             <tr>
                                 <th class="sorting_asc">手机号：</th>
-                                <td class="sorting_asc" >{{$data_info->info_tel}}</td>
+                                <td class="sorting_asc" >{{$v->info_tel}}</td>
                             </tr>
                             <tr>
                                 <th class="sorting_asc">性别：</th>
                                 <td class="sorting_asc" >
-                                    @if($data_info->info_sex==1)
+                                    @if($v->info_sex==1)
                                         男
                                         @else
                                     女
@@ -88,9 +89,14 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th class="sorting_asc">积分：</th>
-                                <td>{{$data_info->info_score}}分</td>
+                                <th class="sorting_asc">所在地：</th>
+                                <td>{{$v->province}}&nbsp;{{$v->city}}&nbsp;{{$v->area}}</td>
                             </tr>
+                            <tr>
+                                <th class="sorting_asc">积分：</th>
+                                <td>{{$v->info_score}}分</td>
+                            </tr>
+                                @endforeach
                             </thead>
                         </table>
                         <button class="edit">修改个人信息</button>
