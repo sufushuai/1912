@@ -12,15 +12,20 @@ use App\Model\SlideModel;
 use App\Model\CartModel;
 use App\Model\CategoryModel;
 use App\Model\GoodsModel;
+use App\Model\SkuAttrValModel;
+use App\Model\SkuAttrModel;
+use App\Model\SkuValModel;
 use App\Model\AreaModel;
 use App\Model\UserModel;
+use App\Model\AddressModel;
+
 
 use Illuminate\Support\Facades\Session;
 class IndexController extends Common
 {
     //首页
     public function index(){
-
+    
         //轮播图
         $slide=SlideModel::where('is_del',1)->limit(5)->get();
         //广告
@@ -132,6 +137,9 @@ class IndexController extends Common
     }
     //详情
     public function item(Request $request,$goods_id){
+
+        //商品
+
         $key="num".$goods_id;
         if(Redis::get($key)){
             Redis::incr($key);
@@ -143,9 +151,29 @@ class IndexController extends Common
         ];
 
         GoodsModel::where('goods_id',$goods_id)->update($where);
-        $role_Info=GoodsModel::where('goods_id',$goods_id)->first();
 
-        return view('index.item',['role_Info'=>$role_Info]);
+        $role_Info=GoodsModel::where('goods_id',$goods_id)->first();
+        $role_Info->goods_images=trim( $role_Info->goods_images,',');
+        $sku_id=SkuAttrValModel::where(['goods_id'=>$goods_id])->get('sku')->toArray();
+        foreach ($sku_id as $k1=>&$v1) {
+            $v1['sku']=explode(',',$v1['sku']);
+            $attr_id = SkuValModel::select('attr_id')->whereIn('val_id', $v1['sku'])->get()->toArray();
+            $att=SkuAttrModel::select('attr_id','attr_name')->whereIN('attr_id',$attr_id)->where('is_del',1)->get()->toArray();
+        }
+        foreach ($att as $k2=>&$v2) {
+            $val=SkuValModel::where('attr_id',$v2['attr_id'])->get()->toarray();
+            $v2['sku']=$val;
+            foreach ($v2['sku'] as $k3=>&$v3) {
+                foreach ($sku_id as $k4=>$v4) {
+                    if(in_array($v3['val_id'],$v4['sku'])){
+                        $v2['sku4'][$k3]=$v3;
+                    }
+               }
+            }
+        }
+        $sav = SkuAttrValModel::where('goods_id',$goods_id)->first();
+
+        return view('index.item',['role_Info'=>$role_Info,'sav'=>$att]);
 
     }
     //减购物车数量
@@ -172,6 +200,8 @@ class IndexController extends Common
     }
     //订单
     public function order(){
+        $address = AddressModel::get();
+           
         //查询所有收货地址  作为列表数据
         $addressInfo=$this->getAddressInfo();
         // dd($addressInfo);
@@ -180,7 +210,7 @@ class IndexController extends Common
         $res=$this->getAreaInfo(0);
         // $cityInfo=$this->getAreaInfo($addressInfo['province']);
 
-        return view('index.order',['res'=>$res]);
+        return view('index.order',['res'=>$res,'addressInfo'=>$addressInfo]);
         
        }
 
@@ -217,24 +247,36 @@ class IndexController extends Common
 
       //获取区域信息
     public function getAddressInfo(){
-        $area_model = new AreaModel;
-        $area = $area_model->where('pid',0)->get();
+        
+        // $area_model = new AreaModel;
+        // $area = $area_model->where('pid',0)->get();
         //$city = $area_model->where('pid',$area['area_id'])->get();
+        $where=[
+            ['user_id','=',$this->user_id()],
+            ['is_del','=',1]
+        ];
+        $addressInfo=Addressmodel::where($where)->get();
+
+        if(!empty($addressInfo)){
+            $area=$addressInfo->toArray();
+        }
       
         
         foreach($area as $k=>$v){
-             $area[$k]['province']=$area_model->where("area_id",$v['province'])->value("name");//根据id查市
-             $area[$k]['city']=$area_model->where("area_id",$v['city'])->value("name");//根据id查省
-             $area[$k]['area']=$area_model->where("area_id",$v['area'])->value("name");//根据id查区
+             $area[$k]['province']=AreaModel::where("area_id",$v['province'])->value("name");//根据id查市
+             $area[$k]['city']=AreaModel::where("area_id",$v['city'])->value("name");//根据id查省
+             $area[$k]['area']=AreaModel::where("area_id",$v['area'])->value("name");//根据id查区
             // dd($area);
          }
         
        
+    
         return $area;
     }
 
     // 用户收货地址添加
     public function create(){
+       $user_id=$this->user_id();
        $user_name = request()->post('user_name');
        $user_tel = request()->post('user_tel');
        $province = request()->post('province');
@@ -246,6 +288,7 @@ class IndexController extends Common
        // dump($city);
        // dump($area);
        $data =[
+            'user_id'=>$user_id,
             'user_name'=>$user_name,
             'user_tel'=>$user_tel,
             'province'=>$province,
@@ -253,6 +296,20 @@ class IndexController extends Common
             'area'=>$area
        ];
        // dd($data);
+       $Address = new AddressModel;
+       $Address->user_id=$data['user_id'];
+       $Address->user_name=$data['user_name'];
+       $Address->user_tel=$data['user_tel'];
+       $Address->province=$data['province'];
+       $Address->city=$data['city'];
+       $Address->area=$data['area'];
+       $res = $Address->save();
+       // dd($res);
+       if($res){
+            return['code'=>'0','mag'=>"成功"];
+        }else{
+            return['code'=>'1','mag'=>"失败"];
+        }
     }
 
     // 三级联动
