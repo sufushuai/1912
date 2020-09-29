@@ -20,7 +20,7 @@
     </div>
     <!--register-->
     <div class="registerArea">
-        <h3>注册新用户<span class="go">我有账号，去<a href="{{url('index/login')}}" target="_blank">登陆</a></span></h3>
+        <h3>注册新用户<span class="go">我有账号，去<a href="{{url('index/login')}}" target="_self">登陆</a></span></h3>
         <div class="info">
             <form class="sui-form form-horizontal">
                 <div class="control-group">
@@ -52,7 +52,7 @@
                     <label for="inputPassword" class="control-label">短信验证码：</label>
                     <div class="controls">
                         <input type="text" name="code" placeholder="短信验证码" class="input-xfat input-xlarge">
-                        <button type="button" id="sendcode">获取短信验证码</button>
+                        <button type="button" id="sendcode" class="sui-btn btn-xlarge btn-warm">获取短信验证码</button>
                         <span class="getcode" style="display: none"></span>
                     </div>
                 </div>
