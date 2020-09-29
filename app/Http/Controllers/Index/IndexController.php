@@ -16,10 +16,9 @@ class IndexController extends Common
 {
     //首页
     public function index(){
-<<<<<<< HEAD
-=======
+
         //猜你喜欢
->>>>>>> ff50e71d65601084545704e8e1855a2603e6ba35
+
         $slide=SlideModel::where('is_del',1)->limit(5)->get();
         //广告
         $ad=AdModel::where('is_del',1)->limit(5)->get();
