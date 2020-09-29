@@ -13,7 +13,7 @@
 
 <body>
 <!--head-->
-@include('index.layouts.layout')
+@include('index.layouts.head')
     <!--主内容-->
     <div class="checkout py-container">
         <div class="checkout-tit">
@@ -29,28 +29,15 @@
                     <ul class="addr-detail">
                         <li class="addr-item">
                             <div>
-                                <div class="con name selected"><a href="javascript:;" >张默<span title="点击取消选择">&nbsp;</a></div>
-                                <div class="con address">张默 北京市海淀区三环内 中关村软件园9号楼 <span>159****3201</span>
-                                    <span class="base">默认地址</span>
+                                @foreach($addressInfo as $k=>$v)
+                                <div class="con name selected"><a href="javascript:;" >{{$v['user_name']}}<span title="点击取消选择">&nbsp;</a></div>
+                                <div class="con address">{{$v['province']}}{{$v['city']}}{{$v['area']}}<span>{{$v['user_tel']}}</span>
                                     <span class="edittext"><a data-toggle="modal" data-target=".edit" data-keyboard="false" >编辑</a>&nbsp;&nbsp;<a href="javascript:;">删除</a></span>
                                 </div>
                                 <div class="clearfix"></div>
+                                @endforeach
                             </div>
-                            <div>
-                                <div class="con name"><a href="javascript:;">李煜<span title="点击取消选择">&nbsp;</a></div>
-                                <div class="con address">李煜 北京市海淀区三环内 中关村软件园8号楼 <span>187****4201</span>
-                                    <span class="edittext"><a data-toggle="modal" data-target=".edit" data-keyboard="false" >编辑</a>&nbsp;&nbsp;<a href="javascript:;">删除</a></span>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-
-                            <div>
-                                <div class="con name"><a href="javascript:;">王希<span title="点击取消选择">&nbsp;</a></div>
-                                <div class="con address">王希 北京市海淀区三环内 中关村软件园6号楼  <span>156****5681</span>
-                                    <span class="edittext"><a data-toggle="modal" data-target=".edit" data-keyboard="false" >编辑</a>&nbsp;&nbsp;<a href="javascript:;">删除</a></span>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
+                           
                         </li>
 
 
@@ -275,10 +262,10 @@ $(function(){
                 dataType:"json",
                 success:function(res){
                     // alert(111);
-                    // if(res.code=='0'){
-                    //     alert(res.mag)
-                    //     location.href='/index/order'
-                    // }
+                    if(res.code=='0'){
+                        alert(res.mag)
+                        location.href='/index/order'
+                    }
                 }
             })
         })
