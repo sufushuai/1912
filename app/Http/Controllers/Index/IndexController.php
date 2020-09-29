@@ -16,10 +16,7 @@ class IndexController extends Common
 {
     //首页
     public function index(){
-<<<<<<< HEAD
-=======
         //猜你喜欢
->>>>>>> ff50e71d65601084545704e8e1855a2603e6ba35
         $slide=SlideModel::where('is_del',1)->limit(5)->get();
         //广告
         $ad=AdModel::where('is_del',1)->limit(5)->get();
@@ -69,7 +66,7 @@ class IndexController extends Common
         //dd($str);
         //利用循环将需要删除的id 一个一个进行执行sql；
         foreach($str as $k => $v){
-            $res=CartModel::destroy($v);
+            $res=CartModel::where('cart_id',$v)->update(["is_del"=>2]);
         }
         //dd($res);
         if($res){
@@ -80,8 +77,6 @@ class IndexController extends Common
     }
     //成功加入购物车
     public function success_cart(){
-
-
         $goods_price = request()->post("goods_price");
 
         $where =[
@@ -94,14 +89,6 @@ class IndexController extends Common
             return $this->error(1,'fail');
         }
     }
-//    //购物车改变数量
-//    public function cartadd(Request $request){
-//        $minus = $request->post('minus');
-//        $add = $request->post('add');
-//        dd($minus);
-//        dd($add);
-//        return view('index.cart');
-//    }
     //详情
     public function item(Request $request,$goods_id){
 
@@ -110,7 +97,28 @@ class IndexController extends Common
         return view('index.item',['role_Info'=>$role_Info]);
 
     }
-
+    //减购物车数量
+    public function cartnumjian(Request $request){
+        $buy_number = $request->post('buy_number');
+        $cart_id = $request->post('cart_id');
+        $numjian = CartModel::where('cart_id',$cart_id)->update(["buy_number"=>$buy_number]);
+        if($numjian){
+            return $this->success(200,'ok');
+        }else{
+            return $this->error(1,'fail');
+        }
+    }
+    //加购物车数量
+    public function cartnumjia(Request $request){
+        $buy_number = $request->post('buy_number');
+        $cart_id = $request->post('cart_id');
+        $numjian = CartModel::where('cart_id',$cart_id)->update(["buy_number"=>$buy_number]);
+        if($numjian){
+            return $this->success(200,'ok');
+        }else{
+            return $this->error(1,'fail');
+        }
+    }
     //订单
     public function order(){
            // echo count(strlen("http://php.net"));die;
