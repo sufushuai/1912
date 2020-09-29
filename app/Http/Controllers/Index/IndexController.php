@@ -16,7 +16,10 @@ class IndexController extends Common
 {
     //首页
     public function index(){
+<<<<<<< HEAD
+=======
         //猜你喜欢
+>>>>>>> ff50e71d65601084545704e8e1855a2603e6ba35
         $slide=SlideModel::where('is_del',1)->limit(5)->get();
         //广告
         $ad=AdModel::where('is_del',1)->limit(5)->get();
@@ -77,8 +80,28 @@ class IndexController extends Common
     }
     //成功加入购物车
     public function success_cart(){
-        return view('index.success_cart');
+
+
+        $goods_price = request()->post("goods_price");
+
+        $where =[
+            "goods_price"=>$goods_price
+        ];
+        $res=CartModel::insert($where);
+        if($res){
+            return $this->success(200,'ok');
+        }else{
+            return $this->error(1,'fail');
+        }
     }
+//    //购物车改变数量
+//    public function cartadd(Request $request){
+//        $minus = $request->post('minus');
+//        $add = $request->post('add');
+//        dd($minus);
+//        dd($add);
+//        return view('index.cart');
+//    }
     //详情
     public function item(Request $request,$goods_id){
 
@@ -87,6 +110,7 @@ class IndexController extends Common
         return view('index.item',['role_Info'=>$role_Info]);
 
     }
+
     //订单
     public function order(){
            // echo count(strlen("http://php.net"));die;

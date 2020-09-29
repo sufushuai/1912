@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
     <title>我的购物车</title>
-
     <link rel="stylesheet" type="text/css" href="/asses/css/webbase.css" />
     <link rel="stylesheet" type="text/css" href="/asses/css/pages-cart.css" />
 </head>
-
 <body>
 <!--head-->
 @include('index.layouts.layout')
@@ -44,14 +41,13 @@
                                             尺寸：13.3英寸</div>
                                     </div>
                                 </li>
-
-                                <li class="yui3-u-1-8"><span class="price">{{$v->goods_price}}</span></li>
+                                <li class="yui3-u-1-8"><span class="price" id="price" >{{$v->goods_price}}</span></li>
                                 <li class="yui3-u-1-8">
-                                    <button id="num-jian" class="increment mins">－</button>
-                                    <input  id="input-num"  type="text" value="1" class="itxt" />
+                                    <button id="num-jian" class="increment mins  numberMinus">－</button>
+                                    <input  id="input-num"  type="text" value="{{$v->buy_number}}" class="itxt" />
                                     <button id="num-jia" class="increment plus">＋</button>
                                 </li>
-                                <li class="yui3-u-1-8"><span class="sum">{{$v->goods_price}}</span></li>
+                                <li class="yui3-u-1-8"><span class="sum" id="sum">{{$v->goods_price*$v->buy_number}}</span></li>
                                 <li class="yui3-u-1-8">
                                     <button class="del">删除</button>
                                     <button >移到我的关注</button>
@@ -69,9 +65,9 @@
                 <a href="#none">清除下柜商品</a>
             </div>
             <div class="toolbar">
-                <div class="chosed">已选择<span>0</span>件商品</div>
+                <div class="chosed">已选择<span class="cartSumNumber" id="cartSumNumber">0</span>件商品</div>
                 <div class="sumprice">
-                    <span><em>总价（不含运费） ：</em><i class="summoney">¥16283.00</i></span>
+                    <span><em>总价（不含运费） ：</em><span class="summoney" id="Sum">16283.00</span></span>
                     <span><em>已节省：</em><i>-¥20.00</i></span>
                 </div>
                 <div class="sumbtn">
@@ -241,21 +237,54 @@
 <script>
     //购物车减
     $(document).on("click","#num-jian",function(){
-        var minus = $(this).parent("li").find("#input-num");
-        if(minus.val()<= 0){
-            minus.val(0);
-        }else{
-            minus.val(parseInt(minus.val()) - 1);
+        var minus = $(this).parent("li").find("#input-num").val();//获取数量框里的数值
+        var productPrice=$(this).parent("li").prev().find("#price").text();//单价的值
+        minus--;  //单击“-”减号时，数量递减
+        if(minus<=0){
+            $(this).prop("disabled", true);
         }
-        minus.change();
+        // if(minus.val()<= 0){
+        //     minus.val(0);
+        // }else{
+        //     minus.val(parseInt(minus.val()) - 1);
+        // }
+       // minus.change();
+        //alert(minus);
+        $(this).next("#input-num").val(minus); //把数量变化后的新值放入数量框中
+        $(this).parent().next().find("#sum").text(minus*productPrice);//小计的值
+        totalPrice();	//调用总价方法
+        // totalNum();	//合计数
     });
-    //购物车加
+    //加号操作
     $(document).on("click","#num-jia",function(){
-        var add = $(this).parent("li").find("#input-num");
-        //alert(add);
-        add.val(parseInt(add.val()) + 1);
-        add.change();
+        var minus = $(this).parent("li").find("#input-num").val();//获取数量框里的数值
+        var productPrice=$(this).parent("li").prev().find("#price").text();//单价的值
+        minus++;  //单击“+”减号时，数量递减
+        if(minus>0){
+            $(this).prev("disabled", false);
+        }
+        //add.val(parseInt(add.val()) + 1);
+        $(this).prev("#input-num").val(minus); //把数量变化后的新值放入数量框中
+        $(this).parent().next().find("#sum").text(minus*productPrice);//小计的值
+        totalPrice();	//调用总价方法
+       // totalNum();	//合计数
     });
+    //计算总价方法
+    function totalPrice(){
+        //计算总价，编写总价方法
+        var zong = 0;
+        $("#sum").each(function(){
+            var all = parseInt($(this).text());
+            zong += all;
+        })
+        $("#Sum").text(zong);
+    }
+    //加载页面时，调用总价方法
+    $(function(){
+        //totalNum();
+        totalPrice();	//调用总价方法
+    })
+
     //ajax删除
     $(document).on('click','.del',function(){
         var cart_id = $(this).parents('ul').attr('cart_id');
