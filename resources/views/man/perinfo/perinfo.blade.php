@@ -96,18 +96,18 @@
                                                     <option value="{{$v->area_id}}">{{$v->name}}</option>
                                                     @endforeach
                                                 </select>
-                                            </div>
-
-                                            <div class="form-group area">
                                                 <select class="form-control region" name="city" >
                                                     <option value="0" selected="selected">--请选择--</option>
                                                 </select>
-                                            </div>
-                                            <div class="form-group area">
+
                                                 <select  name="area" class="form-control region" >
                                                     <option value="0" selected="selected">--请选择--</option>
                                                 </select>
                                             </div>
+
+
+
+
                                         {{--</div>--}}
                                     </div>
                                 </div>
@@ -137,11 +137,14 @@
         var info_name=$("input[name='info_name']").val();
         var info_tel=$("input[name='info_tel']").val();
         var info_sex=$(":checked").val();
+        var province = $("select[name='province']").val();
+        var city = $("select[name='city']").val();
+        var area = $("select[name='area']").val();
 
         $.ajax({
             url:"/man/per_add",
             type:"post",
-            data:{info_name:info_name,info_tel:info_tel,info_sex:info_sex},
+            data:{info_name:info_name,info_tel:info_tel,info_sex:info_sex,province:province,city:city,area:area},
             dataType:"json",
             success:function(res){
                 if(res.code){
@@ -152,28 +155,21 @@
         })
     });
     $(document).on("change",".region",function(){
-        var _this=$(this);  //当前发生的内容的select
-        _this.nextAll('select').html("<option value='0' selected>--请选择--</option>");
-        var area_id=_this.val();
 
-        if(area_id==0){
-            _this.nextAll('select').html("<option value='0' selected>--请选择--</option>");
-            return false;
-        }
-        //console.log(id);
-        //通过ajax技术传到控制器
-        $.post(
-                "{{('/man/getArea')}}",
-                {area_id:area_id},
-                function(res){
-                    //循环
-                    var _option="<option value='0' selected>--请选择--</option>";
-                    for(var i in res){
-                        _option+="<option value='"+res[i]['area_id']+"'>"+res[i]['name']+"</option>";
-                    }
-                    _this.next('select').html(_option);
-                },
-                'json'
-        );
+        var _this = $(this);
+
+        _this.nextAll('select').html("<option value='0'>--请选择--</option>");
+
+        var area_id = _this.val();
+
+        $.ajax({
+            url:"{{url('/man/getArea')}}",
+            data : {'area_id':area_id},
+            type:'post',
+            success:function(res){
+
+                _this.next("select").html(res);
+            }
+        });
     });
 </script>

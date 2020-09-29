@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\AreaModel;
+use App\Model\PerinfoModel;
 use Illuminate\Http\Request;
 
 class Common extends Controller
@@ -87,6 +89,13 @@ class Common extends Controller
             'msg'=>$msg,
             'data'=>$data,
         ];
+    }
+    //获取区域信息
+    function getAreaInfo($pid){
+        $where=[
+            ['pid','=',$pid]
+        ];
+        return Areamodel::where($where)->get();
     }
 
 
