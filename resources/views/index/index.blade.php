@@ -184,10 +184,15 @@
                             <a href="{{url('/index/item/'.$g2['goods_id'])}}" class="pic"><img src="{{env('UPLOAD_URL')}}{{$g2['goods_img']}}" alt="" /></a>
                             <div class="like-text">
                                 <p>{{$g2['goods_name']}}</p>
+<<<<<<< HEAD
+                     <h3>¥{{$g2['goods_price']}}.00</h3>
+
+=======
 
                                 <h3>¥{{$g2['goods_price']}}</h3>
 
                                 <h3>¥{{$g2['goods_price']}}.00</h3>
+>>>>>>> 733ca834f02e3c6526aecbf435b03ad80ea16d4e
                             </div>
                         </dd>
                         @endforeach

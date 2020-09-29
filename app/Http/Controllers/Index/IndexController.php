@@ -12,6 +12,12 @@ use App\Model\SlideModel;
 use App\Model\CartModel;
 use App\Model\CategoryModel;
 use App\Model\GoodsModel;
+<<<<<<< HEAD
+use App\Model\AreaModel;
+use App\Model\UserModel;
+=======
+use Illuminate\Support\Facades\Session;
+>>>>>>> 7ec401c734da80b1707a00da275b192ce4910165
 
 class IndexController extends Common
 {
@@ -133,19 +139,122 @@ class IndexController extends Common
 
     //订单
     public function order(){
-           // echo count(strlen("http://php.net"));die;
-//            $z=2;
-//            $x=$z+$z+$z=3;
-//            echo $x;die;
-//            $a=array(1,2);
-//            foreach($a as $k=>&$v){$v=4;}
-//            function t($s){foreach($s as $k => &$v){$v=5;}return $s;}
-//            $b=t($a);
-//            var_dump($b);die;
-//           // var_dump($a);die;
+        //查询所有收货地址  作为列表数据
+        $addressInfo=$this->getAddressInfo();
+        // dd($addressInfo);
 
-        return view('index.order');
+        //查询所有省份  作为第一个下拉菜单的值  pid=0
+        $res=$this->getAreaInfo(0);
+        // $cityInfo=$this->getAreaInfo($addressInfo['province']);
+
+        return view('index.order',['res'=>$res]);
+        
+       }
+
+     //获取区域信息
+    public function getAreaInfo($pid){
+        // dd($pid);
+        //实例化地区表
+        $area_model=new AreaModel();
+        //写满足的where条件
+        $where=[
+            ['pid','=',$pid]
+        ];
+        //查询地区表满足where的所有的数据，并将结果返回
+        $info=$area_model->where($where)->get();
+        // dump($info);
+        return $info;
+    }
+
+     //获取地区
+    public function getArea(){
+       $area_id=$request->post('area_id');
+//        if($area_id == 0){
+//            return view('Merchandise.Index.areaajax',['id'=>$area_id]);
+//        }
+        $info = $this->getAreaInfo($area_id);
+        $option = "<option value='0'>--请选择--</option>";
+        foreach($info as $k=>$v){
+            $option.="<option value='".$v['area_id']."'>".$v['name']."</option>";
+        }
+        echo $option;
+
     }
 
 
+      //获取区域信息
+    public function getAddressInfo(){
+        $area_model = new AreaModel;
+        $area = $area_model->where('pid',0)->get();
+        //$city = $area_model->where('pid',$area['area_id'])->get();
+      
+        
+        foreach($area as $k=>$v){
+             $area[$k]['province']=$area_model->where("area_id",$v['province'])->value("name");//根据id查市
+             $area[$k]['city']=$area_model->where("area_id",$v['city'])->value("name");//根据id查省
+             $area[$k]['area']=$area_model->where("area_id",$v['area'])->value("name");//根据id查区
+            // dd($area);
+         }
+        
+       
+        return $area;
+    }
+
+    // 用户收货地址添加
+    public function create(){
+       $user_name = request()->post('user_name');
+       $user_tel = request()->post('user_tel');
+       $province = request()->post('province');
+       $city = request()->post('city');
+       $area = request()->post('area');
+       // dump($user_name);
+       // dump($user_tel);
+       // dump($province);
+       // dump($city);
+       // dump($area);
+       $data =[
+            'user_name'=>$user_name,
+            'user_tel'=>$user_tel,
+            'province'=>$province,
+            'city'=>$city,
+            'area'=>$area
+       ];
+       // dd($data);
+    }
+
+    // 三级联动
+    public function area(Request $request)
+    {
+        $data = $request->all();
+        // print_r($data);die;
+        $where = [
+            ['pid' => $data]
+        ];
+        // print_r($where);die;
+        $son = AreaModel::where(['pid' => $data])->get()->toArray();
+
+        //空字符串
+        $str='<option value="">请选择...</option>';
+        //循环
+        foreach ($son as $k => $v) {
+            $str.='<option value="'.$v['area_id'].'">'.$v['name'].'</option>';
+        }
+        
+        if($son !== false){
+            return json_encode(['status'=>'200','msg'=>'ok','data'=>$str]);   
+        }else{
+            return json_encode(['status'=>'100','msg'=>'no']);
+        }
+    }
+
+<<<<<<< HEAD
+
+=======
+   
+
+
+    //无限极
+    public function cate(){
+    }
+>>>>>>> 5cff30d933a50513b6f6c15871a2daa2aed04544
 }

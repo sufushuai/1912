@@ -125,11 +125,9 @@
                 data: {username: username,password:password},
                 dataType: "json",
                 success: function (res) {
-                    if (res.errno == 200) {
-                        alert('登录成功');
+                    if (res.errno) {
+                        alert(res.msg);
                         location.href = "/index";
-                    } else {
-                        alert('登录失败');
                     }
                 }
             })
