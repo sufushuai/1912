@@ -13,7 +13,7 @@
 
 <body>
 <!--head-->
-@include('index.layouts.layout')
+@include('index.layouts.head')
     <!--主内容-->
     <div class="checkout py-container">
         <div class="checkout-tit">
@@ -29,28 +29,15 @@
                     <ul class="addr-detail">
                         <li class="addr-item">
                             <div>
-                                <div class="con name selected"><a href="javascript:;" >张默<span title="点击取消选择">&nbsp;</a></div>
-                                <div class="con address">张默 北京市海淀区三环内 中关村软件园9号楼 <span>159****3201</span>
-                                    <span class="base">默认地址</span>
+                                @foreach($addressInfo as $k=>$v)
+                                <div class="con name selected"><a href="javascript:;" >{{$v['user_name']}}<span title="点击取消选择">&nbsp;</a></div>
+                                <div class="con address">{{$v['province']}}{{$v['city']}}{{$v['area']}}<span>{{$v['user_tel']}}</span>
                                     <span class="edittext"><a data-toggle="modal" data-target=".edit" data-keyboard="false" >编辑</a>&nbsp;&nbsp;<a href="javascript:;">删除</a></span>
                                 </div>
                                 <div class="clearfix"></div>
+                                @endforeach
                             </div>
-                            <div>
-                                <div class="con name"><a href="javascript:;">李煜<span title="点击取消选择">&nbsp;</a></div>
-                                <div class="con address">李煜 北京市海淀区三环内 中关村软件园8号楼 <span>187****4201</span>
-                                    <span class="edittext"><a data-toggle="modal" data-target=".edit" data-keyboard="false" >编辑</a>&nbsp;&nbsp;<a href="javascript:;">删除</a></span>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-
-                            <div>
-                                <div class="con name"><a href="javascript:;">王希<span title="点击取消选择">&nbsp;</a></div>
-                                <div class="con address">王希 北京市海淀区三环内 中关村软件园6号楼  <span>156****5681</span>
-                                    <span class="edittext"><a data-toggle="modal" data-target=".edit" data-keyboard="false" >编辑</a>&nbsp;&nbsp;<a href="javascript:;">删除</a></span>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
+                           
                         </li>
 
 
@@ -65,47 +52,57 @@
                                 </div>
                                 <div class="modal-body">
                                     <form action="" class="sui-form form-horizontal">
+                                        
                                         <div class="control-group">
                                             <label class="control-label">收货人：</label>
                                             <div class="controls">
-                                                <input type="text" class="input-medium">
+                                                <input type="text" name="user_name" class="input-medium">
                                             </div>
                                         </div>
-
                                         <div class="control-group">
-                                            <label class="control-label">详细地址：</label>
+                                            <label class="control-label">所在地区：</label>
                                             <div class="controls">
-                                                <input type="text" class="input-large">
+                                                <div data-toggle="distpicker">
+                                                    <div class="form-group area">
+                                                       
+                                                        <select class="area" name="province">
+                                                              <option value="0" selected="selected">请选择...</option>
+                                                             @foreach($res as $k=>$v)
+                                                              <option value="{{$v->area_id}}">{{$v->name}}</option>
+                                                              @endforeach
+                                                            </select>
+                                                             <select class="area" name="city">
+                                                              <option value="" selected="selected">请选择...</option>
+            
+                                                               
+                                                              <option value=""></option>
+                                                              
+                                                            </select>
+                                                            <select class="area" name="area">
+                                                              <option value="" selected="selected">请选择...</option>
+                                                          
+                                                        </select>
+                                                    </div>
+                                                  
+                                                </div>
                                             </div>
                                         </div>
+                                        
                                         <div class="control-group">
                                             <label class="control-label">联系电话：</label>
                                             <div class="controls">
-                                                <input type="text" class="input-medium">
+                                                <input type="text" name="user_tel" class="input-medium">
                                             </div>
                                         </div>
-                                        <div class="control-group">
-                                            <label class="control-label">邮箱：</label>
-                                            <div class="controls">
-                                                <input type="text" class="input-medium">
-                                            </div>
-                                        </div>
-                                        <div class="control-group">
-                                            <label class="control-label">地址别名：</label>
-                                            <div class="controls">
-                                                <input type="text" class="input-medium">
-                                            </div>
-                                            <div class="othername">
-                                                建议填写常用地址：<a href="#" class="sui-btn btn-default">家里</a>　<a href="#" class="sui-btn btn-default">父母家</a>　<a href="#" class="sui-btn btn-default">公司</a>
-                                            </div>
-                                        </div>
+
+                                       
 
                                     </form>
 
 
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" data-ok="modal" class="sui-btn btn-primary btn-large">确定</button>
+                                    <button type="button" data-ok="modal" class="sui-btn btn-primary btn-large btn">确定</button>
                                     <button type="button" data-dismiss="modal" class="sui-btn btn-default btn-large">取消</button>
                                 </div>
                             </div>
@@ -218,3 +215,61 @@
 </body>
 
 </html>
+<script>
+
+
+
+
+$(function(){
+            $(document).on('change','.area',function(){
+                // alert(123);
+                var _this = $(this);
+
+                _this.nextAll('select').html("<option value=''>请选择...</option>");
+                var area_id = _this.val();
+                // alert(id);
+                $.ajax({
+                    url : "/index/area",
+                    type : "post",
+                    data : {area_id : area_id},
+                    dataType:'json',
+                    success:function(res){
+
+                        if(res.status=='200'){
+                            _this.next().html(res.data)
+                        }
+                    }
+                })
+            });
+        });
+
+        $(document).on('click','.btn',function(){
+            // alert(11);
+            var user_name=$("input[name='user_name']").val();
+            var user_tel=$("input[name='user_tel']").val();
+            var province=$("select[name='province']").val();
+            var city=$("select[name='city']").val();
+            var area=$("select[name='area']").val();
+            // console.log(user_name);
+            // console.log(user_tel);
+            // console.log(province);
+            // console.log(city);
+            // console.log(area);
+             $.ajax({
+                url:"/index/create",
+                data:{user_name:user_name,user_tel:user_tel,province:province,city:city,area:area},
+                type:"post",
+                dataType:"json",
+                success:function(res){
+                    // alert(111);
+                    if(res.code=='0'){
+                        alert(res.mag)
+                        location.href='/index/order'
+                    }
+                }
+            })
+        })
+
+    </script>
+
+ 

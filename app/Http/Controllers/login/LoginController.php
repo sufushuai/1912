@@ -9,6 +9,7 @@ use App\Model\SendcodeModel;
 use AlibabaCloud\Client\AlibabaCloud;
 use AlibabaCloud\Client\Exception\ClientException;
 use AlibabaCloud\Client\Exception\ServerException;
+use Illuminate\Support\Facades\Session;
 
 
 class LoginController extends Controller
@@ -74,13 +75,22 @@ class LoginController extends Controller
         $username = $request->post("username");
         $password = $request->post("password");
         $user=UserModel::where(["username"=>$username])->first();
+        $user_id= $user->user_id;
         $res=password_verify($password,$user->password);
         if($res){
-
-            return $this->response(200,'ok');
+            Session::put('id',$user_id);
+            Session::put('name',$username);
+            return $this->response(200,'登录成功');
         }else{
-            return $this->response(1,'fail');
+            return $this->response(1,'登录失败');
         }
+    }
+    /**
+    *退出登录
+     */
+    public function quit(Request $request){
+        $request->session()->flush();
+        return redirect("index");
     }
 
     public function sendtel(Request $request){
