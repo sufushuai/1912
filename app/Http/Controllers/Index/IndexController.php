@@ -12,31 +12,18 @@ use App\Model\SlideModel;
 use App\Model\CartModel;
 use App\Model\CategoryModel;
 use App\Model\GoodsModel;
-<<<<<<< HEAD
 use App\Model\AreaModel;
 use App\Model\UserModel;
 use Illuminate\Support\Facades\Session;
-=======
 use App\Model\SkuAttrValModel;
 use App\Model\SkuAttrModel;
 use App\Model\SkuValModel;
-use App\Model\AreaModel;
-use App\Model\UserModel;
 use App\Model\AddressModel;
-
->>>>>>> 11ba8fd871b35cf3c0fc35b8e867b5f73abfc28e
-
-use Illuminate\Support\Facades\Session;
 class IndexController extends Common
 {
     //首页
     public function index(){
-<<<<<<< HEAD
         //猜你喜欢
-
-=======
-    
->>>>>>> 11ba8fd871b35cf3c0fc35b8e867b5f73abfc28e
         //轮播图
         $slide=SlideModel::where('is_del',1)->limit(5)->get();
         //广告
@@ -208,7 +195,7 @@ class IndexController extends Common
     //订单
     public function order(){
         $address = AddressModel::get();
-           
+
         //查询所有收货地址  作为列表数据
         $addressInfo=$this->getAddressInfo();
         // dd($addressInfo);
@@ -217,13 +204,10 @@ class IndexController extends Common
         $res=$this->getAreaInfo(0);
         // $cityInfo=$this->getAreaInfo($addressInfo['province']);
 
-<<<<<<< HEAD
         return view('index.order',['res'=>$res]);
 
-=======
         return view('index.order',['res'=>$res,'addressInfo'=>$addressInfo]);
-        
->>>>>>> 11ba8fd871b35cf3c0fc35b8e867b5f73abfc28e
+
        }
 
      //获取区域信息
@@ -259,14 +243,12 @@ class IndexController extends Common
 
       //获取区域信息
     public function getAddressInfo(){
-        
+
         // $area_model = new AreaModel;
         // $area = $area_model->where('pid',0)->get();
         //$city = $area_model->where('pid',$area['area_id'])->get();
-<<<<<<< HEAD
 
 
-=======
         $where=[
             ['user_id','=',$this->user_id()],
             ['is_del','=',1]
@@ -276,21 +258,17 @@ class IndexController extends Common
         if(!empty($addressInfo)){
             $area=$addressInfo->toArray();
         }
-      
-        
->>>>>>> 11ba8fd871b35cf3c0fc35b8e867b5f73abfc28e
+
+
         foreach($area as $k=>$v){
              $area[$k]['province']=AreaModel::where("area_id",$v['province'])->value("name");//根据id查市
              $area[$k]['city']=AreaModel::where("area_id",$v['city'])->value("name");//根据id查省
              $area[$k]['area']=AreaModel::where("area_id",$v['area'])->value("name");//根据id查区
             // dd($area);
          }
-<<<<<<< HEAD
-=======
-        
-       
-    
->>>>>>> 11ba8fd871b35cf3c0fc35b8e867b5f73abfc28e
+
+
+
         return $area;
     }
 
@@ -354,11 +332,7 @@ class IndexController extends Common
             return json_encode(['status'=>'100','msg'=>'no']);
         }
     }
-<<<<<<< HEAD
     //无限极
     public function cate(){
     }
-=======
-
->>>>>>> 11ba8fd871b35cf3c0fc35b8e867b5f73abfc28e
 }
