@@ -50,15 +50,13 @@
                         <!--左右按钮-->
                         <div class="items">
                             <ul>
-                                <li><img src="/asses/img/_/s1.png" bimg="/asses/img/_/b1.png" onmousemove="preview(this)" /></li>
-                                <li><img src="/asses/img/_/s2.png" bimg="/asses/img/_/b2.png" onmousemove="preview(this)" /></li>
-                                <li><img src="/asses/img/_/s3.png" bimg="/asses/img/_/b3.png" onmousemove="preview(this)" /></li>
-                                <li><img src="/asses/img/_/s1.png" bimg="/asses/img/_/b1.png" onmousemove="preview(this)" /></li>
-                                <li><img src="/asses/img/_/s2.png" bimg="/asses/img/_/b2.png" onmousemove="preview(this)" /></li>
-                                <li><img src="/asses/img/_/s3.png" bimg="/asses/img/_/b3.png" onmousemove="preview(this)" /></li>
-                                <li><img src="/asses/img/_/s1.png" bimg="/asses/img/_/b1.png" onmousemove="preview(this)" /></li>
-                                <li><img src="/asses/img/_/s2.png" bimg="/asses/img/_/b2.png" onmousemove="preview(this)" /></li>
-                                <li><img src="/asses/img/_/s3.png" bimg="/asses/img/_/b3.png" onmousemove="preview(this)" /></li>
+                                @if($role_Info->goods_images)
+                                    @php $imgarr = explode(',',$role_Info->goods_images);@endphp
+                                    @foreach($imgarr as $img)
+                                        <li><img src="{{env('UPLOAD_URL')}}{{$img}}" bimg="{{env('UPLOAD_URL')}}{{$img}}" onmousemove="preview(this)" /></li>
+
+                                    @endforeach
+                                @endif
                             </ul>
                         </div>
                         <a class="next">&gt;</a>
@@ -104,59 +102,20 @@
                 </div>
                 <div class="clearfix choose">
                     <div id="specification" class="summary-wrap clearfix">
+                        @foreach($sav as $vv)
                         <dl>
                             <dt>
                                 <div class="fl title">
-                                    <i>选择颜色</i>
+                                    <i>{{$vv['attr_name']}}</i>
                                 </div>
                             </dt>
-                            <dd><a href="javascript:;" class="selected">金色<span title="点击取消选择">&nbsp;</span>
+                            @foreach($vv['sku4'] as $kkk=>$vvv)
+                            <dd><a href="javascript:;" class="selected">{{$vvv['val_name']}}<span title="点击取消选择">&nbsp;</span>
                                 </a></dd>
-                            <dd><a href="javascript:;">银色</a></dd>
-                            <dd><a href="javascript:;">黑色</a></dd>
+
+                            @endforeach
                         </dl>
-                        <dl>
-                            <dt>
-                                <div class="fl title">
-                                    <i>内存容量</i>
-                                </div>
-                            </dt>
-                            <dd><a href="javascript:;" class="selected">16G<span title="点击取消选择">&nbsp;</span>
-                                </a></dd>
-                            <dd><a href="javascript:;">64G</a></dd>
-                            <dd><a href="javascript:;" class="locked">128G</a></dd>
-                        </dl>
-                        <dl>
-                            <dt>
-                                <div class="fl title">
-                                    <i>选择版本</i>
-                                </div>
-                            </dt>
-                            <dd><a href="javascript:;" class="selected">公开版<span title="点击取消选择">&nbsp;</span>
-                                </a></dd>
-                            <dd><a href="javascript:;">移动版</a></dd>
-                        </dl>
-                        <dl>
-                            <dt>
-                                <div class="fl title">
-                                    <i>购买方式</i>
-                                </div>
-                            </dt>
-                            <dd><a href="javascript:;" class="selected">官方标配<span title="点击取消选择">&nbsp;</span>
-                                </a></dd>
-                            <dd><a href="javascript:;">移动优惠版</a></dd>
-                            <dd><a href="javascript:;"  class="locked">电信优惠版</a></dd>
-                        </dl>
-                        <dl>
-                            <dt>
-                                <div class="fl title">
-                                    <i>套　　装</i>
-                                </div>
-                            </dt>
-                            <dd><a href="javascript:;" class="selected">保护套装<span title="点击取消选择">&nbsp;</span>
-                                </a></dd>
-                            <dd><a href="javascript:;"  class="locked">充电套装</a></dd>
-                        </dl>
+                            @endforeach
                     </div>
                     <div class="summary-wrap">
                         <div class="fl title">
@@ -728,8 +687,8 @@
     //购物车减
     $(document).on("click","#num-jian",function(){
         var minus =$("#aa").find("#input-num");
-        if(minus.val()<= 1){
-            minus.val(1);
+        if(minus.val()<= 0){
+            minus.val(0);
         }else{
             minus.val(parseInt(minus.val()) - 1);
         }
@@ -744,7 +703,7 @@
     });
     $(document).ready(function() {
         $('#add').click(function () {
-            var goods_price = $("#goods_price").val();
+            var goods_price = $("goods_price").val();
 
             $.ajax({
                 type: "post",
