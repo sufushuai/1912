@@ -289,9 +289,12 @@
         $(this).prev("#input-num").val(minus); //把数量变化后的新值放入数量框中
         $(this).parent().next().find("#sum").text(minus*productPrice);//小计的值
     });
-    $(document).on("click","#box",function(){
+    $(document).on("click",".box",function(){
+        var zong = 0;
+        alert( $("input[name='check']:checked").length);
         var num = parseInt($(this).parents().find("#zongnum").find("#sum").text());
-        alert(num);
+        zong += num + ',';
+        alert(zong);
     });
     //计算总价方法
     function totalPrice(){
@@ -301,15 +304,15 @@
             $("#Sum").text('￥' + 0);
             return false;
         }
-        var zong = 0;
-        $("input[name='check']:checked").each(function(){
-            var _this = $(this);
-            var num = parseInt($(this).parents().find("#zongnum").find("#sum").text());
-            //var num = parseInt($(this).text());
-            zong += num;
-            // console.log(zong);
-        });
-        $("#Sum").text('￥'+zong);
+        // var zong = 0;
+        // $("input[name='check']:checked").each(function(){
+        //     var _this = $(this);
+        //     var num = parseInt($(this).parents().find("#zongnum").find("#sum").text());
+        //     //var num = parseInt($(this).text());
+        //     zong += num;
+        //     // console.log(zong);
+        // });
+        // $("#Sum").text('￥'+zong);
     }
     //计算数量方法
     function totalNum(){

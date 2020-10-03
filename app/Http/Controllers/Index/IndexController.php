@@ -12,23 +12,17 @@ use App\Model\SlideModel;
 use App\Model\CartModel;
 use App\Model\CategoryModel;
 use App\Model\GoodsModel;
-<<<<<<< HEAD
 use App\Model\AreaModel;
 use App\Model\UserModel;
-=======
 use Illuminate\Support\Facades\Session;
->>>>>>> 7ec401c734da80b1707a00da275b192ce4910165
 
 class IndexController extends Common
 {
     //首页
     public function index(){
-<<<<<<< HEAD
         //猜你喜欢
-=======
 
         //轮播图
->>>>>>> d36ee96d7258ebb7e662a5f975f1dddd9d25cc45
         $slide=SlideModel::where('is_del',1)->limit(5)->get();
         //广告
         $ad=AdModel::where('is_del',1)->limit(5)->get();
@@ -163,7 +157,7 @@ class IndexController extends Common
         // $cityInfo=$this->getAreaInfo($addressInfo['province']);
 
         return view('index.order',['res'=>$res]);
-        
+
        }
 
      //获取区域信息
@@ -202,16 +196,14 @@ class IndexController extends Common
         $area_model = new AreaModel;
         $area = $area_model->where('pid',0)->get();
         //$city = $area_model->where('pid',$area['area_id'])->get();
-      
-        
+
+
         foreach($area as $k=>$v){
              $area[$k]['province']=$area_model->where("area_id",$v['province'])->value("name");//根据id查市
              $area[$k]['city']=$area_model->where("area_id",$v['city'])->value("name");//根据id查省
              $area[$k]['area']=$area_model->where("area_id",$v['area'])->value("name");//根据id查区
             // dd($area);
          }
-        
-       
         return $area;
     }
 
@@ -236,7 +228,6 @@ class IndexController extends Common
        ];
        // dd($data);
     }
-
     // 三级联动
     public function area(Request $request)
     {
@@ -254,22 +245,13 @@ class IndexController extends Common
         foreach ($son as $k => $v) {
             $str.='<option value="'.$v['area_id'].'">'.$v['name'].'</option>';
         }
-        
         if($son !== false){
-            return json_encode(['status'=>'200','msg'=>'ok','data'=>$str]);   
+            return json_encode(['status'=>'200','msg'=>'ok','data'=>$str]);
         }else{
             return json_encode(['status'=>'100','msg'=>'no']);
         }
     }
-
-<<<<<<< HEAD
-
-=======
-   
-
-
     //无限极
     public function cate(){
     }
->>>>>>> 5cff30d933a50513b6f6c15871a2daa2aed04544
 }

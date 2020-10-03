@@ -40,22 +40,17 @@ Route::any('/man/evaluate','Man\ManController@evaluate');//待评价
 Route::any('/man/received','Man\ManController@received');//待收获
 //首页
 Route::any('/index/cart','Index\IndexController@cart');//购物车
-<<<<<<< HEAD
 Route::any('/index/cartnumjian','Index\IndexController@cartnumjian');//减购物车商品数量
 Route::any('/index/cartnumjia','Index\IndexController@cartnumjia');//加购物车商品数量
-=======
 
 Route::any('/index/cartadd','Index\IndexController@cartadd');//购物车删除
 
->>>>>>> d36ee96d7258ebb7e662a5f975f1dddd9d25cc45
 Route::any('/index/cartdestroy','Index\IndexController@cartdestroy');//购物车删除
 Route::any('/index/cartdel','Index\IndexController@cartdel');//购物车删除
 Route::any('/index/success_cart','Index\IndexController@success_cart');//成功加入购物车
 Route::any('/index/item/{goods_id}','Index\IndexController@item');//详情
-<<<<<<< HEAD
 
 
-=======
 
 
 Route::any('/index/cartdestroy','Index\IndexController@cartdestroy');//购物车删除
@@ -64,7 +59,6 @@ Route::any('/index/success_cart','Index\IndexController@success_cart');//成功�
 
 
 
->>>>>>> d36ee96d7258ebb7e662a5f975f1dddd9d25cc45
 Route::any('/index/order','Index\IndexController@order');//订单
 Route::any('/index/area','Index\IndexController@area');//三级联动
 Route::any('/index/create','Index\IndexController@create');//订单
