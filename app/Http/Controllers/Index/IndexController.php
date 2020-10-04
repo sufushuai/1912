@@ -203,6 +203,17 @@ class IndexController extends Common
         }
         return $money;
     }
+    //购物车总价
+    public function cartnum(Request $request){
+        $cart_id = $request->post('cart_id');
+        $cart_id = explode(',',$cart_id);
+        $info = CartModel::whereIn('cart_id',$cart_id)->get(["buy_number"]);
+        $cartnum=0;
+        foreach($info as $k=>$v){
+            $cartnum += $v['buy_number'];
+        }
+        return $cartnum;
+    }
     //订单
     public function order(){
         $address = AddressModel::get();

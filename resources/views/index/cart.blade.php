@@ -76,26 +76,6 @@
             </div>
         </div>
         <div class="clearfix"></div>
-        <div class="deled">
-            <span>已删除商品，您可以重新购买或加关注：</span>
-            <div class="cart-list del">
-                <ul class="goods-list yui3-g">
-                    <li class="yui3-u-1-2">
-                        <div class="good-item">
-                            <div class="item-msg">Apple Macbook Air 13.3英寸笔记本电脑 银色（Corei5）处理器/8GB内存</div>
-                        </div>
-                    </li>
-                    <li class="yui3-u-1-6"><span class="price">8848.00</span></li>
-                    <li class="yui3-u-1-6">
-                        <span class="number">1</span>
-                    </li>
-                    <li class="yui3-u-1-8">
-                        <a href="#none">重新购买</a>
-                        <a href="#none">移到我的关注</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
         <div class="liked">
             <ul class="sui-nav nav-tabs">
                 <li class="active">
@@ -294,6 +274,7 @@
     //总价
     $(document).on("click",".box",function(){
         totalPrice();	//调用总价方法
+        totalNum();//合计数
     });
     //计算总价方法
     function totalPrice(){
@@ -320,17 +301,30 @@
     //计算数量方法
     function totalNum(){
         //计算数量，编写总价方法
-        var sumNum = 0;
-        $(".itxt").each(function () {
-            var number = parseInt($(this).val());
-            sumNum += number;
+        // var sumNum = 0;
+        // $(".itxt").each(function () {
+        //     var number = parseInt($(this).val());
+        //     sumNum += number;
+        // })
+        // $("#cartSumNumber").text(sumNum);
+        var cart_id = '';
+        $("input[name='check']:checked").each(function(){
+            cart_id +=  $(this).parents('ul').attr('cart_id') + ',';
         })
-        $("#cartSumNumber").text(sumNum);
+        cart_id = cart_id.substr(0, cart_id.length - 1);
+        $.get(
+            "/index/cartnum",{
+                cart_id:cart_id
+            },
+            function(res){
+                $("#cartSumNumber").text(res);
+            }
+        )
     }
 
     //加载页面时，调用总价方法
     $(function(){
-        totalNum();//合计数
+        //totalNum();//合计数
         totalPrice();	//调用总价方法
     })
     //ajax删除
