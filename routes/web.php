@@ -21,23 +21,30 @@ Route::any('/index','Index\IndexController@index');
 Route::any('/order_info','Order\OrderController@order_info');
 Route::any('/order_info/order_success','Order\OrderController@order_success');//支付成功
 Route::any('/order_info/order_error','Order\OrderController@order_error');//支付失败
-//个人中心
-Route::any('/man/index','Man\ManController@index')->middleware("user");;//我的订单
-Route::any('/man/pay','Man\ManController@pay');//代付款
-Route::any('/man/send','Man\ManController@send');//代发货
-Route::any('/man/perinfo','Man\ManController@perinfo');//个人信息
-Route::any('/man/getArea','Man\ManController@getArea');//三级联动----省市区
-Route::any('/man/per_add','Man\ManController@per_add');//个人信息--添加
-Route::any('/man/per_index','Man\ManController@per_index');//个人信息--展示
-Route::any('/man/per_edit','Man\ManController@per_edit');//个人信息--修改
-Route::any('/man/per_update','Man\ManController@per_update');//个人信息--修改
 
-Route::any('/man/history','Man\ManController@history');//浏览历史
-Route::any('/man/coupon','Man\ManController@coupon');//优惠卷
-Route::any('/man/collect','Man\ManController@collect');//收藏
-Route::any('/man/address','Man\ManController@address');//收货地址
-Route::any('/man/evaluate','Man\ManController@evaluate');//待评价
-Route::any('/man/received','Man\ManController@received');//待收获
+
+//个人中心
+Route::group(['prefix'=>'/man', 'middleware' => ['userinfo'] ],function(){
+    Route::any('/index','Man\ManController@index');//我的订单
+    Route::any('/pay','Man\ManController@pay');//订单状态
+    Route::any('/history','Man\ManController@history');//浏览历史
+    Route::any('/coupon','Man\ManController@coupon');//优惠卷
+    Route::any('/collect','Man\ManController@collect');//我的收藏
+    Route::any('/address','Man\ManController@address');//收货地址
+    Route::any('/evaluate','Man\ManController@evaluate');//待评价
+    Route::any('/received','Man\ManController@received');//待收获
+});
+//个人信息
+Route::group(['prefix'=>'/man'],function(){
+    Route::any('/perinfo','Man\PersonalController@perinfo');//个人信息
+    Route::any('/getArea','Man\PersonalController@getArea');//三级联动----省市区
+    Route::any('/per_add','Man\PersonalController@per_add');//个人信息--添加
+    Route::any('/per_index','Man\PersonalController@per_index');//个人信息--展示
+    Route::any('/per_edit','Man\PersonalController@per_edit');//个人信息--修改
+    Route::any('/per_update','Man\PersonalController@per_update');//个人信息--修改
+});
+
+
 //首页
 Route::any('/index/cart','Index\IndexController@cart');//购物车
 Route::any('/index/cartnumjian','Index\IndexController@cartnumjian');//减购物车商品数量

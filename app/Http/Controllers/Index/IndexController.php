@@ -215,7 +215,6 @@ class IndexController extends Common
         $res=$this->getAreaInfo(0);
         // $cityInfo=$this->getAreaInfo($addressInfo['province']);
 
-        return view('index.order',['res'=>$res]);
 
         return view('index.order',['res'=>$res,'addressInfo'=>$addressInfo]);
 

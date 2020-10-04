@@ -16,7 +16,7 @@
                     <ul class="fr">
                         <li class="f-item">我的订单</li>
                         <li class="f-item space"></li>
-                        <li class="f-item"><a href="{{url("/man/index")}}" target="_self">个人中心</a></li>
+                        <li class="f-item"><a href="{{url("/man/index")}}"  target="_self">个人中心</a></li>
                         <li class="f-item space"></li>
                         <li class="f-item">品优购会员</li>
                         <li class="f-item space"></li>
