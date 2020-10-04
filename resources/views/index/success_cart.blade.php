@@ -14,7 +14,7 @@
 <body>
 <!-- 头部栏位 -->
 <!--页面顶部-->
-@include('index.layouts.head')
+@include('index.layouts.hea-')
 
 <script type="text/javascript" src="/asses/js/plugins/jquery/jquery.min.js"></script>
 <script type="text/javascript">
