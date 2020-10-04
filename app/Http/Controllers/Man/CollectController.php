@@ -6,6 +6,7 @@ use App\Http\Controllers\Common;
 use Illuminate\Http\Request;
 use App\Model\GoodsModel;
 use App\Model\CollectModel;
+use App\Model\CategoryModel;
 
 class CollectController extends Common
 {
@@ -14,7 +15,9 @@ class CollectController extends Common
      */
     public function collect(){
         $collect=CollectModel::leftjoin("shop_goods","shop_goods.goods_id","=","shop_collect.goods_id")->where("is_edit",1)->get();
-        return view("man/collect/collect",compact("collect"));
+        $floor1=CategoryModel::where('p_id',0)->get();
+
+        return view("man/collect/collect",compact("collect","floor1"));
     }
     /**
      *添加收藏

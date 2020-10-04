@@ -6,6 +6,7 @@ use App\Http\Controllers\Common;
 use App\Model\PerinfoModel;
 use Illuminate\Http\Request;
 use App\Model\AreaModel;
+use App\Model\CategoryModel;
 
 class PersonalController extends Common
 {
@@ -14,7 +15,8 @@ class PersonalController extends Common
      */
     public function perinfo(){
         $area=$this->getAreaInfo(0);
-        return view("man/perinfo/perinfo",compact("area"));
+        $floor1=CategoryModel::where('p_id',0)->get();
+        return view("man/perinfo/perinfo",compact("area","floor1"));
     }
 
     //三级联动
@@ -71,7 +73,9 @@ class PersonalController extends Common
             $data_info[$k]['city'] =AreaModel::where('area_id',$v['city'])->value("name");
             $data_info[$k]['area'] = AreaModel::where('area_id',$v['area'])->value("name");
         }
-        return view("man/perinfo/index",compact("data_info"));
+        $floor1=CategoryModel::where('p_id',0)->get();
+
+        return view("man/perinfo/index",compact("data_info","floor1"));
     }
     /**
      *个人信息----修改页面
@@ -80,7 +84,8 @@ class PersonalController extends Common
         $info_id=$request->post("info_id");
         $info_edit=PerinfoModel::find($info_id);
         $area=$this->getAreaInfo(0);
-        return view("man/perinfo/edit",compact("info_edit","area"));
+        $floor1=CategoryModel::where('p_id',0)->get();
+        return view("man/perinfo/edit",compact("info_edit","area","floor1"));
     }
     /**
      **个人信息 ---修改逻辑

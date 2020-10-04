@@ -121,6 +121,18 @@
 <script>
     $(document).on("click",".edit",function(){
         var info_id=$("input[name='info_id']").val();
-        location.href="/man/per_edit?info_id="+info_id;
+        $.ajax({
+            "url":"/man/per_index",
+            "data":{info_id:info_id},
+            'type':'post',
+            'dataType':"json",
+            success:function(res){
+                if(res.code==40001){
+                    alert(res.msg)
+                    location.href="/man/perinfo"
+                }
+            }
+        })
+
     })
 </script>

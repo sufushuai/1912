@@ -16,7 +16,8 @@
                     <ul class="fr">
                         <li class="f-item">我的订单</li>
                         <li class="f-item space"></li>
-                        <li class="f-item"><a href="{{url("/man/index")}}"  target="_self">个人中心</a></li>
+                        {{--<li class="f-item"><a href="{{url("/man/index")}}"  target="_self"></a></li>--}}
+                        <li class="f-item"><a id="conter">个人中心</a></li>
                         <li class="f-item space"></li>
                         <li class="f-item">品优购会员</li>
                         <li class="f-item space"></li>
@@ -105,3 +106,23 @@
         </div>
     </div>
 </div>
+<script type="text/javascript" src="/asses/js/plugins/jquery/jquery.min.js"></script>
+<script>
+    $(document).on("click","#conter",function(){
+        $.ajax({
+            "url":"/man/per_index",
+            'type':'post',
+            'dataType':"json",
+            success:function(res){
+                if(res.code==100){
+                    alert(res.msg)
+                    location.href="/index/login"
+                }
+                if(res.code==40001){
+                    alert(res.msg)
+                    location.href="/man/perinfo"
+                }
+            }
+        })
+    })
+</script>
