@@ -767,7 +767,14 @@
             'data':{goods_id:goods_id},
             'dataType':"json",
             success:function(res){
-                if(res.code){
+                if(res.code==100){
+                    alert(res.msg)
+                    location.href="/index/login"
+                }
+                if(res.code==1){
+                    alert(res.msg)
+                }
+                if(res.code==200){
                     alert(res.msg)
                 }
             }
@@ -785,7 +792,14 @@
             'data':{goods_id:goods_id},
             'dataType':"json",
             success:function(res){
-                if(res.code){
+                if(res.code==100){
+                    alert(res.msg)
+                    location.href="/index/login"
+                }
+                if(res.code==1){
+                    alert(res.msg)
+                }
+                if(res.code==200){
                     alert(res.msg)
                 }
             }

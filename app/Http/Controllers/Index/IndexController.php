@@ -42,19 +42,18 @@ class IndexController extends Common
         //$guess=collect($guess)->toArray();
         $guess=array_chunk($guess,2,true);
         //dump($guess);die;
-
         //获取分类数据
         $category=CategoryModel::get()->toArray();
         //获取所有父级ID p_id
         //执行无极限
         $cate=$this->getcateInfo2($category);
-
         //今日推荐
         $today=GoodsModel::where('is_del',1)->orderby('goods_clicknum','desc')->limit(4)->get();
 
         //楼层
         $floor=CategoryModel::where('p_id',0)->value('cate_id');
         //dd($floor);
+        $floor1=CategoryModel::where('p_id',0)->get();
         //最高分类
         $cateList1=CategoryModel::where('cate_id',$floor)->first();
         //dd($cateList1);
@@ -76,15 +75,15 @@ class IndexController extends Common
             ['cate_id','in',$str_cateIds]
         ];
         $goodsList=GoodsModel::where($where1)->limit(8)->get();
-
-
-        //dump($floors);
-
-
-        return view('index.index',['brand'=>$brand,'cateList1'=>$cateList1,'cateList2'=>$cateList2,'goodsList'=>$goodsList,'ad'=>$ad,'slide'=>$slide,'category'=>$cate,'guess'=>$guess,'today'=>$today]);
+        return view('index.index',['brand'=>$brand,'floor1'=>$floor1,'cateList1'=>$cateList1,'cateList2'=>$cateList2,'goodsList'=>$goodsList,'ad'=>$ad,'slide'=>$slide,'category'=>$cate,'guess'=>$guess,'today'=>$today]);
     }
-
-
+    //列表
+    public function list(){
+        $brand = BrandModel::get();
+        $goods = GoodsModel::get();
+        $floor1=CategoryModel::where('p_id',0)->get();
+        return view('index.list',['floor1'=>$floor1,'brand'=>$brand,'goods'=>$goods]);
+    }
     //购物车
     public function cart(){
         $cart = CartModel::where(['is_del'=>1])->get();
@@ -134,10 +133,8 @@ class IndexController extends Common
     }
     //详情
     public function item(Request $request,$goods_id){
-
         $collect=CollectModel::where("goods_id",$goods_id)->get();
         //商品
-
         $key="num".$goods_id;
         if(Redis::get($key)){
             Redis::incr($key);
@@ -147,9 +144,7 @@ class IndexController extends Common
         $where=[
             'goods_clicknum'=>Redis::get($key)
         ];
-
         GoodsModel::where('goods_id',$goods_id)->update($where);
-
         $role_Info=GoodsModel::where('goods_id',$goods_id)->first();
         $role_Info->goods_images=trim( $role_Info->goods_images,',');
         $sku_id=SkuAttrValModel::where(['goods_id'=>$goods_id])->get('sku')->toArray();
@@ -170,9 +165,8 @@ class IndexController extends Common
             }
         }
         $sav = SkuAttrValModel::where('goods_id',$goods_id)->first();
-
-        return view('index.item',['role_Info'=>$role_Info,'sav'=>$att,'collect'=>$collect]);
-
+        $floor1=CategoryModel::where('p_id',0)->get();
+        return view('index.item',['role_Info'=>$role_Info,'sav'=>$att,'collect'=>$collect,'floor1'=>$floor1]);
     }
     //减购物车数量
     public function cartnumjian(Request $request){
@@ -230,7 +224,6 @@ class IndexController extends Common
         $res=$this->getAreaInfo(0);
         // $cityInfo=$this->getAreaInfo($addressInfo['province']);
 
-
         return view('index.order',['res'=>$res,'addressInfo'=>$addressInfo]);
 
        }
@@ -264,16 +257,11 @@ class IndexController extends Common
         echo $option;
 
     }
-
-
       //获取区域信息
     public function getAddressInfo(){
-
         // $area_model = new AreaModel;
         // $area = $area_model->where('pid',0)->get();
         //$city = $area_model->where('pid',$area['area_id'])->get();
-
-
         $where=[
             ['user_id','=',$this->user_id()],
             ['is_del','=',1]
@@ -283,20 +271,14 @@ class IndexController extends Common
         if(!empty($addressInfo)){
             $area=$addressInfo->toArray();
         }
-
-
         foreach($area as $k=>$v){
              $area[$k]['province']=AreaModel::where("area_id",$v['province'])->value("name");//根据id查市
              $area[$k]['city']=AreaModel::where("area_id",$v['city'])->value("name");//根据id查省
              $area[$k]['area']=AreaModel::where("area_id",$v['area'])->value("name");//根据id查区
             // dd($area);
          }
-
-
-
         return $area;
     }
-
     // 用户收货地址添加
     public function create(){
        $user_id=$this->user_id();
@@ -353,7 +335,7 @@ class IndexController extends Common
         $data = AddressModel::where(['add_id'=>$id])->first();
         // echo $data;
         $address = AddressModel::get();
-           
+
         //查询所有收货地址  作为列表数据
         $addressInfo=$this->getAddressInfo();
         // dd($addressInfo);
@@ -455,8 +437,5 @@ class IndexController extends Common
         }else{
             return json_encode(['status'=>'100','msg'=>'no']);
         }
-    }
-    //无限极
-    public function cate(){
     }
 }
