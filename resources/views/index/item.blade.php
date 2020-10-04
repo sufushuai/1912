@@ -94,7 +94,7 @@
                         <div class="fl title">
                             <i>价　　格</i>
                         </div>
-                        <div class="fl price" id="goods_price">
+                        <div class="goods_price fl price" >
                             <i>¥</i>
                             <em>{{$role_Info["goods_price"]}}</em>
                             <span>降价通知</span>
@@ -735,12 +735,13 @@
     });
     $(document).ready(function() {
         $('#add').click(function () {
-            var goods_price = $("goods_price").val();
+            var goods_price = $(".goods_price").val();
+            var itxt = $(".itxt").val();
 
             $.ajax({
                 type: "post",
                 url: "/index/success_cart",
-                data: {goods_price:goods_price},
+                data: {goods_price:goods_price,itxt:itxt},
                 dataType: "json",
                 success: function (res) {
                     if (res.code) {
