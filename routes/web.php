@@ -59,12 +59,10 @@ Route::any('/index/item/{goods_id}','Index\IndexController@item');//详情
 Route::any('/index/cartdestroy','Index\IndexController@cartdestroy');//购物车删除
 Route::any('/index/cartdel','Index\IndexController@cartdel');//购物车删除
 Route::any('/index/success_cart','Index\IndexController@success_cart');//成功加入购物车
-
-
-
 Route::any('/index/order','Index\IndexController@order');//订单
 Route::any('/index/area','Index\IndexController@area');//三级联动
 Route::any('/index/create','Index\IndexController@create');//订单
+Route::any('/index/list/{cate_id}','Index\IndexController@list');//商品列表
 //注册登录
 Route::any('/index/register','login\LoginController@register');//注册
 Route::any('/index/sendtel','login\LoginController@sendtel');//发送短信验证码

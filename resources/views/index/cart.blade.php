@@ -242,6 +242,7 @@
         $(this).next("#input-num").val(minus); //把数量变化后的新值放入数量框中
         $(this).parent().next().find("#sum").text(minus*productPrice);//小计的值
         totalPrice();	//调用总价方法
+        totalNum();//合计数
     });
     //加号操作
     $(document).on("click","#num-jia",function(){
@@ -270,6 +271,7 @@
         $(this).prev("#input-num").val(minus); //把数量变化后的新值放入数量框中
         $(this).parent().next().find("#sum").text(minus*productPrice);//小计的值
         totalPrice();	//调用总价方法
+        totalNum();//合计数
     });
     //总价
     $(document).on("click",".box",function(){
@@ -301,12 +303,6 @@
     //计算数量方法
     function totalNum(){
         //计算数量，编写总价方法
-        // var sumNum = 0;
-        // $(".itxt").each(function () {
-        //     var number = parseInt($(this).val());
-        //     sumNum += number;
-        // })
-        // $("#cartSumNumber").text(sumNum);
         var cart_id = '';
         $("input[name='check']:checked").each(function(){
             cart_id +=  $(this).parents('ul').attr('cart_id') + ',';
@@ -321,10 +317,9 @@
             }
         )
     }
-
     //加载页面时，调用总价方法
     $(function(){
-        //totalNum();//合计数
+        totalNum();//合计数
         totalPrice();	//调用总价方法
     })
     //ajax删除
@@ -363,6 +358,7 @@
                 }
             });
             totalPrice();	//调用总价方法
+            totalNum();//合计数
         });
 
         // 批量删除
