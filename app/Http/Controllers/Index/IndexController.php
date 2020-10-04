@@ -6,6 +6,7 @@ use App\Http\Controllers\Common;
 use App\Model\RbacUser;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Http\Request;
+use App\Model\CollectModel;
 use App\Model\BrandModel;
 use App\Model\AdModel;
 use App\Model\SlideModel;
@@ -132,6 +133,7 @@ class IndexController extends Common
     //详情
     public function item(Request $request,$goods_id){
 
+        $collect=CollectModel::where("goods_id",$goods_id)->get();
         //商品
 
         $key="num".$goods_id;
@@ -167,7 +169,7 @@ class IndexController extends Common
         }
         $sav = SkuAttrValModel::where('goods_id',$goods_id)->first();
 
-        return view('index.item',['role_Info'=>$role_Info,'sav'=>$att]);
+        return view('index.item',['role_Info'=>$role_Info,'sav'=>$att,'collect'=>$collect]);
 
     }
     //减购物车数量

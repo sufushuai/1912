@@ -14,12 +14,6 @@
     <link rel="stylesheet" type="text/css" href="/asses/css/widget-cartPanelView.css" />
 
 
-    <link rel="stylesheet" href="/asset/css/modallayer.min.css">
-
-    <script src="https://cdn.bootcss.com/font-awesome/5.11.2/js/all.min.js"></script>
-    <script src="/asset/js/modallayer-ie.min.js"></script>
-
-
 </head>
 
 <body>
@@ -34,8 +28,17 @@
 
                 </ul>
                 <li  style="float: right;margin-top: -40px;margin-right: 10px;list-style: none;"></li><br>
-                <li style="float: right;margin-top: -40px;margin-right: 10px;list-style: none;" id="store" status="3" goods_id="1">
-                    <a href="javascriptvoid:0"><img src="/asses/img/_/timg.jfif" width="30px;" height="30px;" alt=""></a>
+                <li style="float: right;margin-top: -40px;margin-right: 10px;list-style: none;" id="store" status="3">
+                   <input type="hidden" name="goods_id" value="{{$role_Info['goods_id']}}">
+                    @foreach($collect as $k=>$v)
+                    @if($v['is_del']==1)
+                        <button type="button" class="btn-danger addshopcar" id="collect">收藏</button>
+                        <button type="button" class="btn-danger addshopcar" style="display: none" id="collected">取消收藏</button>
+                            @else
+                        <button type="button" class="btn-danger addshopcar" style="display: none" id="collect">收藏</button>
+                        <button type="button" class="btn-danger addshopcar"  id="collected">取消收藏</button>
+                    @endif
+                    @endforeach
                 </li>
             </div>
         <div class="crumb-wrap">
@@ -738,6 +741,42 @@
                 }
             })
            return false;
+        })
+    })
+    $(document).on("click","#collect",function(){
+        var _this=$(this);
+        _this.hide();
+        _this.next("button").show();
+
+        var goods_id=$("input[name='goods_id']").val();
+        $.ajax({
+            'url':'/man/create',
+            'type':'post',
+            'data':{goods_id:goods_id},
+            'dataType':"json",
+            success:function(res){
+                if(res.code){
+                    alert(res.msg)
+                }
+            }
+        })
+    })
+    $(document).on("click","#collected",function(){
+        var _this=$(this);
+        _this.hide();
+        _this.prev("button").show();
+
+        var goods_id=$("input[name='goods_id']").val();
+        $.ajax({
+            'url':'/man/delete',
+            'type':'post',
+            'data':{goods_id:goods_id},
+            'dataType':"json",
+            success:function(res){
+                if(res.code){
+                    alert(res.msg)
+                }
+            }
         })
     })
 </script>
