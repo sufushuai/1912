@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 
 <head>
     <meta charset="UTF-8">
@@ -99,7 +99,13 @@
                                 @endforeach
                             </thead>
                         </table>
-                        <button class="edit">修改个人信息</button>
+                        <div class="control-group">
+                            <label for="sanwei" class="control-label"></label>
+                            <div class="controls">
+                                <button class="edit" class="sui-btn btn-primary">修改个人信息</button>
+                            </div>
+                        </div>
+
                         <!--数据列表/-->
                     </div>
 

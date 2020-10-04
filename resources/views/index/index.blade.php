@@ -237,11 +237,11 @@
 </div>
 
 <!--楼层-->
-@foreach($floor as $v)
+
 <div id="floor-1" class="floor">
     <div class="py-container">
         <div class="title floors">
-            <h3 class="fl">{{$v['cate_name']}}</h3>
+            <h3 class="fl"></h3>
             <div class="fr">
                 <ul class="sui-nav nav-tabs">
 
@@ -315,7 +315,7 @@
         </div>
     </div>
 </div>
-@endforeach
+
 
 <!--商标-->
 <div class="brand">
@@ -331,18 +331,18 @@
 <!--页面底部-->
 @include('index.layouts.foot')
 <!--页面底部END-->
-<!-- 楼层位置 -->
-<div id="floor-index" class="floor-index">
-    <ul>
-        @foreach($floor as $b)
-            <li>
-                <a class="num" href="javascript:;" style="display: none;">{{$b['level']}}F</a>
-                <a class="word" href="javascript;;" style="display: block;">{{$b['cate_name']}}</a>
-            </li>
-            @endforeach
+{{--<!-- 楼层位置 -->--}}
+{{--<div id="floor-index" class="floor-index">--}}
+    {{--<ul>--}}
+        {{--@foreach($floor as $b)--}}
+            {{--<li>--}}
+                {{--<a class="num" href="javascript:;" style="display: none;">{{$b['level']}}F</a>--}}
+                {{--<a class="word" href="javascript;;" style="display: block;">{{$b['cate_name']}}</a>--}}
+            {{--</li>--}}
+            {{--@endforeach--}}
 
-    </ul>
-</div>
+    {{--</ul>--}}
+{{--</div>--}}
 <!--侧栏面板开始-->
 <div class="J-global-toolbar">
     <div class="toolbar-wrap J-wrap">
