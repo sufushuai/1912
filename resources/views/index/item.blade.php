@@ -12,6 +12,14 @@
     <link rel="stylesheet" type="text/css" href="/asses/css/pages-item.css" />
     <link rel="stylesheet" type="text/css" href="/asses/css/pages-zoom.css" />
     <link rel="stylesheet" type="text/css" href="/asses/css/widget-cartPanelView.css" />
+
+
+    <link rel="stylesheet" href="/asset/css/modallayer.min.css">
+
+    <script src="https://cdn.bootcss.com/font-awesome/5.11.2/js/all.min.js"></script>
+    <script src="/asset/js/modallayer-ie.min.js"></script>
+
+
 </head>
 
 <body>
@@ -21,6 +29,15 @@
 
 <div class="py-container">
     <div id="item">
+            <div class="crumb-wrap">
+                <ul class="sui-breadcrumb">
+
+                </ul>
+                <li  style="float: right;margin-top: -40px;margin-right: 10px;list-style: none;"></li><br>
+                <li style="float: right;margin-top: -40px;margin-right: 10px;list-style: none;" id="store" status="3" goods_id="1">
+                    <a href="javascriptvoid:0"><img src="/asses/img/_/timg.jfif" width="30px;" height="30px;" alt=""></a>
+                </li>
+            </div>
         <div class="crumb-wrap">
             <ul class="sui-breadcrumb">
                 <li>
@@ -37,7 +54,8 @@
         </div>
         <!--product-info-->
         <div class="product-info">
-            <div class="fl preview-wrap">
+
+                <div class="fl preview-wrap">
                 <!--放大镜效果-->
                 <div class="zoom">
                     <!--默认第一个预览-->
