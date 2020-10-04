@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 
 <head>
     <meta charset="UTF-8">
@@ -11,6 +11,21 @@
     <link rel="stylesheet" type="text/css" href="/asses/css/webbase.css" />
     <link rel="stylesheet" type="text/css" href="/asses/css/pages-seckillOrder.css" />
 </head>
+<style>
+    .card_tab li{
+        display: inline-block;
+        padding: 10px;
+        border:1px solid #ccc;
+        margin-left: 10px;
+        cursor: pointer;
+    }
+    .cur{
+        background: #ccc;
+    }
+    .hide{
+        display:none;
+    }
+</style>
 
 <body>
 <!-- 头部栏位 -->
@@ -32,6 +47,13 @@
         });
 
     })
+    $(function(){
+        $(".card_tab li").click(function(){
+            $(this).addClass("cur").siblings().removeClass("cur");
+            var index=$(this).index();
+            $(".content_tab").eq(index).removeClass("hide").siblings().addClass("hide");
+        });
+    });
 </script>
 <script type="text/javascript" src="/asses/js/plugins/jquery.easing/jquery.easing.min.js"></script>
 <script type="text/javascript" src="/asses/js/plugins/sui/sui.min.js"></script>
@@ -48,46 +70,67 @@
             <div class="yui3-u-5-6 order-pay">
                 <div class="body">
                     <div class="table-title">
-                        <table class="sui-table  order-table">
-                            <tr>
-                                <thead>
-                                <th width="35%">宝贝</th>
-                                <th width="5%">单价</th>
-                                <th width="5%">数量</th>
-                                <th width="8%">商品操作</th>
-                                <th width="10%">实付款</th>
-                                <th width="10%">交易状态</th>
-                                <th width="10%">交易操作</th>
-                                </thead>
-                            </tr>
-                        </table>
+                        <ul class="card_tab">
+                            <li class="cur">未支付</li>
+                            <li>已支付</li>
+                            <li>未发货</li>
+                            <li>已发货</li>
+                        </ul>
                     </div>
-
-                    <div class="order-detail">
-                        <div class="orders">
-                            <div class="choose-order">
-                                <label data-toggle="checkbox" class="checkbox-pretty checked">
-                                    <input type="checkbox" checked="checked"><span>全选</span>
-                                </label>
-                                <a href="" class="sui-btn btn-info btn-bordered hepay-btn">合并付款</a>
-                                <div class="sui-pagination pagination-large top-pages">
-                                    <ul>
-                                        <li class="prev disabled"><a href="#">上一页</a></li>
-
-                                        <li class="next"><a href="#">下一页</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="choose-title">
-                                <label data-toggle="checkbox" class="checkbox-pretty ">
-                                    <input type="checkbox" checked="checked"><span>2017-02-11 11:59　订单编号：7867473872181848  店铺：哇哈哈 <a>和我联系</a></span>
-                                </label>
-                                <a class="sui-btn btn-info share-btn">分享</a>
-                            </div>
-                            <table class="sui-table table-bordered order-datatable">
-
+                    <div class="content">
+                        <div class="content_tab">
+                                <table width="100%" border="0" cellpadding="5" cellspacing="1" class="tableBasic sui-table table-bordered order-datatable">
+                                    <tbody>
+                                    <div class="order-detail">
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <tr>
+                                        <td width="35%">
+                                            <div class="typographic"><img src="/asses/img/goods.png" />
+                                                <a href="#" class="block-text">包邮 正品玛姬儿压缩面膜无纺布纸膜100粒 送泡瓶面膜刷喷瓶 新款</a>
+                                                <span class="guige">规格：温泉喷雾150ml</span>
+                                            </div>
+                                        </td>
+                                        <td width="5%" class="center">
+                                            <ul class="unstyled">
+                                                <li class="o-price">¥599.00</li>
+                                                <li>¥299.00</li>
+                                            </ul>
+                                        </td>
+                                        <td width="5%" class="center">1</td>
+                                        <td width="8%" class="center">
+                                            <ul class="unstyled">
+                                                <li><a>退货/退款</a></li>
+                                            </ul>
+                                        </td>
+                                        <td width="10%" class="center">
+                                            <ul class="unstyled">
+                                                <li>¥299.00</li>
+                                                <li>（含运费：￥0.00）</li>
+                                            </ul>
+                                        </td>
+                                        <td width="10%" class="center">
+                                            <ul class="unstyled">
+                                                <li>物流派件中</li>
+                                                <li><a href="orderDetail.html" class="btn">订单详情 </a></li>
+                                            </ul>
+                                        </td>
+                                        <td width="10%" class="center">
+                                            <ul class="unstyled">
+                                                <li>还剩8天10小时</li>
+                                                <li><a href="#" class="sui-btn btn-info">确认收货</a></li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                        </div>
+                        <div class="content_tab hide">
+                            <table width="100%" border="0" cellpadding="5" cellspacing="1" class="tableBasic sui-table table-bordered order-datatable">
                                 <tbody>
+                                <div class="order-detail">
+                                    <div class="clearfix"></div>
+                                </div>
                                 <tr>
                                     <td width="35%">
                                         <div class="typographic"><img src="/asses/img/goods.png" />
@@ -102,7 +145,11 @@
                                         </ul>
                                     </td>
                                     <td width="5%" class="center">1</td>
-                                    <td width="8%" class="center"></td>
+                                    <td width="8%" class="center">
+                                        <ul class="unstyled">
+                                            <li><a>退货/退款</a></li>
+                                        </ul>
+                                    </td>
                                     <td width="10%" class="center">
                                         <ul class="unstyled">
                                             <li>¥299.00</li>
@@ -111,48 +158,120 @@
                                     </td>
                                     <td width="10%" class="center">
                                         <ul class="unstyled">
-                                            <li>等待买家付款</li>
+                                            <li>物流派件中</li>
                                             <li><a href="orderDetail.html" class="btn">订单详情 </a></li>
                                         </ul>
-
-
                                     </td>
                                     <td width="10%" class="center">
                                         <ul class="unstyled">
-                                            <li><a href="#" class="sui-btn btn-info">立即付款</a></li>
-                                            <li><a href="#">取消订单</a></li>
+                                            <li>还剩8天10小时</li>
+                                            <li><a href="#" class="sui-btn btn-info">确认收货</a></li>
                                         </ul>
                                     </td>
                                 </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="content_tab hide">
+                            <table width="100%" border="0" cellpadding="5" cellspacing="1" class="tableBasic sui-table table-bordered order-datatable">
+                                <tbody>
+                                <div class="order-detail">
+                                    <div class="clearfix"></div>
+                                </div>
+                                <tr>
+                                    <td width="35%">
+                                        <div class="typographic"><img src="/asses/img/goods.png" />
+                                            <a href="#" class="block-text">包邮 正品玛姬儿压缩面膜无纺布纸膜100粒 送泡瓶面膜刷喷瓶 新款</a>
+                                            <span class="guige">规格：温泉喷雾150ml</span>
+                                        </div>
+                                    </td>
+                                    <td width="5%" class="center">
+                                        <ul class="unstyled">
+                                            <li class="o-price">¥599.00</li>
+                                            <li>¥299.00</li>
+                                        </ul>
+                                    </td>
+                                    <td width="5%" class="center">1</td>
+                                    <td width="8%" class="center">
+                                        <ul class="unstyled">
+                                            <li><a>退货/退款</a></li>
+                                        </ul>
+                                    </td>
+                                    <td width="10%" class="center">
+                                        <ul class="unstyled">
+                                            <li>¥299.00</li>
+                                            <li>（含运费：￥0.00）</li>
+                                        </ul>
+                                    </td>
+                                    <td width="10%" class="center">
+                                        <ul class="unstyled">
+                                            <li>物流派件中</li>
+                                            <li><a href="orderDetail.html" class="btn">订单详情 </a></li>
+                                        </ul>
+                                    </td>
+                                    <td width="10%" class="center">
+                                        <ul class="unstyled">
+                                            <li>还剩8天10小时</li>
+                                            <li><a href="#" class="sui-btn btn-info">确认收货</a></li>
+                                        </ul>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
-
                         </div>
-
-                        <div class="choose-order">
-                            <label data-toggle="checkbox" class="checkbox-pretty checked">
-                                <input type="checkbox" checked="checked"><span>全选</span>
-                            </label>
-                            <a href="" class="sui-btn btn-info btn-bordered hepay-btn">合并付款</a>
-                            <div class="sui-pagination pagination-large top-pages">
-                                <ul>
-                                    <li class="prev disabled"><a href="#">«上一页</a></li>
-                                    <li class="active"><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li class="dotted"><span>...</span></li>
-                                    <li class="next"><a href="#">下一页»</a></li>
-                                </ul>
-                                <div><span>共10页&nbsp;</span><span>
-                                            到
-                                            <input type="text" class="page-num"><button class="page-confirm" onclick="alert(1)">确定</button>
-                                            页</span></div>
-                            </div>
+                        <div class="content_tab hide">
+                            <table width="100%" border="0" cellpadding="5" cellspacing="1" class="tableBasic sui-table table-bordered order-datatable">
+                                <tbody>
+                                <div class="order-detail">
+                                    <div class="clearfix"></div>
+                                </div>
+                                <tr>
+                                    <td width="35%">
+                                        <div class="typographic"><img src="/asses/img/goods.png" />
+                                            <a href="#" class="block-text">包邮 正品玛姬儿压缩面膜无纺布纸膜100粒 送泡瓶面膜刷喷瓶 新款</a>
+                                            <span class="guige">规格：温泉喷雾150ml</span>
+                                        </div>
+                                    </td>
+                                    <td width="5%" class="center">
+                                        <ul class="unstyled">
+                                            <li class="o-price">¥599.00</li>
+                                            <li>¥299.00</li>
+                                        </ul>
+                                    </td>
+                                    <td width="5%" class="center">1</td>
+                                    <td width="8%" class="center">
+                                        <ul class="unstyled">
+                                            <li><a>退货/退款</a></li>
+                                        </ul>
+                                    </td>
+                                    <td width="10%" class="center">
+                                        <ul class="unstyled">
+                                            <li>¥299.00</li>
+                                            <li>（含运费：￥0.00）</li>
+                                        </ul>
+                                    </td>
+                                    <td width="10%" class="center">
+                                        <ul class="unstyled">
+                                            <li>物流派件中</li>
+                                            <li><a href="orderDetail.html" class="btn">订单详情 </a></li>
+                                        </ul>
+                                    </td>
+                                    <td width="10%" class="center">
+                                        <ul class="unstyled">
+                                            <li>还剩8天10小时</li>
+                                            <li><a href="#" class="sui-btn btn-info">确认收货</a></li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
+                    </div>
 
+                    <div class="order-detail">
                         <div class="clearfix"></div>
                     </div>
+
 
                     <div class="like-title">
                         <div class="mt">

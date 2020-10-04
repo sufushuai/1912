@@ -35,12 +35,6 @@ class ManController extends Common
         return view("man/coupon");
     }
     /**
-     * 收藏
-     */
-    public function collect(){
-        return view("man/collect");
-    }
-    /**
      * 地址管理
      */
     public function address(){

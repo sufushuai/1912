@@ -32,7 +32,11 @@
                                 @foreach($addressInfo as $k=>$v)
                                 <div class="con name selected"><a href="javascript:;" >{{$v['user_name']}}<span title="点击取消选择">&nbsp;</a></div>
                                 <div class="con address">{{$v['province']}}{{$v['city']}}{{$v['area']}}<span>{{$v['user_tel']}}</span>
-                                    <span class="edittext"><a data-toggle="modal" data-target=".edit" data-keyboard="false" >编辑</a>&nbsp;&nbsp;<a href="javascript:;">删除</a></span>
+                                    <span class="edittext">
+                                        <a href="{{url('/index/update/'.$v['add_id'])}}" data-target=".update">编辑</a>&nbsp;&nbsp;
+                                       <button type="button" class="del" add_id="{{$v['add_id']}}" >删除</button>
+                                       <a href="{{url('/index/default/'.$v['add_id'])}}" style="color:#ff4e00;">设为默认</a>
+                                    </span>
                                 </div>
                                 <div class="clearfix"></div>
                                 @endforeach
@@ -109,6 +113,7 @@
                         </div>
                     </div>
                     <!--确认地址-->
+                     
                 </div>
                 <div class="hr"></div>
 
@@ -219,7 +224,7 @@
 
 
 
-
+//三级联动
 $(function(){
             $(document).on('change','.area',function(){
                 // alert(123);
@@ -267,6 +272,27 @@ $(function(){
                         location.href='/index/order'
                     }
                 }
+            })
+        })
+
+
+           $(document).on('click','.del',function(){
+            // alert(11);
+            var add_id = $(this).attr('add_id');
+            // console.log(add_id);
+            $.ajax({
+                url:'/index/del',
+                data:{add_id:add_id},
+                type:'post',
+                dataType:'json',
+                success:function(res){
+                    // console.log(res)
+                    if(res.code==0){
+                        alert(res.mag)
+                        location.href="/index/order"
+                    }
+                }
+
             })
         })
 

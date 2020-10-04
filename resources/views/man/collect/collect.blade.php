@@ -15,7 +15,7 @@
 <body>
 <!-- 头部栏位 -->
 <!--页面顶部-->
-@include("index.layouts/head")
+@include("index.layouts.head")
 
 <script type="text/javascript" src="/asses/js/plugins/jquery/jquery.min.js"></script>
 <script type="text/javascript">
@@ -50,12 +50,13 @@
                     <h4>收藏的商品</h4>
                     <div class="goods-list">
                         <ul class="yui3-g"  id="goods-list">
+                            @foreach($collect as $k=>$v)
                             <li class="yui3-u-1-4">
                                 <div class="list-wrap">
-                                    <div class="p-img"><img src="/asses/img/_/t.jpg" alt=''></div>
-                                    <div class="price"><strong><em>¥</em> <i>139.00</i></strong></div>
-                                    <div class="attr"><em>Apple苹果iPhone 6s 32G金色 移动联通电信4G手机</em></div>
-                                    <div class="cu"><em><span>促</span>满一件可参加超值换购</em></div>
+                                    <div class="p-img"> <a href="{{url('/index/item/'.$v['goods_id'])}}" class="pic"><img src="{{env('UPLOAD_URL')}}{{$v["goods_img"]}}" width="200px" height="150px" alt=''></a></div>
+                                    <div class="price"><strong><em>¥</em> <i>{{$v["goods_price"]}}</i></strong></div>
+                                    <div class="attr"><em>{{$v["goods_name"]}}</em></div>
+                                    <div class="cu"><em><span>促</span>{{$v["goods_desc"]}}</em></div>
                                     <div class="operate">
                                         <a href="success-cart.html" target="_blank" class="sui-btn btn-bordered btn-danger">加入购物车</a>
                                         <a href="javascript:void(0);" class="sui-btn btn-bordered">对比</a>
@@ -63,71 +64,7 @@
                                     </div>
                                 </div>
                             </li >
-                            <li class="yui3-u-1-4">
-                                <div class="list-wrap">
-                                    <div class="p-img"><img src="/asses/img/_/t.jpg" alt=''></div>
-                                    <div class="price"><strong><em>¥</em> <i>139.00</i></strong></div>
-                                    <div class="attr"><em>Apple苹果iPhone 6s 32G金色 移动联通电信4G手机</em></div>
-                                    <div class="cu"><em><span>促</span>满一件可参加超值换购</em></div>
-                                    <div class="operate">
-                                        <a href="success-cart.html" target="_blank" class="sui-btn btn-bordered btn-danger">加入购物车</a>
-                                        <a href="javascript:void(0);" class="sui-btn btn-bordered">对比</a>
-                                        <a href="javascript:void(0);" class="sui-btn btn-bordered">降价通知</a>
-                                    </div>
-                                </div>
-                            </li >
-                            <li class="yui3-u-1-4">
-                                <div class="list-wrap">
-                                    <div class="p-img"><img src="/asses/img/_/t.jpg" alt=''></div>
-                                    <div class="price"><strong><em>¥</em> <i>139.00</i></strong></div>
-                                    <div class="attr"><em>Apple苹果iPhone 6s 32G金色 移动联通电信4G手机</em></div>
-                                    <div class="cu"><em><span>促</span>满一件可参加超值换购</em></div>
-                                    <div class="operate">
-                                        <a href="success-cart.html" target="_blank" class="sui-btn btn-bordered btn-danger">加入购物车</a>
-                                        <a href="javascript:void(0);" class="sui-btn btn-bordered">对比</a>
-                                        <a href="javascript:void(0);" class="sui-btn btn-bordered">降价通知</a>
-                                    </div>
-                                </div>
-                            </li >
-                            <li class="yui3-u-1-4">
-                                <div class="list-wrap">
-                                    <div class="p-img"><img src="/asses/img/_/t.jpg" alt=''></div>
-                                    <div class="price"><strong><em>¥</em> <i>139.00</i></strong></div>
-                                    <div class="attr"><em>Apple苹果iPhone 6s 32G金色 移动联通电信4G手机</em></div>
-                                    <div class="cu"><em><span>促</span>满一件可参加超值换购</em></div>
-                                    <div class="operate">
-                                        <a href="success-cart.html" target="_blank" class="sui-btn btn-bordered btn-danger">加入购物车</a>
-                                        <a href="javascript:void(0);" class="sui-btn btn-bordered">对比</a>
-                                        <a href="javascript:void(0);" class="sui-btn btn-bordered">降价通知</a>
-                                    </div>
-                                </div>
-                            </li >
-                            <li class="yui3-u-1-4">
-                                <div class="list-wrap">
-                                    <div class="p-img"><img src="/asses/img/_/t.jpg" alt=''></div>
-                                    <div class="price"><strong><em>¥</em> <i>139.00</i></strong></div>
-                                    <div class="attr"><em>Apple苹果iPhone 6s 32G金色 移动联通电信4G手机</em></div>
-                                    <div class="cu"><em><span>促</span>满一件可参加超值换购</em></div>
-                                    <div class="operate">
-                                        <a href="success-cart.html" target="_blank" class="sui-btn btn-bordered btn-danger">加入购物车</a>
-                                        <a href="javascript:void(0);" class="sui-btn btn-bordered">对比</a>
-                                        <a href="javascript:void(0);" class="sui-btn btn-bordered">降价通知</a>
-                                    </div>
-                                </div>
-                            </li >
-                            <li class="yui3-u-1-4">
-                                <div class="list-wrap">
-                                    <div class="p-img"><img src="/asses/img/_/t.jpg" alt=''></div>
-                                    <div class="price"><strong><em>¥</em> <i>139.00</i></strong></div>
-                                    <div class="attr"><em>Apple苹果iPhone 6s 32G金色 移动联通电信4G手机</em></div>
-                                    <div class="cu"><em><span>促</span>满一件可参加超值换购</em></div>
-                                    <div class="operate">
-                                        <a href="success-cart.html" target="_blank" class="sui-btn btn-bordered btn-danger">加入购物车</a>
-                                        <a href="javascript:void(0);" class="sui-btn btn-bordered">对比</a>
-                                        <a href="javascript:void(0);" class="sui-btn btn-bordered">降价通知</a>
-                                    </div>
-                                </div>
-                            </li >
+                            @endforeach
                         </ul>
                     </div>
 
