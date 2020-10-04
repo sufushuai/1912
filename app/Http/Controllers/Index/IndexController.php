@@ -6,6 +6,7 @@ use App\Http\Controllers\Common;
 use App\Model\RbacUser;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Http\Request;
+use App\Model\CollectModel;
 use App\Model\BrandModel;
 use App\Model\AdModel;
 use App\Model\SlideModel;
@@ -129,6 +130,11 @@ class IndexController extends Common
     }
     //详情
     public function item(Request $request,$goods_id){
+<<<<<<< HEAD
+=======
+
+        $collect=CollectModel::where("goods_id",$goods_id)->get();
+>>>>>>> 32b7ce4880ca214fd010f2997081a5dc3e671792
         //商品
         $key="num".$goods_id;
         if(Redis::get($key)){
@@ -160,8 +166,14 @@ class IndexController extends Common
             }
         }
         $sav = SkuAttrValModel::where('goods_id',$goods_id)->first();
+<<<<<<< HEAD
         $floor1=CategoryModel::where('p_id',0)->get();
         return view('index.item',['role_Info'=>$role_Info,'sav'=>$att,'floor1'=>$floor1]);
+=======
+
+        return view('index.item',['role_Info'=>$role_Info,'sav'=>$att,'collect'=>$collect]);
+
+>>>>>>> 32b7ce4880ca214fd010f2997081a5dc3e671792
     }
     //减购物车数量
     public function cartnumjian(Request $request){
@@ -311,6 +323,105 @@ class IndexController extends Common
             return['code'=>'1','mag'=>"失败"];
         }
     }
+
+
+    public function del(){
+        $add_id=request()->post('add_id');
+        // dd($add_id);
+        $res = AddressModel::where(['add_id'=>$add_id])->update(['is_del'=>2]);
+        // dd($res);
+        if($res){
+            return['code'=>'0','mag'=>"成功"];
+        }else{
+            return['code'=>'1','mag'=>"失败"];
+        }
+    }
+
+    public function update($id){
+        // echo 1111;
+        $data = AddressModel::where(['add_id'=>$id])->first();
+        // echo $data;
+        $address = AddressModel::get();
+           
+        //查询所有收货地址  作为列表数据
+        $addressInfo=$this->getAddressInfo();
+        // dd($addressInfo);
+
+        //查询所有省份  作为第一个下拉菜单的值  pid=0
+        $res=$this->getAreaInfo(0);
+        // $cityInfo=$this->getAreaInfo($addressInfo['province']);
+        return view('index.edit',['data'=>$data,'res'=>$res,'addressInfo'=>$addressInfo]);
+    }
+
+
+    public function updatedo(){
+        // echo 11;die;
+       $add_id=request()->post('add_id');
+       $user_id=$this->user_id();
+       $user_name = request()->post('user_name');
+       $user_tel = request()->post('user_tel');
+       $province = request()->post('province');
+       $city = request()->post('city');
+       $area = request()->post('area');
+       // dump($add_id);
+        // dump($user_name);
+       // dump($user_tel);
+       // dump($province);
+       // dump($city);
+       // dump($area);
+       $data =[
+            'add_id'=>$add_id,
+            'user_id'=>$user_id,
+            'user_name'=>$user_name,
+            'user_tel'=>$user_tel,
+            'province'=>$province,
+            'city'=>$city,
+            'area'=>$area
+       ];
+
+       $where=[
+            ['add_id','=',$add_id]
+       ];
+
+       //$address = new AddressModel;
+       $res = AddressModel::where($where)->update($data);
+       // dd($res);s
+
+       if($res){
+            return['code'=>'0','mag'=>"成功"];
+        }else{
+            return['code'=>'1','mag'=>"失败"];
+        }
+
+    }
+
+    //默认
+    public function default($id){
+        // echo 111;
+         //接受收货地址
+        $addid=request()->post('add_id');
+        //实例化对象
+        $address_model=new AddressModel();
+        //获取用户id
+        $user_id=$this->user_id();
+        //写满足的where条件
+        $where=[
+            ['user_id','=',$user_id],//用户的id
+            ['is_del','=',1]//没有被删除
+        ];
+        //根据收货id将把这个用户的默认改为1 其他的收货地址改为2
+        $address_model->where($where)->update(['is_default'=>2]);//将其他地址改为2
+        $res=$address_model->where('add_id',$id)->update(['is_default'=>1]);//将默认改为1
+        // 判断
+        if($res){
+            // echo '成功';
+            return redirect('/index/order');
+        }else{
+            echo '失败';
+        }
+    }
+
+
     // 三级联动
     public function area(Request $request)
     {
