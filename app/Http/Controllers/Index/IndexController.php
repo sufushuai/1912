@@ -118,9 +118,11 @@ class IndexController extends Common
     //成功加入购物车
     public function success_cart(){
         $goods_price = request()->post("goods_price");
-
+        $itxt = request()->post("itxt");
         $where =[
-            "goods_price"=>$goods_price
+            "goods_price"=>$goods_price,
+            "buy_number"=>$itxt
+
         ];
         $res=CartModel::insert($where);
         if($res){
