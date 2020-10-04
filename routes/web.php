@@ -24,7 +24,7 @@ Route::any('/order_info/order_error','Order\OrderController@order_error');//支�
 
 
 //个人中心
-Route::group(['prefix'=>'/man', 'middleware' => ['userinfo'] ],function(){
+Route::group(['prefix'=>'/man', 'middleware' => ['user','userinfo'] ],function(){
     Route::any('/index','Man\ManController@index');//我的订单
     Route::any('/pay','Man\ManController@pay');//订单状态
     Route::any('/history','Man\ManController@history');//浏览历史
@@ -43,7 +43,7 @@ Route::group(['prefix'=>'/man'],function(){
     Route::any('/per_update','Man\PersonalController@per_update');//个人信息--修改
 });
 //我的收藏
-Route::group(['prefix'=>'/man', 'middleware' => ['userinfo'] ],function(){
+Route::group(['prefix'=>'/man', 'middleware' => ['user','userinfo'] ],function(){
     Route::any('/collect','Man\CollectController@collect');//我的收藏
     Route::any('/create','Man\CollectController@create');//我的收藏
     Route::any('/delete','Man\CollectController@delete');//我的收藏
