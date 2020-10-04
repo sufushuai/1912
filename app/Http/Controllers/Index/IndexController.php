@@ -130,11 +130,7 @@ class IndexController extends Common
     }
     //详情
     public function item(Request $request,$goods_id){
-<<<<<<< HEAD
-=======
-
         $collect=CollectModel::where("goods_id",$goods_id)->get();
->>>>>>> 32b7ce4880ca214fd010f2997081a5dc3e671792
         //商品
         $key="num".$goods_id;
         if(Redis::get($key)){
@@ -166,14 +162,8 @@ class IndexController extends Common
             }
         }
         $sav = SkuAttrValModel::where('goods_id',$goods_id)->first();
-<<<<<<< HEAD
         $floor1=CategoryModel::where('p_id',0)->get();
-        return view('index.item',['role_Info'=>$role_Info,'sav'=>$att,'floor1'=>$floor1]);
-=======
-
-        return view('index.item',['role_Info'=>$role_Info,'sav'=>$att,'collect'=>$collect]);
-
->>>>>>> 32b7ce4880ca214fd010f2997081a5dc3e671792
+        return view('index.item',['role_Info'=>$role_Info,'sav'=>$att,'collect'=>$collect,'floor1'=>$floor1]);
     }
     //减购物车数量
     public function cartnumjian(Request $request){
@@ -342,7 +332,7 @@ class IndexController extends Common
         $data = AddressModel::where(['add_id'=>$id])->first();
         // echo $data;
         $address = AddressModel::get();
-           
+
         //查询所有收货地址  作为列表数据
         $addressInfo=$this->getAddressInfo();
         // dd($addressInfo);

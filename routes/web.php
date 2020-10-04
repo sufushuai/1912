@@ -67,14 +67,11 @@ Route::any('/index/success_cart','Index\IndexController@success_cart');//成功�
 Route::any('/index/order','Index\IndexController@order');//订单
 Route::any('/index/area','Index\IndexController@area');//三级联动
 Route::any('/index/create','Index\IndexController@create');//订单
-<<<<<<< HEAD
 Route::any('/index/list/{cate_id}','Index\IndexController@list');//商品列表
-=======
 Route::any('/index/del','Index\IndexController@del');//地址删除
 Route::any('/index/update/{id}','Index\IndexController@update');//修改
 Route::any('/index/updatedo','Index\IndexController@updatedo');//修改
 Route::any('/index/default/{id}','Index\IndexController@default');//默认收货地址
->>>>>>> 32b7ce4880ca214fd010f2997081a5dc3e671792
 //注册登录
 Route::any('/index/register','login\LoginController@register');//注册
 Route::any('/index/sendtel','login\LoginController@sendtel');//发送短信验证码

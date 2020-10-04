@@ -88,7 +88,7 @@
                 <div class="fl ext">
                 </div>
             </div>
-           
+
         </div>
         <!--details-->
         <div class="details">
