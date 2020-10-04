@@ -80,8 +80,9 @@ class IndexController extends Common
     //列表
     public function list(){
         $brand = BrandModel::get();
+        $goods = GoodsModel::get();
         $floor1=CategoryModel::where('p_id',0)->get();
-        return view('index.list',['floor1'=>$floor1,'brand'=>$brand]);
+        return view('index.list',['floor1'=>$floor1,'brand'=>$brand,'goods'=>$goods]);
     }
     //购物车
     public function cart(){
