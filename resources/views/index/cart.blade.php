@@ -30,7 +30,7 @@
                     </div>
                     <div class="cart-body">
                         <div class="cart-list">
-                            <ul class="goods-list yui3-g" cart_id="{{$v->cart_id}}">
+                            <ul class="goods-list yui3-g" cart_id="{{$v->cart_id}}" goods_id="{{$v->goods_id}}">
                                 <li class="yui3-u-1-24">
                                     <input type="checkbox" name="check" class="box" id="box" value="{{$v->cart_id}}" />
                                 </li>
@@ -41,7 +41,7 @@
                                             尺寸：13.3英寸</div>
                                     </div>
                                 </li>
-                                <li class="yui3-u-1-8"><span class="price" id="price" >{{$v->goods_price}}</span></li>
+                                <li class="yui3-u-1-8 danjia"><span class="price" id="price" >{{$v->goods_price}}</span></li>
                                 <li class="yui3-u-1-8">
                                     <button id="num-jian" class="increment mins  numberMinus">－</button>
                                     <input  id="input-num"  type="text" value="{{$v->buy_number}}" class="itxt" />
@@ -251,7 +251,7 @@
             data:{buy_number:minus,cart_id:cart_id},
             success:function(res){
                     if(res.code==200){
-                        alert("修改成功")
+                        alert("减少数量成功")
                         location.href='/index/cart'
                     }
                 if(res.code==1){
@@ -261,6 +261,7 @@
         });
         $(this).next("#input-num").val(minus); //把数量变化后的新值放入数量框中
         $(this).parent().next().find("#sum").text(minus*productPrice);//小计的值
+        totalPrice();	//调用总价方法
     });
     //加号操作
     $(document).on("click","#num-jia",function(){
@@ -278,7 +279,7 @@
             data:{buy_number:minus,cart_id:cart_id},
             success:function(res){
                 if(res.code==200){
-                    alert("修改成功")
+                    alert("增加数量成功")
                     location.href='/index/cart'
                 }
                 if(res.code==1){
@@ -288,35 +289,37 @@
         });
         $(this).prev("#input-num").val(minus); //把数量变化后的新值放入数量框中
         $(this).parent().next().find("#sum").text(minus*productPrice);//小计的值
+        totalPrice();	//调用总价方法
     });
+    //总价
     $(document).on("click",".box",function(){
-        var zong = 0;
-        alert( $("input[name='check']:checked").length);
-        var num = parseInt($(this).parents().find("#zongnum").find("#sum").text());
-        zong += num + ',';
-        alert(zong);
+        totalPrice();	//调用总价方法
     });
     //计算总价方法
     function totalPrice(){
-        //计算总价，编写总价方法
-        var box = $(".box:checked");
-        if(box.length == 0){
-            $("#Sum").text('￥' + 0);
-            return false;
-        }
-        // var zong = 0;
-        // $("input[name='check']:checked").each(function(){
-        //     var _this = $(this);
-        //     var num = parseInt($(this).parents().find("#zongnum").find("#sum").text());
-        //     //var num = parseInt($(this).text());
-        //     zong += num;
-        //     // console.log(zong);
-        // });
-        // $("#Sum").text('￥'+zong);
+        var goods_id = '';
+        $("input[name='check']:checked").each(function(){
+            goods_id +=  $(this).parents('ul').attr('goods_id') + ',';
+        })
+        goods_id = goods_id.substr(0, goods_id.length - 1);
+        var cart_id = '';
+        $("input[name='check']:checked").each(function(){
+            cart_id +=  $(this).parents('ul').attr('cart_id') + ',';
+        })
+        cart_id = cart_id.substr(0, cart_id.length - 1);
+        $.get(
+            "/index/money",{
+                cart_id:cart_id,
+                goods_id:goods_id
+            },
+            function(res){
+                $("#Sum").text('￥' + res);
+            }
+        )
     }
     //计算数量方法
     function totalNum(){
-        //计算总价，编写总价方法
+        //计算数量，编写总价方法
         var sumNum = 0;
         $(".itxt").each(function () {
             var number = parseInt($(this).val());
@@ -365,6 +368,7 @@
                     $(this).prop('checked', false);
                 }
             });
+            totalPrice();	//调用总价方法
         });
 
         // 批量删除

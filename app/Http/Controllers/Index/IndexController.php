@@ -192,6 +192,17 @@ class IndexController extends Common
             return $this->error(1,'fail');
         }
     }
+    //购物车总价
+    public function money(Request $request){
+        $goods_id = $request->post('goods_id');
+        $goods_id = explode(',',$goods_id);
+        $info = CartModel::whereIn('goods_id',$goods_id)->get(["goods_price","buy_number"]);
+        $money=0;
+        foreach($info as $k=>$v){
+            $money += $v["goods_price"]*$v['buy_number'];
+        }
+        return $money;
+    }
     //订单
     public function order(){
         $address = AddressModel::get();
