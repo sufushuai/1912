@@ -16,7 +16,7 @@ class ManController extends Common
         return view("man/index");
     }
     /**
-     *代付款
+     *我的订单
      */
     public function pay(){
         return view("man/pay");
