@@ -92,6 +92,16 @@
                 <div class="support">
                     <div class="summary-wrap">
                         <div class="fl title">
+                            <h4><i>库　　存</i></h4>
+                        </div>
+                        <div class="fl fix-width" id="goods_score">
+                            <h4><span >{{$role_Info["goods_num"]}}</span></h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="support">
+                    <div class="summary-wrap">
+                        <div class="fl title">
                             <h4><i>积　　分</i></h4>
                         </div>
                         <div class="fl fix-width" id="goods_score">
@@ -100,13 +110,14 @@
                     </div>
 
                 </div>
+
                 <div class="clearfix choose">
                     <div id="specification" class="summary-wrap clearfix">
                         @foreach($sav as $vv)
                         <dl>
                             <dt>
-                                <div class="fl title">
-                                    <i>{{$vv['attr_name']}}</i>
+                                <div >
+                                    <i>{{$vv['attr_name']}}:</i>
                                 </div>
                             </dt>
                             @foreach($vv['sku4'] as $kkk=>$vvv)
@@ -687,8 +698,8 @@
     //购物车减
     $(document).on("click","#num-jian",function(){
         var minus =$("#aa").find("#input-num");
-        if(minus.val()<= 0){
-            minus.val(0);
+        if(minus.val()<= 1){
+            minus.val(1);
         }else{
             minus.val(parseInt(minus.val()) - 1);
         }
