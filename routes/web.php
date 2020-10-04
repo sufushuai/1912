@@ -64,12 +64,10 @@ Route::any('/index/item/{goods_id}','Index\IndexController@item');//详情
 Route::any('/index/cartdestroy','Index\IndexController@cartdestroy');//购物车删除
 Route::any('/index/cartdel','Index\IndexController@cartdel');//购物车删除
 Route::any('/index/success_cart','Index\IndexController@success_cart');//成功加入购物车
-
-
-
 Route::any('/index/order','Index\IndexController@order');//订单
 Route::any('/index/area','Index\IndexController@area');//三级联动
 Route::any('/index/create','Index\IndexController@create');//订单
+Route::any('/index/list/{cate_id}','Index\IndexController@list');//商品列表
 Route::any('/index/del','Index\IndexController@del');//地址删除
 Route::any('/index/update/{id}','Index\IndexController@update');//修改
 Route::any('/index/updatedo','Index\IndexController@updatedo');//修改
