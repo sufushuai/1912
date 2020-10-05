@@ -24,26 +24,24 @@ Route::any('/order_info/order_error','Order\OrderController@order_error');//支�
 
 
 //个人中心
-Route::group(['prefix'=>'/man', 'middleware' => ['user']],function(){
+Route::group(['prefix'=>'/man', 'middleware' => ['user','userinfo']],function(){
     Route::any('/index','Man\ManController@index');//我的订单
     Route::any('/pay','Man\ManController@pay');//订单状态
     Route::any('/history','Man\ManController@history');//浏览历史
     Route::any('/coupon','Man\ManController@coupon');//优惠卷
     Route::any('/address','Man\ManController@address');//收货地址
-    Route::any('/evaluate','Man\ManController@evaluate');//待评价
-    Route::any('/received','Man\ManController@received');//待收获
 });
 //个人信息
 Route::group(['prefix'=>'/man'],function(){
     Route::any('/perinfo','Man\PersonalController@perinfo');//个人信息
     Route::any('/getArea','Man\PersonalController@getArea');//三级联动----省市区
     Route::any('/per_add','Man\PersonalController@per_add');//个人信息--添加
-    Route::any('/per_index','Man\PersonalController@per_index')->middleware("userinfo");//个人信息--展示
+    Route::any('/per_index','Man\PersonalController@per_index');//个人信息--展示
     Route::any('/per_edit','Man\PersonalController@per_edit');//个人信息--修改
     Route::any('/per_update','Man\PersonalController@per_update');//个人信息--修改
 });
 //我的收藏
-Route::group(['prefix'=>'/man', 'middleware' => ['user'] ],function(){
+Route::group(['prefix'=>'/man', 'middleware' => ['user','userinfo'] ],function(){
     Route::any('/collect','Man\CollectController@collect');//我的收藏
     Route::any('/create','Man\CollectController@create');//我的收藏
     Route::any('/delete','Man\CollectController@delete');//我的收藏
@@ -79,6 +77,10 @@ Route::any('/index/do_register','login\LoginController@do_register');//执行注
 Route::any('/index/login','login\LoginController@login');//登录
 Route::post('/index/do_login','login\LoginController@do_login');//执行登录
 Route::any('/index/quit','login\LoginController@quit');//退出登录
+
+
+Route::any('/conter/index/login','Conter\ConterController@login');//中间件跳转登陆页面
+Route::any('/conter/index/perinfo','Conter\ConterController@perinfo');//中间件跳转个人信息页面
 
 
 

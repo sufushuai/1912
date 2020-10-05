@@ -17,12 +17,7 @@ class UserMiddleware
     public function handle($request, Closure $next)
     {
         if(empty(Session::has('id'))){
-            $error=[
-                "code"=>100,
-                "msg"=>"请先登陆后操作"
-            ];
-            return response()->json($error);
-//            return redirect("/index/login");
+            return redirect("/conter/index/login");
         }
         return $next($request);
     }

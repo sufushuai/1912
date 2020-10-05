@@ -21,12 +21,7 @@ class UserinfoMiddleware
         $user_id=Session::get("id");
         $userinfo=PerinfoModel::where("user_id",$user_id)->first();
         if(empty($userinfo)){
-            $error=[
-                "code"=>40001,
-                "msg"=>"请务必先填写个人信息"
-            ];
-            return response()->json($error);
-//            return redirect("/man/perinfo");
+            return redirect("/conter/index/perinfo");
         }
         return $next($request);
     }
