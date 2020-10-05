@@ -141,10 +141,11 @@
                                     <i>{{$vv['attr_name']}}:</i>
                                 </div>
                             </dt>
+                            @php $str=0 @endphp
                             @foreach($vv['sku4'] as $kkk=>$vvv)
-                            <dd><a href="javascript:;" class="selected">{{$vvv['val_name']}}<span title="点击取消选择">&nbsp;</span>
+                                @php $str+=1; @endphp
+                            <dd><a href="javascript:;" class="{{$str==1?'selected sku':'sku'}}">{{$vvv['val_name']}}<span title="点击取消选择">&nbsp;</span>
                                 </a></dd>
-
                             @endforeach
                         </dl>
                             @endforeach
@@ -804,5 +805,8 @@
                 }
             }
         })
+    })
+    $(document).on("click","#sku",function(){
+      
     })
 </script>
