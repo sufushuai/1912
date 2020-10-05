@@ -36,9 +36,8 @@
                                 </li>
                                 <li class="yui3-u-11-24">
                                     <div class="good-item">
-                                        <div class="item-img"><img src="/asses/img/goods.png" /></div>
-                                        <div class="item-msg">Apple Macbook Air 13.3英寸笔记本电脑 银色（Corei5）处理器/8GB内存
-                                            尺寸：13.3英寸</div>
+                                        <div class="item-img"><img src="{{env('UPLOAD_URL')}}{{$v->goods_img}}" /></div>
+                                        <div class="item-msg">{{$v->goods_name}}</div>
                                     </div>
                                 </li>
                                 <li class="yui3-u-1-8 danjia"><span class="price" id="price" >{{$v->goods_price}}</span></li>

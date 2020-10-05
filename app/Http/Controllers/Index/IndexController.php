@@ -86,8 +86,10 @@ class IndexController extends Common
     }
     //购物车
     public function cart(){
-        $cart = CartModel::where(['is_del'=>1])->get();
+        $cart = CartModel::leftjoin('shop_goods','shop_cart.goods_id','=','shop_goods.goods_id')->get();
         return view('index.cart',['cart'=>$cart]);
+
+
     }
     //购物车删除
     public function cartdestroy(){
@@ -223,8 +225,8 @@ class IndexController extends Common
         //查询所有省份  作为第一个下拉菜单的值  pid=0
         $res=$this->getAreaInfo(0);
         // $cityInfo=$this->getAreaInfo($addressInfo['province']);
-
-        return view('index.order',['res'=>$res,'addressInfo'=>$addressInfo]);
+        $floor1=CategoryModel::where('p_id',0)->get();
+        return view('index.order',['res'=>$res,'addressInfo'=>$addressInfo,'floor1'=>$floor1]);
 
        }
 
@@ -343,7 +345,8 @@ class IndexController extends Common
         //查询所有省份  作为第一个下拉菜单的值  pid=0
         $res=$this->getAreaInfo(0);
         // $cityInfo=$this->getAreaInfo($addressInfo['province']);
-        return view('index.edit',['data'=>$data,'res'=>$res,'addressInfo'=>$addressInfo]);
+        $floor1=CategoryModel::where('p_id',0)->get();
+        return view('index.edit',['data'=>$data,'res'=>$res,'addressInfo'=>$addressInfo,'floor1'=>$floor1]);
     }
 
 
