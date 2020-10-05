@@ -30,10 +30,8 @@
                 <li  style="float: right;margin-top: -40px;margin-right: 10px;list-style: none;"></li><br>
                 <li style="float: right;margin-top: -40px;margin-right: 10px;list-style: none;" id="store" status="3">
                    <input type="hidden" name="goods_id" value="{{$role_Info['goods_id']}}">
-                    <button type="button" class="btn-danger addshopcar" id="collect">收藏</button>
-                    <button type="button" class="btn-danger addshopcar" style="display: none" id="collected">取消收藏</button>
-                    @foreach($collect as $k=>$v)
-                    @if($v['is_del']==1)
+                @foreach($collect as $k=>$v)
+                    @if($v['is_edit']==1)
                         <button type="button" class="btn-danger addshopcar" id="collect">收藏</button>
                         <button type="button" class="btn-danger addshopcar" style="display: none" id="collected">取消收藏</button>
                             @else
@@ -769,10 +767,6 @@
             'data':{goods_id:goods_id},
             'dataType':"json",
             success:function(res){
-                if(res.code==100){
-                    alert(res.msg)
-                    location.href="/index/login"
-                }
                 if(res.code==1){
                     alert(res.msg)
                 }
@@ -794,10 +788,6 @@
             'data':{goods_id:goods_id},
             'dataType':"json",
             success:function(res){
-                if(res.code==100){
-                    alert(res.msg)
-                    location.href="/index/login"
-                }
                 if(res.code==1){
                     alert(res.msg)
                 }

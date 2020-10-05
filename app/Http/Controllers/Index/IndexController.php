@@ -133,7 +133,10 @@ class IndexController extends Common
     }
     //详情
     public function item(Request $request,$goods_id){
-        $collect=CollectModel::where("goods_id",$goods_id)->get();
+        $user_id=$this->user_id();
+        $collect=CollectModel::where("goods_id",$goods_id)->where("user_id",$user_id)->get();
+//        dd($collect);
+
         //商品
         $key="num".$goods_id;
         if(Redis::get($key)){

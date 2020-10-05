@@ -41,10 +41,10 @@ Route::group(['prefix'=>'/man'],function(){
     Route::any('/per_update','Man\PersonalController@per_update');//个人信息--修改
 });
 //我的收藏
-Route::group(['prefix'=>'/man', 'middleware' => ['user','userinfo'] ],function(){
+Route::group(['prefix'=>'/man' ],function(){
     Route::any('/collect','Man\CollectController@collect');//我的收藏
-    Route::any('/create','Man\CollectController@create');//我的收藏
-    Route::any('/delete','Man\CollectController@delete');//我的收藏
+    Route::any('/create','Man\CollectController@create');//添加收藏
+    Route::any('/delete','Man\CollectController@delete');//删除收藏
 });
 
 
