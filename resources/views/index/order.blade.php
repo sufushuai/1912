@@ -188,8 +188,8 @@
     <div class="order-summary">
         <div class="static fr">
             <div class="list">
-                <span><i class="number">1</i>件商品，总商品金额</span>
-                <em class="allprice" id="Sum">¥5399.00</em>
+                <span><i class="number">{{$num}}</i>件商品，总商品金额</span>
+                <em class="allprice" id="Sum">¥{{$money}}</em>
             </div>
             <div class="list">
                 <span>返现：</span>
@@ -202,7 +202,7 @@
         </div>
     </div>
     <div class="clearfix trade">
-        <div class="fc-price">应付金额:　<span class="price">¥5399.00</span></div>
+        <div class="fc-price">应付金额:　<span class="price">¥{{$money}}</span></div>
         <div class="fc-receiverInfo">寄送至:北京市海淀区三环内 中关村软件园9号楼 收货人：某某某 159****3201</div>
     </div>
     <div class="submit">
@@ -223,20 +223,7 @@
 
 </html>
 <script>
-    function totalPrice(){
-        //计算总价，编写总价方法
-        var zong = 0;
-        $("#sumprice").each(function () {
-            var all = $(this).text();
-            zong += all;
-        })
-        alert(zong);
-        $("#Sum").text(zong);
-    }
-//总价
-$(function(){
-    totalPrice();
-});
+
 
 
 //三级联动
