@@ -49,59 +49,12 @@
             <div class="yui3-u-5-6">
                 <div class="body userAddress">
                     <div class="address-title">
-                        <span class="title">地址管理</span>
-                        <a data-toggle="modal" data-target=".edit" data-keyboard="false"   class="sui-btn  btn-info add-new">添加新地址</a>
-                        <span class="clearfix"></span>
-                    </div>
-                    <div class="address-detail">
-                       
-                        <table class="sui-table table-bordered">
-                            
-                            <thead>
-
-                            <tr>
-                                <th>姓名</th>
-                                <th>地址</th>
-                                <th>联系电话</th>
-                                <th>操作</th>
-                            </tr>
-                            </thead>
-                            @foreach($addressInfo as $k=>$v)
-                            <tbody>
-                            <tr>
-                                <td>{{$v['user_name']}}</td>
-                                <td>{{$v['province']}}{{$v['city']}}{{$v['area']}}</td>
-                                <td>{{$v['user_tel']}}</td>
-                                <td>
-                                    
-                                        <a href="{{url('/man/update/'.$v['add_id'])}}" data-target=".update">编辑</a>&nbsp;&nbsp;
-                                       <button type="button" class="del" add_id="{{$v['add_id']}}" >删除</button>
-                                       <a href="{{url('/man/default/'.$v['add_id'])}}" style="color:#ff4e00;">设为默认</a>
-                                    
-                                </td>
-                            </tr>
-                           
-                            
-                            </tbody>
-                            @endforeach
-                        </table>
-
-                    </div>
-                    <!--新增地址弹出层-->
-                     <div  tabindex="-1" role="dialog" data-hasfoot="false" class="sui-modal hide fade edit">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" data-dismiss="modal" aria-hidden="true" class="sui-close">×</button>
-                                    <h4 id="myModalLabel" class="modal-title">添加收货地址</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <form action="" class="sui-form form-horizontal">
-                                        
+                        <form action="" class="sui-form form-horizontal">
+                                        <input type="hidden" name="add_id" value="{{$data->add_id}}">
                                         <div class="control-group">
                                             <label class="control-label">收货人：</label>
                                             <div class="controls">
-                                                <input type="text" name="user_name" class="input-medium">
+                                                <input type="text" name="user_name" class="input-medium" value="{{$data->user_name}}">
                                             </div>
                                         </div>
                                         <div class="control-group">
@@ -136,23 +89,16 @@
                                         <div class="control-group">
                                             <label class="control-label">联系电话：</label>
                                             <div class="controls">
-                                                <input type="text" name="user_tel" class="input-medium">
+                                                <input type="text" name="user_tel" class="input-medium" value="{{$data->user_tel}}">
                                             </div>
                                         </div>
 
-                                       
+                                        <a class="sui-btn btn-danger btn-xlarge btn" >确认修改</a>
 
                                     </form>
 
-
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" data-ok="modal" class="sui-btn btn-primary btn-large btn">确定</button>
-                                    <button type="button" data-dismiss="modal" class="sui-btn btn-default btn-large">取消</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                 
+                   
                 </div>
             </div>
         </div>
@@ -190,52 +136,31 @@ $(function(){
 
 
      $(document).on('click','.btn',function(){
-                // alert(11);
-                var user_name=$("input[name='user_name']").val();
-                var user_tel=$("input[name='user_tel']").val();
-                var province=$("select[name='province']").val();
-                var city=$("select[name='city']").val();
-                var area=$("select[name='area']").val();
-                // console.log(user_name);
-                // console.log(user_tel);
-                // console.log(province);
-                // console.log(city);
-                // console.log(area);
-                 $.ajax({
-                    url:"/man/add",
-                    data:{user_name:user_name,user_tel:user_tel,province:province,city:city,area:area},
-                    type:"post",
-                    dataType:"json",
-                    success:function(res){
-                        // alert(111);
-                        if(res.code=='0'){
-                            alert(res.mag)
-                            location.href='/man/address'
-                        }
-                    }
-                })
-            })
-
-
-            $(document).on('click','.del',function(){
             // alert(11);
-            var add_id = $(this).attr('add_id');
-            // console.log(add_id);
-            $.ajax({
-                url:'/man/del',
-                data:{add_id:add_id},
-                type:'post',
-                dataType:'json',
+            var add_id=$("input[name='add_id']").val();
+            var user_name=$("input[name='user_name']").val();
+            var user_tel=$("input[name='user_tel']").val();
+            var province=$("select[name='province']").val();
+            var city=$("select[name='city']").val();
+            var area=$("select[name='area']").val();
+            // console.log(user_name);btn
+            // console.log(user_tel);
+            // console.log(province);
+            // console.log(city);
+            // console.log(area);
+             $.ajax({
+                url:"/man/updatedo",
+                data:{user_name:user_name,user_tel:user_tel,province:province,city:city,area:area,add_id:add_id},
+                type:"post",
+                dataType:"json",
                 success:function(res){
-                    // console.log(res)
-                    if(res.code==0){
+                    // alert(res);
+                    if(res.code=='0'){
                         alert(res.mag)
-                        location.href="/man/address"
+                        location.href='/man/address'
                     }
                 }
-
             })
         })
-
-
+         
 </script>
