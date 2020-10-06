@@ -20,12 +20,8 @@ use App\Model\SkuAttrValModel;
 use App\Model\SkuAttrModel;
 use App\Model\SkuValModel;
 use App\Model\AddressModel;
-<<<<<<< HEAD
 use App\Model\OrderModel;
-=======
 
-
->>>>>>> f770a620b8f630b82ca0d5b2ffa0d6958b1dad08
 class IndexController extends Common
 {
     //首页
