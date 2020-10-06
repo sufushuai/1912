@@ -20,12 +20,18 @@ use App\Model\SkuAttrValModel;
 use App\Model\SkuAttrModel;
 use App\Model\SkuValModel;
 use App\Model\AddressModel;
+<<<<<<< HEAD
 use App\Model\OrderModel;
+=======
+
+
+>>>>>>> f770a620b8f630b82ca0d5b2ffa0d6958b1dad08
 class IndexController extends Common
 {
     //首页
-    public function index(){
+    public function index(request $request){
         //猜你喜欢
+
         //轮播图
         $slide=SlideModel::where('is_del',1)->limit(5)->get();
         //广告
@@ -52,31 +58,41 @@ class IndexController extends Common
         $today=GoodsModel::where('is_del',1)->orderby('goods_clicknum','desc')->limit(4)->get();
 
         //楼层
-        $floor=CategoryModel::where('p_id',0)->value('cate_id');
+        $cate_id=CategoryModel::where('p_id',0)->value('cate_id');
         //dd($floor);
         $floor1=CategoryModel::where('p_id',0)->get();
         //最高分类
-        $cateList1=CategoryModel::where('cate_id',$floor)->first();
+        $cateList1=CategoryModel::where('cate_id',$cate_id)->first();
         //dd($cateList1);
         $where=[
-            'p_id'=>$floor,
+            'p_id'=>$cate_id,
         ];
         //子级分类
         $cateList2=CategoryModel::where($where)->get();
         //所有子孙级ID
         $cateAll=CategoryModel::get();
-        $cateIds=$this->getCateIds($cateAll,$floor);
+        $cateIds=$this->getCateIds($cateAll,$cate_id);
         //获取当前数组中所有的值
         $cateIds=array_values($cateIds);
         //dd($cateIds);
-        //转换成字符串
-        $str_cateIds=implode(',',$cateIds);
-        //查询当前cate==这些ID的商品
-        $where1=[
-            ['cate_id','in',$str_cateIds]
-        ];
-        $goodsList=GoodsModel::where($where1)->limit(8)->get();
-        return view('index.index',['brand'=>$brand,'floor1'=>$floor1,'cateList1'=>$cateList1,'cateList2'=>$cateList2,'goodsList'=>$goodsList,'ad'=>$ad,'slide'=>$slide,'category'=>$cate,'guess'=>$guess,'today'=>$today]);
+
+        //获取ajax传过来的cate_id
+        $cateid=$request->post('cate_id');
+        //判断cate_id是否有值
+        if($cateid){
+            //有值则直接查询该id下的商品
+            $goodsList=GoodsModel::where('cate_id',$cateid)->limit(5)->get();
+        }else{
+            //没有值则查询数组里的
+            $goodsList=GoodsModel::whereIn('cate_id',$cateIds)->limit(5)->get();
+        }
+        //判断是否ajax请求
+        if(request()->ajax()){
+            $html = json_encode(['goodsList'=>$goodsList]);
+            return  $html;
+        }else{
+            return view('index.index',['brand'=>$brand,'floor1'=>$floor1,'cateList1'=>$cateList1,'cateList2'=>$cateList2,'goodsList'=>$goodsList,'ad'=>$ad,'slide'=>$slide,'category'=>$cate,'guess'=>$guess,'today'=>$today]);
+        }
     }
     //列表
     public function list(){
