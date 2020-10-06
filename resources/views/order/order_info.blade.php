@@ -21,8 +21,8 @@
     <!--主内容-->
     <div class="checkout py-container  pay">
         <div class="checkout-tit">
-            <h4 class="fl tit-txt"><span class="success-icon"></span><span  class="success-info">订单提交成功，请您及时付款！订单号：56789065645</span></h4>
-            <span class="fr"><em class="sui-lead">应付金额：</em><em  class="orange money">￥17,654</em>元</span>
+            <h4 class="fl tit-txt"><span class="success-icon"></span><span  class="success-info">订单提交成功，请您及时付款！订单号：{{$order}}</span></h4>
+            <span class="fr"><em class="sui-lead">应付金额：</em><em  class="orange money">￥123456</em>元</span>
             <div class="clearfix"></div>
         </div>
         <div class="checkout-steps">
