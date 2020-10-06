@@ -23,7 +23,7 @@ class OrderController extends Controller
         $param2 = [
             'out_trade_no'      => time().mt_rand(11111111111,99999999999),
             'product_code'      => 'FAST_INSTANT_TRADE_PAY',
-            'total_amount'      => 0.01,
+            'total_amount'      => 5399.00,
             'subject'           => '优品购支付',
         ];
 

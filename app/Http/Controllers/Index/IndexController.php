@@ -22,7 +22,6 @@ use App\Model\SkuValModel;
 use App\Model\AddressModel;
 use App\Model\OrderModel;
 
-
 class IndexController extends Common
 {
     //首页
@@ -98,6 +97,20 @@ class IndexController extends Common
         $floor1=CategoryModel::where('p_id',0)->get();
         return view('index.list',['floor1'=>$floor1,'brand'=>$brand,'goods'=>$goods]);
     }
+    /**
+    *  详情sku
+     */
+    public function sku(Request $request){
+        $goods_id=$request->post("goods_id");
+        $sku=$request->post("sku");
+        $sku=implode(",",$sku);
+        $sku_attr=SkuAttrValModel::where("sku",$sku)->where("goods_id",$goods_id)->first();
+        if($sku_attr){
+            return json_encode(["sku_attr"=>$sku_attr]);
+        }else{
+            return $this->error("no");
+        }
+    }
     //购物车
     public function cart(){
         $cart = CartModel::leftjoin('shop_goods','shop_cart.goods_id','=','shop_goods.goods_id')
@@ -135,11 +148,13 @@ class IndexController extends Common
     //成功加入购物车
     public function success_cart(){
         $goods_price = request()->post("goods_price");
-        $itxt = request()->post("itxt");
+        $goods_id = request()->post("goods_id");
+        $buy_number = request()->post("buy_number");
         $where =[
             "goods_price"=>$goods_price,
-            "buy_number"=>$itxt
-
+            "goods_id"=>$goods_id,
+            "buy_number"=>$buy_number,
+            "add_time"=>time(),
         ];
         $res=CartModel::insert($where);
         if($res){
@@ -184,9 +199,9 @@ class IndexController extends Common
                }
             }
         }
-        $sav = SkuAttrValModel::where('goods_id',$goods_id)->first();
+        $sku_goods=GoodsModel::leftjoin("sku_attr_val","shop_goods.goods_id","=","sku_attr_val.goods_id")->having("goods_id",$goods_id);
         $floor1=CategoryModel::where('p_id',0)->get();
-        return view('index.item',['role_Info'=>$role_Info,'sav'=>$att,'collect'=>$collect,'floor1'=>$floor1]);
+        return view('index.item',['role_Info'=>$role_Info,'sav'=>$att,'collect'=>$collect,'floor1'=>$floor1,"sku_goods"=>$sku_goods]);
     }
     //减购物车数量
     public function cartnumjian(Request $request){
@@ -490,4 +505,6 @@ class IndexController extends Common
             return json_encode(['status'=>'100','msg'=>'no']);
         }
     }
+
+
 }

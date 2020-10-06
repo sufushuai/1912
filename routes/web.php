@@ -55,6 +55,7 @@ Route::group(['prefix'=>'/man' ],function(){
 
 //首页
 Route::any('/index/cart','Index\IndexController@cart');//购物车
+Route::any('/index/sku','Index\IndexController@sku');//详情sku
 Route::any('/index/cartnumjian','Index\IndexController@cartnumjian');//减购物车商品数量
 Route::any('/index/cartnumjia','Index\IndexController@cartnumjia');//加购物车商品数量
 Route::any('/index/money','Index\IndexController@money');//购物车总价
