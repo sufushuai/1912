@@ -71,18 +71,22 @@ class IndexController extends Common
         //获取当前数组中所有的值
         $cateIds=array_values($cateIds);
         //dd($cateIds);
+
+        //获取ajax传过来的cate_id
         $cateid=$request->post('cate_id');
+        //判断cate_id是否有值
         if($cateid){
+            //有值则直接查询该id下的商品
             $goodsList=GoodsModel::where('cate_id',$cateid)->limit(5)->get();
         }else{
+            //没有值则查询数组里的
             $goodsList=GoodsModel::whereIn('cate_id',$cateIds)->limit(5)->get();
         }
-
+        //判断是否ajax请求
         if(request()->ajax()){
             $html = json_encode(['goodsList'=>$goodsList]);
             return  $html;
         }else{
-
             return view('index.index',['brand'=>$brand,'floor1'=>$floor1,'cateList1'=>$cateList1,'cateList2'=>$cateList2,'goodsList'=>$goodsList,'ad'=>$ad,'slide'=>$slide,'category'=>$cate,'guess'=>$guess,'today'=>$today]);
         }
     }
