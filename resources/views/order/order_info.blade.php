@@ -26,7 +26,7 @@
             <div class="clearfix"></div>
         </div>
         <div class="checkout-steps">
-            <div class="fl weixin">微信支付</div>
+            <div class="fl weixin">支付宝支付</div>
             <div class="fl sao">
                 <p class="red">二维码已过期，刷新页面重新获取二维码。</p>
                 <div class="fl code">
