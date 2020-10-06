@@ -16,7 +16,8 @@
                     <ul class="fr">
                         <li class="f-item">我的订单</li>
                         <li class="f-item space"></li>
-                        <li class="f-item"><a href="{{url("/man/index")}}" target="_self">个人中心</a></li>
+                        {{--<li class="f-item"><a href="{{url("/man/index")}}"  target="_self"></a></li>--}}
+                        <li class="f-item"><a  href="{{url("/man/index")}}">个人中心</a></li>
                         <li class="f-item space"></li>
                         <li class="f-item">品优购会员</li>
                         <li class="f-item space"></li>
@@ -76,11 +77,10 @@
                                 <span class="car"></span>
                                 <a class="sui-btn btn-default btn-xlarge" href="{{url('index/cart')}}" target="_self">
                                     <span>我的购物车</span>
-                                    <i class="shopnum">0</i>
+                                    <i class="shopnum">5</i>
                                 </a>
                                 <div class="clearfix shopcarlist" id="shopcarlist" style="display:none">
-                                    <p>"啊哦，你的购物车还没有商品哦！"</p>
-                                    <p>"啊哦，你的购物车还没有商品哦！"</p>
+                                    <p>"苏富帅，这里还没做哦！"</p>
                                 </div>
                             </div>
                         </div>
@@ -93,13 +93,9 @@
                     </div>
                     <div class="yui3-u Center navArea">
                         <ul class="nav">
-                            <li class="f-item">服装城</li>
-                            <li class="f-item">美妆馆</li>
-                            <li class="f-item">品优超市</li>
-                            <li class="f-item">全球购</li>
-                            <li class="f-item">闪购</li>
-                            <li class="f-item">团购</li>
-                            <li class="f-item">有趣</li>
+                            @foreach($floor1 as $v)
+                            <li class="f-item"><a href="{{url('index/list/'.$v['cate_id'])}}" target="_self">{{$v->cate_name}}</a></li>
+                            @endforeach
                             <li class="f-item"><a href="seckill-index.html" target="_self">秒杀</a></li>
                         </ul>
                     </div>
@@ -109,3 +105,4 @@
         </div>
     </div>
 </div>
+

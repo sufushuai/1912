@@ -2,13 +2,13 @@
     <div class="all-sort-list2">
         @foreach($category as $c)
         <div class="item bo">
-            <h3><a href="">{{$c['cate_name']}}</a></h3>
+            <h3><a href="{{url('index/list/'.$c['cate_id'])}}">{{$c['cate_name']}}</a></h3>
             <div class="item-list clearfix">
                 <div class="subitem">
                     <dl class="fore1">
                         <dd>
                             @foreach($c['son'] as $p)
-                                <em><a href="">{{$p['cate_name']}}</a></em>
+                                <em><a href="{{url('index/list/'.$p['cate_id'])}}">{{$p['cate_name']}}</a></em>
                             @endforeach
                         </dd>
 

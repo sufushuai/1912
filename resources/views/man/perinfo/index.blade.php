@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 
 <head>
     <meta charset="UTF-8">
@@ -99,7 +99,13 @@
                                 @endforeach
                             </thead>
                         </table>
-                        <button class="edit">修改个人信息</button>
+                        <div class="control-group">
+                            <label for="sanwei" class="control-label"></label>
+                            <div class="controls">
+                                <button class="edit" class="sui-btn btn-primary">修改个人信息</button>
+                            </div>
+                        </div>
+
                         <!--数据列表/-->
                     </div>
 
@@ -115,6 +121,18 @@
 <script>
     $(document).on("click",".edit",function(){
         var info_id=$("input[name='info_id']").val();
-        location.href="/man/per_edit?info_id="+info_id;
+        $.ajax({
+            "url":"/man/per_index",
+            "data":{info_id:info_id},
+            'type':'post',
+            'dataType':"json",
+            success:function(res){
+                if(res.code==40001){
+                    alert(res.msg)
+                    location.href="/man/perinfo"
+                }
+            }
+        })
+
     })
 </script>

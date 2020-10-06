@@ -4,8 +4,10 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Session;
+use App\Model\PerinfoModel;
 
-class UserMiddleware
+
+class UserinfoMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,8 +18,10 @@ class UserMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(empty(Session::has('id'))){
-            return redirect("/conter/index/login");
+        $user_id=Session::get("id");
+        $userinfo=PerinfoModel::where("user_id",$user_id)->first();
+        if(empty($userinfo)){
+            return redirect("/conter/index/perinfo");
         }
         return $next($request);
     }
