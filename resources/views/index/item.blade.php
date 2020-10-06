@@ -747,8 +747,6 @@
             var goods_price = $("#goods_price").text();
             var goods_id=$("input[name='goods_id']").val();
             var sku_id=$("#sku_id").val();
-            console.log(sku_id);
-            return false;
 //            var goods_num = $("#goods_num").text();
             var buy_number = $("input[name='buy_number']").val();
 
@@ -838,7 +836,7 @@
                     $("#goods_num").html(res.sku_attr.sku_num)
                 }
             });
-            
+
         })
     })
 </script>
