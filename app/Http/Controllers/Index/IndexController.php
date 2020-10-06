@@ -20,6 +20,7 @@ use App\Model\SkuAttrValModel;
 use App\Model\SkuAttrModel;
 use App\Model\SkuValModel;
 use App\Model\AddressModel;
+use App\Model\OrderModel;
 class IndexController extends Common
 {
     //首页
@@ -86,7 +87,8 @@ class IndexController extends Common
     }
     //购物车
     public function cart(){
-        $cart = CartModel::leftjoin('shop_goods','shop_cart.goods_id','=','shop_goods.goods_id')->get();
+        $cart = CartModel::leftjoin('shop_goods','shop_cart.goods_id','=','shop_goods.goods_id')
+                                    ->get();
         return view('index.cart',['cart'=>$cart]);
 
 
@@ -206,7 +208,7 @@ class IndexController extends Common
         }
         return $money;
     }
-    //购物车总价
+    //购物车总数量
     public function cartnum(Request $request){
         $cart_id = $request->post('cart_id');
         $cart_id = explode(',',$cart_id);
@@ -217,8 +219,28 @@ class IndexController extends Common
         }
         return $cartnum;
     }
+    //购物车结算
+    public function cartorder(Request $request){
+        $cart_id = $request->post('cart_id');
+        $cart_id = explode(',',$cart_id);
+        $cart = CartModel::whereIn('cart_id',$cart_id)->get();
+        $data = [];
+        foreach($cart as $k=>$v){
+            $data['goods_id'] = $v['goods_id'];
+            $data['order_price'] = $v['goods_price'];
+            $data['buy_number'] = $v['buy_number'];
+            $res = OrderModel::insert($data);
+        }
+        if($res){
+            return $this->success(200,'ok');
+        }else{
+            return $this->error(1,'fail');
+        }
+    }
     //订单
-    public function order(){
+    public function order(Request $request){
+        $order = OrderModel::leftjoin('shop_goods','shop_order_goods.goods_id','=','shop_goods.goods_id')
+                                        ->get();
         $address = AddressModel::get();
 
         //查询所有收货地址  作为列表数据
@@ -229,8 +251,7 @@ class IndexController extends Common
         $res=$this->getAreaInfo(0);
         // $cityInfo=$this->getAreaInfo($addressInfo['province']);
         $floor1=CategoryModel::where('p_id',0)->get();
-        return view('index.order',['res'=>$res,'addressInfo'=>$addressInfo,'floor1'=>$floor1]);
-
+        return view('index.order',['res'=>$res,'addressInfo'=>$addressInfo,'floor1'=>$floor1,'order'=>$order]);
        }
 
      //获取区域信息

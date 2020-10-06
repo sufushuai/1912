@@ -41,7 +41,7 @@
                                 <div class="clearfix"></div>
                                 @endforeach
                             </div>
-                           
+
                         </li>
 
 
@@ -56,7 +56,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <form action="" class="sui-form form-horizontal">
-                                        
+
                                         <div class="control-group">
                                             <label class="control-label">收货人：</label>
                                             <div class="controls">
@@ -68,7 +68,7 @@
                                             <div class="controls">
                                                 <div data-toggle="distpicker">
                                                     <div class="form-group area">
-                                                       
+
                                                         <select class="area" name="province">
                                                               <option value="0" selected="selected">请选择...</option>
                                                              @foreach($res as $k=>$v)
@@ -77,21 +77,21 @@
                                                             </select>
                                                              <select class="area" name="city">
                                                               <option value="" selected="selected">请选择...</option>
-            
-                                                               
+
+
                                                               <option value=""></option>
-                                                              
+
                                                             </select>
                                                             <select class="area" name="area">
                                                               <option value="" selected="selected">请选择...</option>
-                                                          
+
                                                         </select>
                                                     </div>
-                                                  
+
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="control-group">
                                             <label class="control-label">联系电话：</label>
                                             <div class="controls">
@@ -99,7 +99,7 @@
                                             </div>
                                         </div>
 
-                                       
+
 
                                     </form>
 
@@ -113,7 +113,7 @@
                         </div>
                     </div>
                     <!--确认地址-->
-                     
+
                 </div>
                 <div class="hr"></div>
 
@@ -141,22 +141,24 @@
                             <div class="sendGoods">
 
                                 <ul class="yui3-g">
+                                    @foreach($order as $k=>$v)
                                     <li class="yui3-u-1-6">
-                                        <span><img src="/asses/img/goods.png"/></span>
+                                        <span><img src="{{env('UPLOAD_URL')}}{{$v->goods_img}}"/></span>
                                     </li>
                                     <li class="yui3-u-7-12">
-                                        <div class="desc">Apple iPhone 6s (A1700) 64G 玫瑰金色 移动联通电信4G手机硅胶透明防摔软壳 本色系列</div>
+                                        <div class="desc">{{$v->goods_name}}</div>
                                         <div class="seven">7天无理由退货</div>
                                     </li>
                                     <li class="yui3-u-1-12">
-                                        <div class="price">￥5399.00</div>
+                                        <div class="price" id="sumprice">{{$v->goods_price}}</div>
                                     </li>
                                     <li class="yui3-u-1-12">
-                                        <div class="num">X1</div>
+                                        <div class="num">X{{$v->buy_number}}</div>
                                     </li>
                                     <li class="yui3-u-1-12">
                                         <div class="exit">有货</div>
                                     </li>
+                                        @endforeach
                                 </ul>
                             </div>
                         </li>
@@ -187,7 +189,7 @@
         <div class="static fr">
             <div class="list">
                 <span><i class="number">1</i>件商品，总商品金额</span>
-                <em class="allprice">¥5399.00</em>
+                <em class="allprice" id="Sum">¥5399.00</em>
             </div>
             <div class="list">
                 <span>返现：</span>
@@ -215,13 +217,26 @@
 <script type="text/javascript" src="/asses/js/plugins/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="/asses/js/plugins/jquery.easing/jquery.easing.min.js"></script>
 <script type="text/javascript" src="/asses/js/plugins/sui/sui.min.js"></script>
-<script type="text/javascript" src="components/ui-modules/nav/nav-portal-top.js"></script>
+<script type="text/javascript" src="/asses/js/widget/nav-portal-top.js"></script>
 <script type="text/javascript" src="/asses/js/pages/getOrderInfo.js"></script>
 </body>
 
 </html>
 <script>
-
+    function totalPrice(){
+        //计算总价，编写总价方法
+        var zong = 0;
+        $("#sumprice").each(function () {
+            var all = $(this).text();
+            zong += all;
+        })
+        alert(zong);
+        $("#Sum").text(zong);
+    }
+//总价
+$(function(){
+    totalPrice();
+});
 
 
 //三级联动
@@ -298,4 +313,3 @@ $(function(){
 
     </script>
 
- 
