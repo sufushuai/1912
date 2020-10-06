@@ -24,6 +24,7 @@
                 <div class="yui3-u-1-8">操作</div>
             </div>
             @foreach($cart as $k=>$v)
+                @if($v->is_del==1)
                 <div class="cart-item-list">
                     <div class="cart-shop">
                         <span class="shopname">神州数码专营店</span>
@@ -33,11 +34,12 @@
                             <ul class="goods-list yui3-g" cart_id="{{$v->cart_id}}" goods_id="{{$v->goods_id}}">
                                 <li class="yui3-u-1-24">
                                     <input type="checkbox" name="check" class="box" id="box" value="{{$v->cart_id}}" />
+                                    <span class="goods_id"><input type="hidden"  value="{{$v->goods_id}}"></span>
                                 </li>
                                 <li class="yui3-u-11-24">
                                     <div class="good-item">
-                                        <div class="item-img"><img src="{{env('UPLOAD_URL')}}{{$v->goods_img}}" /></div>
-                                        <div class="item-msg">{{$v->goods_name}}</div>
+                                        <div class="item-img" id="goods_img"><img src="{{env('UPLOAD_URL')}}{{$v->goods_img}}" /></div>
+                                        <div class="item-msg" id="goods_name">{{$v->goods_name}}</div>
                                     </div>
                                 </li>
                                 <li class="yui3-u-1-8 danjia"><span class="price" id="price" >{{$v->goods_price}}</span></li>
@@ -55,6 +57,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
             @endforeach
         </div>
         <div class="cart-tool">
@@ -66,11 +69,11 @@
             <div class="toolbar">
                 <div class="chosed">已选择<span class="cartSumNumber" id="cartSumNumber">0</span>件商品</div>
                 <div class="sumprice">
-                    <span><em>总价（不含运费） ：</em><span class="summoney" id="Sum">16283.00</span></span>
+                    <span><em>总价（不含运费） ：</em><span class="summoney" id="Sum">0</span></span>
                     <span><em>已节省：</em><i>-¥20.00</i></span>
                 </div>
                 <div class="sumbtn">
-                    <a class="sum-btn" href="{{url('index/order')}}" target="_blank">结算</a>
+                    <a class="sum-btn"  target="_blank" id="order">结算</a>
                 </div>
             </div>
         </div>
@@ -214,10 +217,40 @@
 <script type="text/javascript" src="/asses/js/plugins/sui/sui.min.js"></script>
 <script type="text/javascript" src="/asses/js/widget/nav.js"></script>
 <script>
+    //结算
+    $(document).on("click","#order",function(){
+        var cart_id = '';
+        $("input[name='check']:checked").each(function(){
+            cart_id +=  $(this).parents('ul').attr('cart_id') + ',';
+        })
+        cart_id = cart_id.substr(0, cart_id.length - 1);
+        //alert(cart_id);
+        var zongprice = $("#Sum").text();
+        var zongprice1 = zongprice.substring(1,zongprice.length);
+        if(zongprice1>0){
+            $.ajax({
+                type:"post",
+                dataType:"json",
+                url:"/index/cartorder",
+                data:{cart_id:cart_id,zongprice1:zongprice1},
+                success:function(res){
+                    if(res.code=='ok'){
+                        location.href='/index/order'
+                    }
+                    if(res.code==1){
+                        alert(res.msg)
+                    }
+                }
+            });
+        }else{
+            alert("提交信息错误");
+        }
+
+    });
     //购物车减
     $(document).on("click","#num-jian",function(){
         var cart_id = $(this).parents('ul').attr('cart_id');
-        var minus = $(this).parent("li").find("#input-num").val();//获取数量框里的数值
+        var minus = Math.floor($(this).parent("li").find("#input-num").val());//获取数量框里的数值
         var productPrice=$(this).parent("li").prev().find("#price").text();//单价的值
         minus--;  //单击“-”减号时，数量递减
         if(minus<=0){
@@ -246,7 +279,7 @@
     //加号操作
     $(document).on("click","#num-jia",function(){
         var cart_id = $(this).parents('ul').attr('cart_id');
-        var minus = $(this).parent("li").find("#input-num").val();//获取数量框里的数值
+        var minus = Math.floor($(this).parent("li").find("#input-num").val());//获取数量框里的数值
         var productPrice=$(this).parent("li").prev().find("#price").text();//单价的值
         minus++;  //单击“+”减号时，数量递减
         if(minus>0){

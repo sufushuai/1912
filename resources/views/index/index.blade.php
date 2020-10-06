@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="/asses/css/widget-cartPanelView.css" />
 </head>
 
-<body>
+<body id="body">
 <!-- 头部栏位 -->
 <!--页面顶部-->
 
@@ -238,15 +238,16 @@
 
 <!--楼层-->
 
-<div id="floor-1" class="floor">
+<div id="floor-1" class="floor" >
     <div class="py-container">
         <div class="title floors">
-            <h3 class="fl"></h3>
+            <h3 class="fl">{{$cateList1->cate_name}}</h3>
             <div class="fr">
                 <ul class="sui-nav nav-tabs">
 
                     <li>
-                        <a href="#tab2" data-toggle="tab"></a>
+                        {{--<a href="#tab2" data-toggle="tab"></a>--}}
+
                     </li>
 
                 </ul>
@@ -255,59 +256,26 @@
         <div class="clearfix  tab-content floor-content">
             <div id="tab1" class="tab-pane active">
                 <div class="yui3-g Floor-1">
-                    <div class="yui3-u Left blockgary">
+                    <div class="yui3-u-2-24  blockgary">
                         <ul class="jd-list">
-                            <li>节能补贴</li>
+                            @foreach($cateList2 as $v)
+                            <li class="li" value="{{$v->cate_id}}"><a href="javascript:void(0)">{{$v->cate_name}}</a></li>
+                            @endforeach
 
                         </ul>
-                        <img src="/asses/img/floor-1-1.png" />
-                    </div>
-                    <div class="yui3-u row-330 floorBanner">
-                        <div id="floorCarousel" data-ride="carousel" data-interval="4000" class="sui-carousel slide">
-                            <ol class="carousel-indicators">
-                                <li data-target="#floorCarousel" data-slide-to="0" class="active"></li>
-                                <li data-target="#floorCarousel" data-slide-to="1"></li>
-                                <li data-target="#floorCarousel" data-slide-to="2"></li>
-                            </ol>
-                            <div class="carousel-inner">
-                                <div class="active item">
-                                    <img src="/asses/img/floor-1-b01.png">
-                                </div>
-                                <div class="item">
-                                    <img src="/asses/img/floor-1-b02.png">
-                                </div>
-                                <div class="item">
-                                    <img src="/asses/img/floor-1-b03.png">
-                                </div>
-                            </div>
-                            <a href="#floorCarousel" data-slide="prev" class="carousel-control left">‹</a>
-                            <a href="#floorCarousel" data-slide="next" class="carousel-control right">›</a>
-                        </div>
+                        <h4><a href="{{url('/index/list/'.$v->cate_id)}}">更多商品</a></h4>
                     </div>
 
-                    <div class="yui3-u row-220 split">
-                        <span class="floor-x-line"></span>
-                        <div class="floor-conver-pit">
-                            <img src="/asses/img/floor-1-2.png" />
-                        </div>
-                        <div class="floor-conver-pit">
-                            <img src="/asses/img/floor-1-3.png" />
-                        </div>
+                    <div id="goods_list">
+                    @foreach($goodsList as $v)
+                    <div class="yui3-u row-218 split" >
+
+                        <img src="{{env('UPLOAD_URL')}}{{$v->goods_img}}"/>
+
+                    </div>
+                    @endforeach
                     </div>
 
-                    <div class="yui3-u row-218 split">
-                        <img src="/asses/img/floor-1-4.png" />
-                    </div>
-
-                    <div class="yui3-u row-220 split">
-                        <span class="floor-x-line"></span>
-                        <div class="floor-conver-pit">
-                            <img src="/asses/img/floor-1-5.png" />
-                        </div>
-                        <div class="floor-conver-pit">
-
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -504,5 +472,34 @@
 <script type="text/javascript" src="/asses/js/widget/nav.js"></script>
 </body>
 
-
 </html>
+{{--<script src="/jquery.min.js"></script>--}}
+<script>
+    $(function(){
+        $('.li').bind('click',function(){
+           // alert(111);
+            var cate_id=$(this).val();
+            //alert(cate_id);
+            $.ajax({
+                'url':'/index',
+                'type':'post',
+                'dataType':'json',
+                'data':{'cate_id':cate_id},
+                success:function(res){
+                    var list=res.goodsList;
+                    var str='';
+                    $(list).each(function(k,v){
+                        str+='<div class="yui3-u row-218 split">';
+                        str+='<img src="{{env('UPLOAD_URL')}}'+v.goods_img+'"'+'/>';
+                        str+='</div>';
+                    });
+                    console.log(str);
+                    $("#goods_list").html(str);
+
+                }
+            })
+        })
+
+    })
+
+</script>
