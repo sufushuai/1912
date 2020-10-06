@@ -20,12 +20,9 @@ use App\Model\SkuAttrValModel;
 use App\Model\SkuAttrModel;
 use App\Model\SkuValModel;
 use App\Model\AddressModel;
-<<<<<<< HEAD
 use App\Model\OrderModel;
-=======
 
 
->>>>>>> f770a620b8f630b82ca0d5b2ffa0d6958b1dad08
 class IndexController extends Common
 {
     //首页
@@ -255,6 +252,16 @@ class IndexController extends Common
     }
     //订单
     public function order(Request $request){
+        $info = OrderModel::get();
+        $money=0;
+        foreach($info as $k=>$v){
+            $money += $v["order_price"]*$v['buy_number'];
+        }
+        $num=0;
+        foreach($info as $k=>$v){
+            $num += $v['buy_number'];
+        }
+
         $order = OrderModel::leftjoin('shop_goods','shop_order_goods.goods_id','=','shop_goods.goods_id')
                                         ->get();
         $address = AddressModel::get();
@@ -267,7 +274,7 @@ class IndexController extends Common
         $res=$this->getAreaInfo(0);
         // $cityInfo=$this->getAreaInfo($addressInfo['province']);
         $floor1=CategoryModel::where('p_id',0)->get();
-        return view('index.order',['res'=>$res,'addressInfo'=>$addressInfo,'floor1'=>$floor1,'order'=>$order]);
+        return view('index.order',['res'=>$res,'addressInfo'=>$addressInfo,'floor1'=>$floor1,'order'=>$order,'money'=>$money,'num'=>$num]);
        }
 
      //获取区域信息
