@@ -30,6 +30,11 @@ Route::group(['prefix'=>'/man', 'middleware' => ['user','userinfo']],function(){
     Route::any('/history','Man\ManController@history');//浏览历史
     Route::any('/coupon','Man\ManController@coupon');//优惠卷
     Route::any('/address','Man\ManController@address');//收货地址
+    Route::any('/add','Man\ManController@add');//收货地址----添加
+    Route::any('/del','Man\ManController@del');//收货地址----删除
+    Route::any('/update/{id}','Man\ManController@update');//收货地址----修改
+    Route::any('/updatedo','Man\ManController@updatedo');//收货地址----修改
+    Route::any('/default/{id}','Man\ManController@default');//收货地址----修改
 });
 //个人信息
 Route::group(['prefix'=>'/man'],function(){
@@ -64,12 +69,12 @@ Route::any('/index/cartdel','Index\IndexController@cartdel');//购物车删除
 Route::any('/index/success_cart','Index\IndexController@success_cart');//成功加入购物车
 Route::any('/index/order','Index\IndexController@order');//订单
 Route::any('/index/area','Index\IndexController@area');//三级联动
-Route::any('/index/create','Index\IndexController@create');//订单
+Route::any('/index/create','Index\IndexController@create');//收货地址添加
 Route::any('/index/list/{cate_id}','Index\IndexController@list');//商品列表
-Route::any('/index/del','Index\IndexController@del');//地址删除
-Route::any('/index/update/{id}','Index\IndexController@update');//修改
-Route::any('/index/updatedo','Index\IndexController@updatedo');//修改
-Route::any('/index/default/{id}','Index\IndexController@default');//默认收货地址
+Route::any('/index/del','Index\IndexController@del');//收货地址删除
+Route::any('/index/update/{id}','Index\IndexController@update');//收货地址修改
+Route::any('/index/updatedo','Index\IndexController@updatedo');//收货地址修改
+Route::any('/index/default/{id}','Index\IndexController@default');//收货地址默认收货地址
 //注册登录
 Route::any('/index/register','login\LoginController@register');//注册
 Route::any('/index/sendtel','login\LoginController@sendtel');//发送短信验证码
