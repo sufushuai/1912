@@ -18,14 +18,14 @@ use App\Model\SkuValModel;
 use App\Model\AreaModel;
 use App\Model\UserModel;
 use App\Model\AddressModel;
-
-
 use Illuminate\Support\Facades\Session;
+
+
 class IndexController extends Common
 {
     //首页
-    public function index(){
-    
+    public function index(request $request){
+
         //轮播图
         $slide=SlideModel::where('is_del',1)->limit(5)->get();
         //广告
@@ -54,35 +54,42 @@ class IndexController extends Common
         $today=GoodsModel::where('is_del',1)->orderby('goods_clicknum','desc')->limit(4)->get();
 
         //楼层
-        $floor=CategoryModel::where('p_id',0)->value('cate_id');
+        $cate_id=CategoryModel::where('p_id',0)->value('cate_id');
         //dd($floor);
         //最高分类
-        $cateList1=CategoryModel::where('cate_id',$floor)->first();
+        $cateList1=CategoryModel::where('cate_id',$cate_id)->first();
         //dd($cateList1);
         $where=[
-            'p_id'=>$floor,
+            'p_id'=>$cate_id,
         ];
         //子级分类
         $cateList2=CategoryModel::where($where)->get();
         //所有子孙级ID
         $cateAll=CategoryModel::get();
-        $cateIds=$this->getCateIds($cateAll,$floor);
+        $cateIds=$this->getCateIds($cateAll,$cate_id);
         //获取当前数组中所有的值
         $cateIds=array_values($cateIds);
         //dd($cateIds);
         //转换成字符串
-        $str_cateIds=implode(',',$cateIds);
+        //$str_cateIds=implode(',',$cateIds);
         //查询当前cate==这些ID的商品
-        $where1=[
-            ['cate_id','in',$str_cateIds]
-        ];
-        $goodsList=GoodsModel::where($where1)->limit(8)->get();
+        //$where1[]=$str_cateIds;
+       // dump($cateIds);die;
+        //点击分类项传来的ID
+        $cateid=$request->post('cate_id');
+        if($cateid){
+            $goodsList=GoodsModel::where('cate_id',$cateid)->limit(5)->get();
+        }else{
+            $goodsList=GoodsModel::whereIn('cate_id',$cateIds)->limit(5)->get();
+        }
 
+        if(request()->ajax()){
+            $html = json_encode(['goodsList'=>$goodsList]);
+            return  $html;
+        }else{
 
-        //dump($floors);
-
-
-        return view('index.index',['brand'=>$brand,'cateList1'=>$cateList1,'cateList2'=>$cateList2,'goodsList'=>$goodsList,'ad'=>$ad,'slide'=>$slide,'category'=>$cate,'guess'=>$guess,'today'=>$today]);
+            return view('index.index',['brand'=>$brand,'cateList1'=>$cateList1,'cateList2'=>$cateList2,'goodsList'=>$goodsList,'ad'=>$ad,'slide'=>$slide,'category'=>$cate,'guess'=>$guess,'today'=>$today]);
+        }
     }
 
 
