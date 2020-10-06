@@ -831,7 +831,6 @@
                 dataType: 'json',
                 type: "post",
                 success:function(res){
-                    console.log(res)
                     $("#goods_price").html(res.sku_attr.sku_price)
                     $("#goods_num").html(res.sku_attr.sku_num)
                 }
