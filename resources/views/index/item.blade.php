@@ -801,7 +801,10 @@
             }
         })
     })
-    $(document).on("click","#sku",function(){
-      
+    //sku
+    $(document).ready(function() {
+        $('.sku').click(function () {
+          alert(123);
+        })
     })
 </script>
