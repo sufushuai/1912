@@ -267,11 +267,13 @@ class IndexController extends Common
     }
     //订单
     public function order(Request $request){
+
         $info = OrderModel::get();
         $money=0;
         foreach($info as $k=>$v){
             $money += $v["order_price"]*$v['buy_number'];
         }
+
         $num=0;
         foreach($info as $k=>$v){
             $num += $v['buy_number'];
