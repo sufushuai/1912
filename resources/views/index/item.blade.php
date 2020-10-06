@@ -30,7 +30,6 @@
                 <li  style="float: right;margin-top: -40px;margin-right: 10px;list-style: none;"></li><br>
                 <li style="float: right;margin-top: -40px;margin-right: 10px;list-style: none;" id="store" status="3">
                    <input type="hidden" name="goods_id" value="{{$role_Info['goods_id']}}">
-
                     <button type="button" class="btn-danger addshopcar" id="collect">收藏</button>
                     <button type="button" class="btn-danger addshopcar" style="display: none" id="collected">取消收藏</button>
                 @foreach($collect as $k=>$v)
@@ -97,9 +96,13 @@
                         <div class="fl title">
                             <i>价　　格</i>
                         </div>
-                        <div class="goods_price fl price" >
+                        <div class="fl price" >
                             <i>¥</i>
-                            <em>{{$role_Info["goods_price"]}}</em>
+
+                            <em id="goods_price">{{$role_Info["goods_price"]}}</em>
+                            @foreach($sku_goods as $k=>$v)
+                                <em>{{$v["sku_price"]}}</em>
+                            @endforeach
                             <span>降价通知</span>
                         </div>
                     </div>
@@ -118,8 +121,8 @@
                         <div class="fl title">
                             <h4><i>库　　存</i></h4>
                         </div>
-                        <div class="fl fix-width" id="goods_score">
-                            <h4><span >{{$role_Info["goods_num"]}}</span></h4>
+                        <div class="fl fix-width">
+                            <h4><span id="goods_num" >{{$role_Info["goods_num"]}}</span></h4>
                         </div>
                     </div>
                 </div>
@@ -140,15 +143,17 @@
                         @foreach($sav as $vv)
                         <dl>
                             <dt>
-                                <div >
+                                <div attr_id="{{$vv['attr_id']}}">
                                     <i>{{$vv['attr_name']}}:</i>
                                 </div>
                             </dt>
                             @php $str=0 @endphp
                             @foreach($vv['sku4'] as $kkk=>$vvv)
                                 @php $str+=1; @endphp
-                            <dd><a href="javascript:;" class="{{$str==1?'selected sku':'sku'}}">{{$vvv['val_name']}}<span title="点击取消选择">&nbsp;</span>
-                                </a></dd>
+                            <dt>
+                                <a href="javascript:;" {{--class="selected"--}}val_id="{{$vvv['val_id']}}"  class="sku attr_val">{{$vvv['val_name']}}<span title="点击取消选择">&nbsp;</span>
+                                </a>
+                            </dt>
                             @endforeach
                         </dl>
                             @endforeach
@@ -739,13 +744,18 @@
     });
     $(document).ready(function() {
         $('#add').click(function () {
-            var goods_price = $(".goods_price").val();
-            var itxt = $(".itxt").val();
+            var goods_price = $("#goods_price").text();
+            var goods_id=$("input[name='goods_id']").val();
+            var sku_id=$("#sku_id").val();
+            console.log(sku_id);
+            return false;
+//            var goods_num = $("#goods_num").text();
+            var buy_number = $("input[name='buy_number']").val();
 
             $.ajax({
                 type: "post",
                 url: "/index/success_cart",
-                data: {goods_price:goods_price,itxt:itxt},
+                data: {goods_price:goods_price,buy_number:buy_number,goods_id:goods_id},
                 dataType: "json",
                 success: function (res) {
                     if (res.code) {
@@ -803,8 +813,32 @@
     })
     //sku
     $(document).ready(function() {
-        $('.sku').click(function () {
-          alert(123);
+        $('.attr_val').click(function () {
+            var _this=$(this);
+            var addclass=_this.addClass('selected')
+            var moveclass=_this.parent().siblings().children().removeClass("selected");
+            var goods_id=$("input[name='goods_id']").val();
+            var goods_price = $("#goods_price").text(); //价格
+            var val_id=_this.attr('val_id'); //属性值id
+            var attr_id=_this.parent().siblings().children().attr('attr_id');//属性名id
+
+            var sku = [];
+            $(".selected").each(function(){
+                sku.push($(this).attr('val_id'));
+            });
+
+            $.ajax({
+                url:'/index/sku',
+                data: {goods_id:goods_id,sku:sku},
+                dataType: 'json',
+                type: "post",
+                success:function(res){
+                    console.log(res)
+                    $("#goods_price").html(res.sku_attr.sku_price)
+                    $("#goods_num").html(res.sku_attr.sku_num)
+                }
+            });
+            
         })
     })
 </script>
