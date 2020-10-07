@@ -269,9 +269,9 @@
                     <div id="goods_list">
                     @foreach($goodsList as $v)
                     <div class="yui3-u row-218 split" >
-
-                        <img src="{{env('UPLOAD_URL')}}{{$v->goods_img}}"/>
-
+                        <a href="{{'/index/item/'.$v->goods_id}}">
+                            <img src="{{env('UPLOAD_URL')}}{{$v->goods_img}}"/>
+                        </a>
                     </div>
                     @endforeach
                     </div>
@@ -490,7 +490,9 @@
                     var str='';
                     $(list).each(function(k,v){
                         str+='<div class="yui3-u row-218 split">';
+                        {{--str+='<a href="{{url('/index/item/',$v['goods_id'])}}">';--}}
                         str+='<img src="{{env('UPLOAD_URL')}}'+v.goods_img+'"'+'/>';
+//                        str+='</a>';
                         str+='</div>';
                     });
                     console.log(str);

@@ -77,10 +77,10 @@ class IndexController extends Common
         //判断cate_id是否有值
         if($cateid){
             //有值则直接查询该id下的商品
-            $goodsList=GoodsModel::where('cate_id',$cateid)->limit(5)->get();
+            $goodsList=GoodsModel::where('cate_id',$cateid)->orderBy('goods_id','desc')->limit(5)->get();
         }else{
             //没有值则查询数组里的
-            $goodsList=GoodsModel::whereIn('cate_id',$cateIds)->limit(5)->get();
+            $goodsList=GoodsModel::whereIn('cate_id',$cateIds)->orderBy('goods_id','desc')->limit(5)->get();
         }
         //判断是否ajax请求
         if(request()->ajax()){
