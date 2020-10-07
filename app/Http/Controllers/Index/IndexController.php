@@ -495,8 +495,8 @@ class IndexController extends Common
         $res=$address_model->where('add_id',$id)->update(['is_default'=>1]);//将默认改为1
         // 判断
         if($res){
-            // echo '成功';
-            return redirect('/index/order');
+             echo ("<script>alert('默认成功！');location='/index/order'</script>");
+            // return redirect('/index/order');
         }else{
             echo '失败';
         }
