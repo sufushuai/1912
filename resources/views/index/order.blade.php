@@ -202,11 +202,15 @@
         </div>
     </div>
     <div class="clearfix trade">
+<<<<<<< HEAD
+        <div class="fc-price">应付金额:　<span class="price" id="money">¥{{$money}}</span></div>
+=======
         <div class="fc-price">应付金额:　<span class="prices">¥{{$money}}</span></div>
+>>>>>>> 4b15fdc2376d867b2eefcf06d94515b576ade4f7
         <div class="fc-receiverInfo">寄送至:北京市海淀区三环内 中关村软件园9号楼 收货人：某某某 159****3201</div>
     </div>
     <div class="submit">
-        <a class="sui-btn btn-danger btn-xlarge" href="{{url('order_info')}}">提交订单</a>
+        <a class="sui-btn btn-danger btn-xlarge" id="add">提交订单</a>
     </div>
 </div>
 <!-- 底部栏位 -->
@@ -268,11 +272,11 @@ $(function(){
             var province=$("select[name='province']").val();
             var city=$("select[name='city']").val();
             var area=$("select[name='area']").val();
-            // console.log(user_name);
-            // console.log(user_tel);
-            // console.log(province);
-            // console.log(city);
-            // console.log(area);
+             console.log(user_name);
+             console.log(user_tel);
+             console.log(province);
+             console.log(city);
+             console.log(area);
              $.ajax({
                 url:"/index/create",
                 data:{user_name:user_name,user_tel:user_tel,province:province,city:city,area:area},
@@ -309,5 +313,20 @@ $(function(){
             })
         })
 
+$(document).ready(function() {
+    $('#add').click(function () {
+        var money = $("#money").text();
+        $.ajax({
+            type: "post",
+            url: "/order_info",
+            data: {money:money},
+            dataType: "json",
+            success: function (res) {
+
+            }
+        })
+
+    })
+})
     </script>
 

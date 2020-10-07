@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Order;
 
 use App\Http\Controllers\Common;
 use Illuminate\Http\Request;
-use App\Model\CartModel;
+use App\Model\OrderGoodsModel;
 use Illuminate\Support\Str;
 use App\Model\OrderinfoModel;
 
@@ -15,6 +15,9 @@ class OrderController extends Common
      */
     public function order_info(Request $request)
     {
+
+        $orderprice = $request->get("money");
+
 //        $money = $request->post('money');
 //        dd($money);
         $user_id=$this->user_id();
@@ -22,6 +25,7 @@ class OrderController extends Common
         foreach($order as $k=>$v){
             $money = $v['order_amout'];
         }
+
         $oid = $request->get('oid');
         //echo '订单ID： '. $oid;
         //根据订单查询到订单信息  订单号  订单金额
@@ -32,7 +36,11 @@ class OrderController extends Common
         $param2 = [
             'out_trade_no'      => time().mt_rand(11111111111,99999999999),
             'product_code'      => 'FAST_INSTANT_TRADE_PAY',
+
+            'total_amount'      => $orderprice,
+
             'total_amount'      => $money,
+
             'subject'           => '优品购支付',
         ];
 
