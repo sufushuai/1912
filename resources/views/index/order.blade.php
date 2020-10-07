@@ -257,11 +257,11 @@ $(function(){
             var province=$("select[name='province']").val();
             var city=$("select[name='city']").val();
             var area=$("select[name='area']").val();
-            // console.log(user_name);
-            // console.log(user_tel);
-            // console.log(province);
-            // console.log(city);
-            // console.log(area);
+             console.log(user_name);
+             console.log(user_tel);
+             console.log(province);
+             console.log(city);
+             console.log(area);
              $.ajax({
                 url:"/index/create",
                 data:{user_name:user_name,user_tel:user_tel,province:province,city:city,area:area},
