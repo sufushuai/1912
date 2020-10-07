@@ -21,6 +21,7 @@ use App\Model\SkuAttrModel;
 use App\Model\SkuValModel;
 use App\Model\AddressModel;
 use App\Model\OrderModel;
+use App\Model\OrderinfoModel;
 
 class IndexController extends Common
 {
@@ -252,10 +253,28 @@ class IndexController extends Common
     //购物车结算
     public function cartorder(Request $request){
         $user_id=$this->user_id();
+        $info = OrderModel::where("user_id",$user_id)->get();
+        $money=0;
+        foreach($info as $k=>$v){
+            $money += $v["order_price"]*$v['buy_number'];
+        }
         $cart_id = $request->post('cart_id');
         $cart_id = explode(',',$cart_id);
         $cart = CartModel::whereIn('cart_id',$cart_id)->get();
+        $order_sn = time().rand(00000,99999).$user_id;
+        $orderinfo = [
+            'order_sn'=>$order_sn,
+            'user_id'=>$user_id,
+            'order_status'=>1,
+            'order_amout'=>$money,
+            'add_time'=>time()
+        ];
         $data = [];
+        $order = OrderinfoModel::insert($orderinfo);
+        $order_id = OrderinfoModel::get('order_id');
+        foreach ($order_id as $k=>$v){
+            $data['order_id'] = $v['order_id'];
+        }
         foreach($cart as $k=>$v){
             $data['user_id'] = $v['user_id'];
             $data['goods_id'] = $v['goods_id'];
@@ -272,7 +291,7 @@ class IndexController extends Common
     //订单
     public function order(Request $request){
         $user_id=$this->user_id();
-        $info = OrderModel::get();
+        $info = OrderModel::where("user_id",$user_id)->get();
         $money=0;
         foreach($info as $k=>$v){
             $money += $v["order_price"]*$v['buy_number'];
@@ -284,7 +303,6 @@ class IndexController extends Common
         $order = OrderModel::leftjoin('shop_goods','shop_order_goods.goods_id','=','shop_goods.goods_id')
                                         ->having("user_id",$user_id)->get();
         $address = AddressModel::get();
-
         //查询所有收货地址  作为列表数据
         $addressInfo=$this->getAddressInfo();
         // dd($addressInfo);

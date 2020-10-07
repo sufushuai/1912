@@ -150,7 +150,7 @@
                                         <div class="seven">7天无理由退货</div>
                                     </li>
                                     <li class="yui3-u-1-12">
-                                        <div class="price" id="sumprice">{{$v->goods_price}}</div>
+                                        <div class="price" id="sumprice">{{$v->order_price}}</div>
                                     </li>
                                     <li class="yui3-u-1-12">
                                         <div class="num">X{{$v->buy_number}}</div>
@@ -202,7 +202,7 @@
         </div>
     </div>
     <div class="clearfix trade">
-        <div class="fc-price">应付金额:　<span class="price">¥{{$money}}</span></div>
+        <div class="fc-price">应付金额:　<span class="prices">¥{{$money}}</span></div>
         <div class="fc-receiverInfo">寄送至:北京市海淀区三环内 中关村软件园9号楼 收货人：某某某 159****3201</div>
     </div>
     <div class="submit">
@@ -223,9 +223,20 @@
 
 </html>
 <script>
-
-
-
+    // $(document).on('click','#order_info',function(){
+    //    var money = $('.prices').text();
+    //    var money = money.substring(1,money.length);
+    //    alert(money);
+    //     $.ajax({
+    //         url : "/order_info",
+    //         type : "post",
+    //         data : {money : money},
+    //         dataType:'json',
+    //         success:function(res){
+    //                 location.href='/index/order'
+    //         }
+    //     })
+    // })
 //三级联动
 $(function(){
             $(document).on('change','.area',function(){

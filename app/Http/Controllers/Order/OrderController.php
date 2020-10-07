@@ -2,17 +2,26 @@
 
 namespace App\Http\Controllers\Order;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Common;
 use Illuminate\Http\Request;
 use App\Model\CartModel;
 use Illuminate\Support\Str;
-class OrderController extends Controller
+use App\Model\OrderinfoModel;
+
+class OrderController extends Common
 {
     /**
      * 跳转支付宝支付
      */
     public function order_info(Request $request)
     {
+//        $money = $request->post('money');
+//        dd($money);
+        $user_id=$this->user_id();
+        $order = OrderinfoModel::where('user_id',$user_id)->get('order_amout');
+        foreach($order as $k=>$v){
+            $money = $v['order_amout'];
+        }
         $oid = $request->get('oid');
         //echo '订单ID： '. $oid;
         //根据订单查询到订单信息  订单号  订单金额
@@ -23,7 +32,7 @@ class OrderController extends Controller
         $param2 = [
             'out_trade_no'      => time().mt_rand(11111111111,99999999999),
             'product_code'      => 'FAST_INSTANT_TRADE_PAY',
-            'total_amount'      => 5399.00,
+            'total_amount'      => $money,
             'subject'           => '优品购支付',
         ];
 
