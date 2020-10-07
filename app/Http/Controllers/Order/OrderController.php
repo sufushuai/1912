@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Order;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Model\CartModel;
+use App\Model\OrderGoodsModel;
 use Illuminate\Support\Str;
 class OrderController extends Controller
 {
@@ -13,6 +13,7 @@ class OrderController extends Controller
      */
     public function order_info(Request $request)
     {
+        $orderprice = $request->get("money");
         $oid = $request->get('oid');
         //echo '订单ID： '. $oid;
         //根据订单查询到订单信息  订单号  订单金额
@@ -23,7 +24,7 @@ class OrderController extends Controller
         $param2 = [
             'out_trade_no'      => time().mt_rand(11111111111,99999999999),
             'product_code'      => 'FAST_INSTANT_TRADE_PAY',
-            'total_amount'      => 5399.00,
+            'total_amount'      => $orderprice,
             'subject'           => '优品购支付',
         ];
 

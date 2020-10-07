@@ -202,11 +202,11 @@
         </div>
     </div>
     <div class="clearfix trade">
-        <div class="fc-price">应付金额:　<span class="price">¥{{$money}}</span></div>
+        <div class="fc-price">应付金额:　<span class="price" id="money">¥{{$money}}</span></div>
         <div class="fc-receiverInfo">寄送至:北京市海淀区三环内 中关村软件园9号楼 收货人：某某某 159****3201</div>
     </div>
     <div class="submit">
-        <a class="sui-btn btn-danger btn-xlarge" href="{{url('order_info')}}">提交订单</a>
+        <a class="sui-btn btn-danger btn-xlarge" id="add">提交订单</a>
     </div>
 </div>
 <!-- 底部栏位 -->
@@ -298,5 +298,20 @@ $(function(){
             })
         })
 
+$(document).ready(function() {
+    $('#add').click(function () {
+        var money = $("#money").text();
+        $.ajax({
+            type: "post",
+            url: "/order_info",
+            data: {money:money},
+            dataType: "json",
+            success: function (res) {
+
+            }
+        })
+
+    })
+})
     </script>
 
