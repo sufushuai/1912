@@ -157,7 +157,7 @@
             </li>
             @foreach($today as $t)
             <li class="yui3-u-5-24">
-                <a href="{{'/index/item/'.$t['goods_id']}}" target="_blank"><img src="{{env('UPLOAD_URL')}}{{$t['goods_img']}}" width="160" height="200"/></a>
+                <a href="{{'/index/item/'.$t['goods_id']}}" target="_blank"><img src="{{env('UPLOAD_URL')}}{{$t['goods_img']}}" width="200" height="165"/></a>
             </li>
                 @endforeach
 
