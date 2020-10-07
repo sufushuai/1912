@@ -113,7 +113,8 @@ class IndexController extends Common
     }
     //购物车
     public function cart(){
-        $cart = CartModel::leftjoin('shop_goods','shop_cart.goods_id','=','shop_goods.goods_id')->get();
+        $user_id=$this->user_id();
+        $cart = CartModel::leftjoin('shop_goods','shop_cart.goods_id','=','shop_goods.goods_id')->having("user_id",$user_id)->get();
         return view('index.cart',['cart'=>$cart]);
     }
     //购物车删除
@@ -144,10 +145,12 @@ class IndexController extends Common
     }
     //成功加入购物车
     public function success_cart(){
+        $user_id=$this->user_id();
         $goods_price = request()->post("goods_price");
         $goods_id = request()->post("goods_id");
         $buy_number = request()->post("buy_number");
         $where =[
+            "user_id"=>$user_id,
             "cart_price"=>$goods_price,
             "goods_id"=>$goods_id,
             "buy_number"=>$buy_number,
@@ -246,11 +249,13 @@ class IndexController extends Common
     }
     //购物车结算
     public function cartorder(Request $request){
+        $user_id=$this->user_id();
         $cart_id = $request->post('cart_id');
         $cart_id = explode(',',$cart_id);
         $cart = CartModel::whereIn('cart_id',$cart_id)->get();
         $data = [];
         foreach($cart as $k=>$v){
+            $data['user_id'] = $v['user_id'];
             $data['goods_id'] = $v['goods_id'];
             $data['order_price'] = $v['cart_price'];
             $data['buy_number'] = $v['buy_number'];
@@ -264,6 +269,7 @@ class IndexController extends Common
     }
     //订单
     public function order(Request $request){
+        $user_id=$this->user_id();
         $info = OrderModel::get();
         $money=0;
         foreach($info as $k=>$v){
@@ -274,7 +280,7 @@ class IndexController extends Common
             $num += $v['buy_number'];
         }
         $order = OrderModel::leftjoin('shop_goods','shop_order_goods.goods_id','=','shop_goods.goods_id')
-                                        ->get();
+                                        ->having("user_id",$user_id)->get();
         $address = AddressModel::get();
 
         //查询所有收货地址  作为列表数据
@@ -451,6 +457,7 @@ class IndexController extends Common
 
     //默认
     public function default($id){
+//        $user_id=$this->user_id();
         // echo 111;
          //接受收货地址
         $addid=request()->post('add_id');
