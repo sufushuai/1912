@@ -756,10 +756,13 @@
                 data: {goods_price:goods_price,buy_number:buy_number,goods_id:goods_id},
                 dataType: "json",
                 success: function (res) {
-                    if (res.code) {
+                    if (res.code==40001) {
+                        alert(res.msg);
+                        location.href = "/index/login";
+                    }else if(res.code=='ok'){
                         alert(res.msg);
                         location.href = "/index/cart";
-                    } else {
+                    }else {
                         alert('添加失败');
                     }
                 }

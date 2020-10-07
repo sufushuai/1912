@@ -38,11 +38,13 @@ class IndexController extends Common
           $where=[
                     'is_hot'=>1,
                     'is_show'=>1,
-                    'is_new'=>1
+                    'is_new'=>1,
+                    'is_del'=>1
+
                 ];
         //猜你喜欢
-        $guess=GoodsModel::where($where)->limit(12)->get()->toArray();
-        //$guess=collect($guess)->toArray();
+        $guess=GoodsModel::where($where)->orderby( 'goods_clicknum','desc')->limit(12)->get()->toArray();
+
         $guess=array_chunk($guess,2,true);
         //dump($guess);die;
         //获取分类数据
@@ -77,10 +79,10 @@ class IndexController extends Common
         //判断cate_id是否有值
         if($cateid){
             //有值则直接查询该id下的商品
-            $goodsList=GoodsModel::where('cate_id',$cateid)->limit(5)->get();
+            $goodsList=GoodsModel::where('cate_id',$cateid)->orderBy('goods_id','desc')->limit(5)->get();
         }else{
             //没有值则查询数组里的
-            $goodsList=GoodsModel::whereIn('cate_id',$cateIds)->limit(5)->get();
+            $goodsList=GoodsModel::whereIn('cate_id',$cateIds)->orderBy('goods_id','desc')->limit(5)->get();
         }
         //判断是否ajax请求
         if(request()->ajax()){
@@ -113,11 +115,9 @@ class IndexController extends Common
     }
     //购物车
     public function cart(){
-        $cart = CartModel::leftjoin('shop_goods','shop_cart.goods_id','=','shop_goods.goods_id')
-                                    ->get();
+        $user_id=$this->user_id();
+        $cart = CartModel::leftjoin('shop_goods','shop_cart.goods_id','=','shop_goods.goods_id')->having("user_id",$user_id)->get();
         return view('index.cart',['cart'=>$cart]);
-
-
     }
     //购物车删除
     public function cartdestroy(){
@@ -147,11 +147,13 @@ class IndexController extends Common
     }
     //成功加入购物车
     public function success_cart(){
+        $user_id=$this->user_id();
         $goods_price = request()->post("goods_price");
         $goods_id = request()->post("goods_id");
         $buy_number = request()->post("buy_number");
         $where =[
-            "goods_price"=>$goods_price,
+            "user_id"=>$user_id,
+            "cart_price"=>$goods_price,
             "goods_id"=>$goods_id,
             "buy_number"=>$buy_number,
             "add_time"=>time(),
@@ -227,12 +229,12 @@ class IndexController extends Common
     }
     //购物车总价
     public function money(Request $request){
-        $goods_id = $request->post('goods_id');
-        $goods_id = explode(',',$goods_id);
-        $info = CartModel::whereIn('goods_id',$goods_id)->get(["goods_price","buy_number"]);
+        $cart_id = $request->post('cart_id');
+        $cart_id = explode(',',$cart_id);
+        $info = CartModel::whereIn('cart_id',$cart_id)->get(["cart_price","buy_number"]);
         $money=0;
         foreach($info as $k=>$v){
-            $money += $v["goods_price"]*$v['buy_number'];
+            $money += $v["cart_price"]*$v['buy_number'];
         }
         return $money;
     }
@@ -249,13 +251,15 @@ class IndexController extends Common
     }
     //购物车结算
     public function cartorder(Request $request){
+        $user_id=$this->user_id();
         $cart_id = $request->post('cart_id');
         $cart_id = explode(',',$cart_id);
         $cart = CartModel::whereIn('cart_id',$cart_id)->get();
         $data = [];
         foreach($cart as $k=>$v){
+            $data['user_id'] = $v['user_id'];
             $data['goods_id'] = $v['goods_id'];
-            $data['order_price'] = $v['goods_price'];
+            $data['order_price'] = $v['cart_price'];
             $data['buy_number'] = $v['buy_number'];
             $res = OrderModel::insert($data);
         }
@@ -267,20 +271,18 @@ class IndexController extends Common
     }
     //订单
     public function order(Request $request){
-
+        $user_id=$this->user_id();
         $info = OrderModel::get();
         $money=0;
         foreach($info as $k=>$v){
             $money += $v["order_price"]*$v['buy_number'];
         }
-
         $num=0;
         foreach($info as $k=>$v){
             $num += $v['buy_number'];
         }
-
         $order = OrderModel::leftjoin('shop_goods','shop_order_goods.goods_id','=','shop_goods.goods_id')
-                                        ->get();
+                                        ->having("user_id",$user_id)->get();
         $address = AddressModel::get();
 
         //查询所有收货地址  作为列表数据
@@ -457,6 +459,7 @@ class IndexController extends Common
 
     //默认
     public function default($id){
+//        $user_id=$this->user_id();
         // echo 111;
          //接受收货地址
         $addid=request()->post('add_id');

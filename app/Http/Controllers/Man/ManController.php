@@ -77,7 +77,7 @@ class ManController extends Common
 
      //获取地区
     public function getArea(request $request){
-       $area_id=$request->post('area_id');
+        $area_id=$request->post('area_id');
 //        if($area_id == 0){
 //            return view('Merchandise.Index.areaajax',['id'=>$area_id]);
 //        }
@@ -164,7 +164,7 @@ class ManController extends Common
     }
 
     public function update($id){
-         $data = AddressModel::where(['add_id'=>$id])->first();
+        $data = AddressModel::where(['add_id'=>$id])->first();
         // echo $data;
         $address = AddressModel::get();
 
@@ -180,7 +180,7 @@ class ManController extends Common
     }
 
     public function updatedo(){
-        $add_id=request()->post('add_id');
+       $add_id=request()->post('add_id');
        $user_id=$this->user_id();
        $user_name = request()->post('user_name');
        $user_tel = request()->post('user_tel');

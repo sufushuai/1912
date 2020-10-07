@@ -157,7 +157,7 @@
             </li>
             @foreach($today as $t)
             <li class="yui3-u-5-24">
-                <a href="{{'/index/item/'.$t['goods_id']}}" target="_blank"><img src="{{env('UPLOAD_URL')}}{{$t['goods_img']}}" width="160" height="200"/></a>
+                <a href="{{'/index/item/'.$t['goods_id']}}" target="_blank"><img src="{{env('UPLOAD_URL')}}{{$t['goods_img']}}" width="200" height="165"/></a>
             </li>
                 @endforeach
 
@@ -269,9 +269,9 @@
                     <div id="goods_list">
                     @foreach($goodsList as $v)
                     <div class="yui3-u row-218 split" >
-
-                        <img src="{{env('UPLOAD_URL')}}{{$v->goods_img}}"/>
-
+                        <a href="{{'/index/item/'.$v->goods_id}}">
+                            <img src="{{env('UPLOAD_URL')}}{{$v->goods_img}}"/>
+                        </a>
                     </div>
                     @endforeach
                     </div>
@@ -490,7 +490,9 @@
                     var str='';
                     $(list).each(function(k,v){
                         str+='<div class="yui3-u row-218 split">';
+                        {{--str+='<a href="{{url('/index/item/',$v['goods_id'])}}">';--}}
                         str+='<img src="{{env('UPLOAD_URL')}}'+v.goods_img+'"'+'/>';
+//                        str+='</a>';
                         str+='</div>';
                     });
                     console.log(str);

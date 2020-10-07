@@ -42,13 +42,13 @@
                                         <div class="item-msg" id="goods_name">{{$v->goods_name}}</div>
                                     </div>
                                 </li>
-                                <li class="yui3-u-1-8 danjia"><span class="price" id="price" >{{$v->goods_price}}</span></li>
+                                <li class="yui3-u-1-8 danjia"><span class="price" id="price" >{{$v->cart_price}}</span></li>
                                 <li class="yui3-u-1-8">
                                     <button id="num-jian" class="increment mins  numberMinus">－</button>
                                     <input  id="input-num"  type="text" value="{{$v->buy_number}}" class="itxt" />
                                     <button id="num-jia" class="increment plus">＋</button>
                                 </li>
-                                <li class="yui3-u-1-8 zongnum" id="zongnum"><span class="sum" id="sum">{{$v->goods_price*$v->buy_number}}</span></li>
+                                <li class="yui3-u-1-8 zongnum" id="zongnum"><span class="sum" id="sum">{{$v->cart_price*$v->buy_number}}</span></li>
                                 <li class="yui3-u-1-8">
                                     <button class="del">删除</button>
                                     <button >移到我的关注</button>
@@ -321,16 +321,17 @@
         $("input[name='check']:checked").each(function(){
             cart_id +=  $(this).parents('ul').attr('cart_id') + ',';
         })
+        //alert(goods_id);
         cart_id = cart_id.substr(0, cart_id.length - 1);
-        $.get(
-            "/index/money",{
-                cart_id:cart_id,
-                goods_id:goods_id
-            },
-            function(res){
+        $.ajax({
+            type:"post",
+            dataType:"json",
+            url:"/index/money",
+            data:{cart_id:cart_id,goods_id:goods_id},
+            success:function(res){
                 $("#Sum").text('￥' + res);
             }
-        )
+        });
     }
     //计算数量方法
     function totalNum(){
