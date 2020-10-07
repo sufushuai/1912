@@ -54,7 +54,7 @@ Route::group(['prefix'=>'/man' ],function(){
 
 
 //购物车
-Route::group(['prefix'=>'/index','middleware' => ['user']],function() {
+Route::group(['prefix'=>'/index','middleware' => ['userlogin']],function() {
     Route::any('/cart', 'Index\IndexController@cart');//购物车
     Route::any('/cartnumjian', 'Index\IndexController@cartnumjian');//减购物车商品数量
     Route::any('/cartnumjia', 'Index\IndexController@cartnumjia');//加购物车商品数量
