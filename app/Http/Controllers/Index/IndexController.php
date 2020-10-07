@@ -113,11 +113,8 @@ class IndexController extends Common
     }
     //购物车
     public function cart(){
-        $cart = CartModel::leftjoin('shop_goods','shop_cart.goods_id','=','shop_goods.goods_id')
-                                    ->get();
+        $cart = CartModel::leftjoin('shop_goods','shop_cart.goods_id','=','shop_goods.goods_id')->get();
         return view('index.cart',['cart'=>$cart]);
-
-
     }
     //购物车删除
     public function cartdestroy(){
@@ -151,7 +148,7 @@ class IndexController extends Common
         $goods_id = request()->post("goods_id");
         $buy_number = request()->post("buy_number");
         $where =[
-            "goods_price"=>$goods_price,
+            "cart_price"=>$goods_price,
             "goods_id"=>$goods_id,
             "buy_number"=>$buy_number,
             "add_time"=>time(),
@@ -227,12 +224,12 @@ class IndexController extends Common
     }
     //购物车总价
     public function money(Request $request){
-        $goods_id = $request->post('goods_id');
-        $goods_id = explode(',',$goods_id);
-        $info = CartModel::whereIn('goods_id',$goods_id)->get(["goods_price","buy_number"]);
+        $cart_id = $request->post('cart_id');
+        $cart_id = explode(',',$cart_id);
+        $info = CartModel::whereIn('cart_id',$cart_id)->get(["cart_price","buy_number"]);
         $money=0;
         foreach($info as $k=>$v){
-            $money += $v["goods_price"]*$v['buy_number'];
+            $money += $v["cart_price"]*$v['buy_number'];
         }
         return $money;
     }
@@ -255,7 +252,7 @@ class IndexController extends Common
         $data = [];
         foreach($cart as $k=>$v){
             $data['goods_id'] = $v['goods_id'];
-            $data['order_price'] = $v['goods_price'];
+            $data['order_price'] = $v['cart_price'];
             $data['buy_number'] = $v['buy_number'];
             $res = OrderModel::insert($data);
         }
@@ -267,18 +264,15 @@ class IndexController extends Common
     }
     //订单
     public function order(Request $request){
-
         $info = OrderModel::get();
         $money=0;
         foreach($info as $k=>$v){
             $money += $v["order_price"]*$v['buy_number'];
         }
-
         $num=0;
         foreach($info as $k=>$v){
             $num += $v['buy_number'];
         }
-
         $order = OrderModel::leftjoin('shop_goods','shop_order_goods.goods_id','=','shop_goods.goods_id')
                                         ->get();
         $address = AddressModel::get();
