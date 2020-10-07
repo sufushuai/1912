@@ -53,38 +53,46 @@ Route::group(['prefix'=>'/man' ],function(){
 });
 
 
-//首页
-Route::any('/index/cart','Index\IndexController@cart');//购物车
-Route::any('/index/sku','Index\IndexController@sku');//详情sku
-Route::any('/index/cartnumjian','Index\IndexController@cartnumjian');//减购物车商品数量
-Route::any('/index/cartnumjia','Index\IndexController@cartnumjia');//加购物车商品数量
-Route::any('/index/money','Index\IndexController@money');//购物车总价
-Route::any('/index/cartnum','Index\IndexController@cartnum');//购物车总数量
-Route::any('/index/cartadd','Index\IndexController@cartadd');//购物车添加
-Route::any('/index/cartdestroy','Index\IndexController@cartdestroy');//购物车删除
-Route::any('/index/cartdel','Index\IndexController@cartdel');//购物车删除
-Route::any('/index/success_cart','Index\IndexController@success_cart');//成功加入购物车
-Route::any('/index/item/{goods_id}','Index\IndexController@item');//详情
-Route::any('/index/cartdestroy','Index\IndexController@cartdestroy');//购物车删除
-Route::any('/index/cartdel','Index\IndexController@cartdel');//购物车删除
-Route::any('/index/success_cart','Index\IndexController@success_cart');//成功加入购物车
-Route::any('/index/cartorder','Index\IndexController@cartorder');//订单
+//购物车
+Route::group(['prefix'=>'/index','middleware' => ['user']],function() {
+    Route::any('/cart', 'Index\IndexController@cart');//购物车
+    Route::any('/cartnumjian', 'Index\IndexController@cartnumjian');//减购物车商品数量
+    Route::any('/cartnumjia', 'Index\IndexController@cartnumjia');//加购物车商品数量
+    Route::any('/money', 'Index\IndexController@money');//购物车总价
+    Route::any('/cartnum', 'Index\IndexController@cartnum');//购物车总数量
+    Route::any('/cartadd', 'Index\IndexController@cartadd');//购物车添加
+    Route::any('/cartdestroy', 'Index\IndexController@cartdestroy');//购物车删除
+    Route::any('/cartdel', 'Index\IndexController@cartdel');//购物车删除
+    Route::any('/success_cart', 'Index\IndexController@success_cart');//成功加入购物车
+    Route::any('/cartdestroy', 'Index\IndexController@cartdestroy');//购物车删除
+});
+//商品详情
+Route::group(['prefix'=>'/index'],function() {
+    Route::any('/item/{goods_id}', 'Index\IndexController@item');//详情
+    Route::any('/sku', 'Index\IndexController@sku');//详情sku
+});
 
-Route::any('/index/order','Index\IndexController@order');//订单
-Route::any('/index/area','Index\IndexController@area');//三级联动
-Route::any('/index/create','Index\IndexController@create');//收货地址添加
-Route::any('/index/list/{cate_id}','Index\IndexController@list');//商品列表
-Route::any('/index/del','Index\IndexController@del');//收货地址删除
-Route::any('/index/update/{id}','Index\IndexController@update');//收货地址修改
-Route::any('/index/updatedo','Index\IndexController@updatedo');//收货地址修改
-Route::any('/index/default/{id}','Index\IndexController@default');//收货地址默认收货地址
+//订单
+Route::group(['prefix'=>'/index','middleware' => ['user']],function() {
+    Route::any('/cartorder', 'Index\IndexController@cartorder');//订单
+    Route::any('/order', 'Index\IndexController@order');//订单
+    Route::any('/area', 'Index\IndexController@area');//三级联动
+    Route::any('/create', 'Index\IndexController@create');//收货地址添加
+    Route::any('/list/{cate_id}', 'Index\IndexController@list');//商品列表
+    Route::any('/del', 'Index\IndexController@del');//收货地址删除
+    Route::any('/update/{id}', 'Index\IndexController@update');//收货地址修改
+    Route::any('/updatedo', 'Index\IndexController@updatedo');//收货地址修改
+    Route::any('/default/{id}', 'Index\IndexController@default');//收货地址默认收货地址
+});
 //注册登录
-Route::any('/index/register','login\LoginController@register');//注册
-Route::any('/index/sendtel','login\LoginController@sendtel');//发送短信验证码
-Route::any('/index/do_register','login\LoginController@do_register');//执行注册
-Route::any('/index/login','login\LoginController@login');//登录
-Route::post('/index/do_login','login\LoginController@do_login');//执行登录
-Route::any('/index/quit','login\LoginController@quit');//退出登录
+Route::group(['prefix'=>'/index'],function() {
+    Route::any('/register','login\LoginController@register');//注册
+    Route::any('/sendtel','login\LoginController@sendtel');//发送短信验证码
+    Route::any('/do_register','login\LoginController@do_register');//执行注册
+    Route::any('/login','login\LoginController@login');//登录
+    Route::post('/do_login','login\LoginController@do_login');//执行登录
+    Route::any('/quit','login\LoginController@quit');//退出登录
+});
 
 
 Route::any('/conter/index/login','Conter\ConterController@login');//中间件跳转登陆页面
