@@ -20,7 +20,7 @@ use App\Model\SkuAttrValModel;
 use App\Model\SkuAttrModel;
 use App\Model\SkuValModel;
 use App\Model\AddressModel;
-
+use App\Model\OrderModel;
 
 class IndexController extends Common
 {
@@ -97,12 +97,24 @@ class IndexController extends Common
         $floor1=CategoryModel::where('p_id',0)->get();
         return view('index.list',['floor1'=>$floor1,'brand'=>$brand,'goods'=>$goods]);
     }
+    /**
+    *  详情sku
+     */
+    public function sku(Request $request){
+        $goods_id=$request->post("goods_id");
+        $sku=$request->post("sku");
+        $sku=implode(",",$sku);
+        $sku_attr=SkuAttrValModel::where("sku",$sku)->where("goods_id",$goods_id)->first();
+        if($sku_attr){
+            return json_encode(["sku_attr"=>$sku_attr]);
+        }else{
+            return $this->error("no");
+        }
+    }
     //购物车
     public function cart(){
         $cart = CartModel::leftjoin('shop_goods','shop_cart.goods_id','=','shop_goods.goods_id')->get();
         return view('index.cart',['cart'=>$cart]);
-
-
     }
     //购物车删除
     public function cartdestroy(){
@@ -133,11 +145,13 @@ class IndexController extends Common
     //成功加入购物车
     public function success_cart(){
         $goods_price = request()->post("goods_price");
-        $itxt = request()->post("itxt");
+        $goods_id = request()->post("goods_id");
+        $buy_number = request()->post("buy_number");
         $where =[
-            "goods_price"=>$goods_price,
-            "buy_number"=>$itxt
-
+            "cart_price"=>$goods_price,
+            "goods_id"=>$goods_id,
+            "buy_number"=>$buy_number,
+            "add_time"=>time(),
         ];
         $res=CartModel::insert($where);
         if($res){
@@ -182,9 +196,9 @@ class IndexController extends Common
                }
             }
         }
-        $sav = SkuAttrValModel::where('goods_id',$goods_id)->first();
+        $sku_goods=GoodsModel::leftjoin("sku_attr_val","shop_goods.goods_id","=","sku_attr_val.goods_id")->having("goods_id",$goods_id);
         $floor1=CategoryModel::where('p_id',0)->get();
-        return view('index.item',['role_Info'=>$role_Info,'sav'=>$att,'collect'=>$collect,'floor1'=>$floor1]);
+        return view('index.item',['role_Info'=>$role_Info,'sav'=>$att,'collect'=>$collect,'floor1'=>$floor1,"sku_goods"=>$sku_goods]);
     }
     //减购物车数量
     public function cartnumjian(Request $request){
@@ -210,16 +224,16 @@ class IndexController extends Common
     }
     //购物车总价
     public function money(Request $request){
-        $goods_id = $request->post('goods_id');
-        $goods_id = explode(',',$goods_id);
-        $info = CartModel::whereIn('goods_id',$goods_id)->get(["goods_price","buy_number"]);
+        $cart_id = $request->post('cart_id');
+        $cart_id = explode(',',$cart_id);
+        $info = CartModel::whereIn('cart_id',$cart_id)->get(["cart_price","buy_number"]);
         $money=0;
         foreach($info as $k=>$v){
-            $money += $v["goods_price"]*$v['buy_number'];
+            $money += $v["cart_price"]*$v['buy_number'];
         }
         return $money;
     }
-    //购物车总价
+    //购物车总数量
     public function cartnum(Request $request){
         $cart_id = $request->post('cart_id');
         $cart_id = explode(',',$cart_id);
@@ -230,8 +244,37 @@ class IndexController extends Common
         }
         return $cartnum;
     }
+    //购物车结算
+    public function cartorder(Request $request){
+        $cart_id = $request->post('cart_id');
+        $cart_id = explode(',',$cart_id);
+        $cart = CartModel::whereIn('cart_id',$cart_id)->get();
+        $data = [];
+        foreach($cart as $k=>$v){
+            $data['goods_id'] = $v['goods_id'];
+            $data['order_price'] = $v['cart_price'];
+            $data['buy_number'] = $v['buy_number'];
+            $res = OrderModel::insert($data);
+        }
+        if($res){
+            return $this->success(200,'ok');
+        }else{
+            return $this->error(1,'fail');
+        }
+    }
     //订单
-    public function order(){
+    public function order(Request $request){
+        $info = OrderModel::get();
+        $money=0;
+        foreach($info as $k=>$v){
+            $money += $v["order_price"]*$v['buy_number'];
+        }
+        $num=0;
+        foreach($info as $k=>$v){
+            $num += $v['buy_number'];
+        }
+        $order = OrderModel::leftjoin('shop_goods','shop_order_goods.goods_id','=','shop_goods.goods_id')
+                                        ->get();
         $address = AddressModel::get();
 
         //查询所有收货地址  作为列表数据
@@ -242,8 +285,7 @@ class IndexController extends Common
         $res=$this->getAreaInfo(0);
         // $cityInfo=$this->getAreaInfo($addressInfo['province']);
         $floor1=CategoryModel::where('p_id',0)->get();
-        return view('index.order',['res'=>$res,'addressInfo'=>$addressInfo,'floor1'=>$floor1]);
-
+        return view('index.order',['res'=>$res,'addressInfo'=>$addressInfo,'floor1'=>$floor1,'order'=>$order,'money'=>$money,'num'=>$num]);
        }
 
      //获取区域信息
@@ -457,4 +499,6 @@ class IndexController extends Common
             return json_encode(['status'=>'100','msg'=>'no']);
         }
     }
+
+
 }

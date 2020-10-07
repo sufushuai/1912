@@ -55,6 +55,7 @@ Route::group(['prefix'=>'/man' ],function(){
 
 //首页
 Route::any('/index/cart','Index\IndexController@cart');//购物车
+Route::any('/index/sku','Index\IndexController@sku');//详情sku
 Route::any('/index/cartnumjian','Index\IndexController@cartnumjian');//减购物车商品数量
 Route::any('/index/cartnumjia','Index\IndexController@cartnumjia');//加购物车商品数量
 Route::any('/index/money','Index\IndexController@money');//购物车总价
@@ -67,6 +68,8 @@ Route::any('/index/item/{goods_id}','Index\IndexController@item');//详情
 Route::any('/index/cartdestroy','Index\IndexController@cartdestroy');//购物车删除
 Route::any('/index/cartdel','Index\IndexController@cartdel');//购物车删除
 Route::any('/index/success_cart','Index\IndexController@success_cart');//成功加入购物车
+Route::any('/index/cartorder','Index\IndexController@cartorder');//订单
+
 Route::any('/index/order','Index\IndexController@order');//订单
 Route::any('/index/area','Index\IndexController@area');//三级联动
 Route::any('/index/create','Index\IndexController@create');//收货地址添加

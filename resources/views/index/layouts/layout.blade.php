@@ -3,7 +3,14 @@
         <div class="shortcut">
             <ul class="fl">
                 <li class="f-item">品优购欢迎您！</li>
-                <li class="f-item">请登录　<span><a href="{{url('index/register')}}">免费注册</a></span></li>
+                <li class="f-item">
+                @if(Session::get('id'))
+                    <li class="f-item">{{ Session::get('name') }}</li>
+                    <li class="f-item"><a href="{{url('index/quit')}}">退出</a></li>
+                @else
+                    <li class="f-item">请<a href="{{url('index/login')}}" target="_self">登录</a>　<span><a href="{{url('index/register')}}" target="_self">免费注册</a></span></li>
+                @endif　
+                <span><a href="{{url('index/register')}}">免费注册</a></span></li>
             </ul>
             <ul class="fr">
                 <li class="f-item">我的订单</li>
